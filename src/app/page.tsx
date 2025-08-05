@@ -11,6 +11,7 @@ import VisionSection from '@/components/sections/VisionSection'
 import GetStartedSection from '@/components/sections/GetStartedSection'
 import Timer from '@/components/Timer'
 import PresenterMode from '@/components/PresenterMode'
+import SectionNavigation from '@/components/SectionNavigation'
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0)
@@ -63,6 +64,17 @@ export default function Home() {
     return () => window.removeEventListener('keydown', handleKeyPress)
   }, [isPresenterMode, isTimerRunning])
 
+  const navigateSection = (direction: 'prev' | 'next') => {
+    const newSection = direction === 'next' 
+      ? Math.min(currentSection + 1, sections.length - 1)
+      : Math.max(currentSection - 1, 0)
+    
+    const targetElement = document.getElementById(sections[newSection].id)
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <main className="relative">
       <Header />
@@ -108,6 +120,12 @@ export default function Home() {
       <section id="get-started" className="section-container">
         <GetStartedSection />
       </section>
+
+      <SectionNavigation 
+        currentSection={currentSection}
+        totalSections={sections.length}
+        onNavigate={navigateSection}
+      />
     </main>
   )
 }

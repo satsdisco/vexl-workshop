@@ -13,12 +13,12 @@ interface Contact {
 }
 
 const CONTACT_TYPES = [
-  { id: 'pizza', name: 'Pizza Place', icon: '🍕' },
-  { id: 'dog', name: 'Dog Walker', icon: '🐕' },
-  { id: 'coffee', name: 'Coffee Shop', icon: '☕' },
+  { id: 'satoshi', name: 'Satoshi Nakamoto', icon: '₿' },
+  { id: 'grandma', name: 'Grandma', icon: '👵' },
+  { id: 'friend', name: 'Best Friend', icon: '🤝' },
   { id: 'gym', name: 'Gym Buddy', icon: '💪' },
-  { id: 'restaurant', name: 'Restaurant', icon: '🍽️' },
-  { id: 'mechanic', name: 'Mechanic', icon: '🔧' },
+  { id: 'barber', name: 'Your Barber', icon: '💈' },
+  { id: 'neighbor', name: 'Cool Neighbor', icon: '🏠' },
 ]
 
 export default function WebOfTrustDemo() {

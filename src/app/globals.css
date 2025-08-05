@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+
+@layer base {
+  :root {
+    --vexl-black: #000000;
+    --vexl-white: #FFFFFF;
+    --vexl-yellow: #FFD700;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased bg-vexl-black text-vexl-white pt-16;
+    font-size: 18px;
+    background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23FFFFFF" fill-opacity="0.03"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply min-h-screen flex flex-col justify-center items-center px-6 py-12 md:px-12 lg:px-20 relative;
+  }
+
+  .presenter-note {
+    @apply bg-vexl-gray-900/90 backdrop-blur-md border border-vexl-gray-700 rounded-none p-6 text-sm;
+  }
+
+  .timing-indicator {
+    @apply fixed top-4 right-4 bg-vexl-white text-vexl-black px-6 py-3 rounded-none font-medium text-sm z-50;
+  }
+
+  .nav-dot {
+    @apply w-2 h-2 rounded-full bg-vexl-gray-600 transition-all duration-300;
+  }
+
+  .nav-dot.active {
+    @apply w-8 bg-vexl-white;
+  }
+
+  .vexl-button {
+    @apply bg-vexl-white text-vexl-black px-8 py-4 rounded-none font-bold text-lg hover:bg-vexl-gray-200 transition-colors;
+  }
+
+  .vexl-card {
+    @apply bg-vexl-gray-900/50 backdrop-blur-sm border border-vexl-gray-800 rounded-none p-8;
+  }
+}

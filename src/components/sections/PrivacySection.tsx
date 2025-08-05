@@ -147,14 +147,6 @@ export default function PrivacySection() {
               </div>
               
               <div className="flex justify-between items-center">
-                <span className="text-vexl-gray-400">Government Access</span>
-                <div className="flex gap-4">
-                  <span className="text-red-500">KYC: YES</span>
-                  <span className="text-green-500">Vexl: NO</span>
-                </div>
-              </div>
-              
-              <div className="flex justify-between items-center">
                 <span className="text-vexl-gray-400">Data Breaches Risk</span>
                 <div className="flex gap-4">
                   <span className="text-red-500">KYC: HIGH</span>

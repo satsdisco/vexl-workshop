@@ -19,7 +19,7 @@ const demoSteps = [
   },
   {
     title: "3. See Offer Details",
-    description: "Check payment methods, amounts, and trader reputation.",
+    description: "Check payment methods, amounts, and trader reputation (mutual trust).",
     screenshot: "/screenshots/offerdetails.PNG",
     highlights: ["Clear terms", "Payment options", "Trust indicators"]
   },

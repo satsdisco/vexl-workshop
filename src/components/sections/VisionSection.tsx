@@ -6,7 +6,7 @@ import NeighborhoodTalentMap from '@/components/NeighborhoodTalentMap'
 import TrustComparison from '@/components/TrustComparison'
 import SkillSharingCarousel from '@/components/SkillSharingCarousel'
 import NetworkEffectCalculator from '@/components/NetworkEffectCalculator'
-import EnhancedWebOfTrust from '@/components/EnhancedWebOfTrust'
+import EnhancedWebOfTrustV2 from '@/components/EnhancedWebOfTrustV2'
 
 export default function VisionSection() {
   const [activeTab, setActiveTab] = useState('web')
@@ -70,7 +70,7 @@ export default function VisionSection() {
       >
         {activeTab === 'web' && (
           <div className="space-y-8">
-            <EnhancedWebOfTrust />
+            <EnhancedWebOfTrustV2 />
           </div>
         )}
 

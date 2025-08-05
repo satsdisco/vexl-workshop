@@ -20,11 +20,11 @@ export default function VisionSection() {
   ]
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto h-full flex flex-col">
       <motion.h2 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        className="text-4xl md:text-6xl text-center mb-4"
+        className="text-3xl md:text-5xl text-center mb-3"
         style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
       >
         Your Network is Your <span className="text-vexl-yellow">Net Worth</span>
@@ -34,20 +34,20 @@ export default function VisionSection() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="text-xl text-center text-vexl-gray-400 mb-12 max-w-3xl mx-auto"
+        className="text-lg text-center text-vexl-gray-400 mb-6 max-w-3xl mx-auto"
       >
         Stop selling your time to one employer. Start serving your community with all your skills.
       </motion.p>
 
       {/* Tab Navigation */}
-      <div className="flex flex-wrap justify-center gap-3 mb-12">
+      <div className="flex flex-wrap justify-center gap-2 mb-6">
         {tabs.map((tab) => (
           <motion.button
             key={tab.id}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-5 py-3 rounded-lg font-semibold flex items-center gap-2 transition-all ${
+            className={`px-4 py-2 rounded-lg font-semibold flex items-center gap-2 transition-all text-sm md:text-base ${
               activeTab === tab.id
                 ? 'bg-vexl-yellow text-black'
                 : 'bg-vexl-gray-900 hover:bg-vexl-gray-800'
@@ -66,6 +66,7 @@ export default function VisionSection() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
+        className="flex-1 overflow-hidden"
       >
         {activeTab === 'web' && (
           <div className="space-y-8">

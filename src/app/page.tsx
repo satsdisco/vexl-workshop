@@ -32,7 +32,10 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 2
+      const container = document.querySelector('.overflow-y-auto')
+      if (!container) return
+      
+      const scrollPosition = container.scrollTop + window.innerHeight / 2
       const sectionElements = sections.map(s => document.getElementById(s.id))
       
       sectionElements.forEach((el, index) => {
@@ -45,10 +48,18 @@ export default function Home() {
       })
     }
 
-    window.addEventListener('scroll', handleScroll)
-    handleScroll()
+    const container = document.querySelector('.overflow-y-auto')
+    if (container) {
+      container.addEventListener('scroll', handleScroll)
+      handleScroll()
+    }
     
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      const container = document.querySelector('.overflow-y-auto')
+      if (container) {
+        container.removeEventListener('scroll', handleScroll)
+      }
+    }
   }, [sections])
 
   const navigateSection = (direction: 'prev' | 'next') => {
@@ -57,8 +68,12 @@ export default function Home() {
       : Math.max(currentSection - 1, 0)
     
     const targetElement = document.getElementById(sections[newSection].id)
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' })
+    const container = document.querySelector('.overflow-y-auto')
+    if (targetElement && container) {
+      container.scrollTo({
+        top: targetElement.offsetTop,
+        behavior: 'smooth'
+      })
     }
   }
 
@@ -127,7 +142,7 @@ export default function Home() {
   }, [isPresenterMode, isTimerRunning, sections])
 
   return (
-    <main className="relative">
+    <main className="relative h-screen overflow-hidden">
       <Header />
       <Navigation 
         sections={sections} 
@@ -148,33 +163,35 @@ export default function Home() {
         />
       )}
 
-      <section id="hook" className="section-container">
-        <HookSection />
-      </section>
+      <div className="h-full overflow-y-auto overflow-x-hidden snap-y snap-mandatory">
+        <section id="hook" className="section-container snap-start">
+          <HookSection />
+        </section>
 
-      <section id="pitch" className="section-container">
-        <PitchSection />
-      </section>
+        <section id="pitch" className="section-container snap-start">
+          <PitchSection />
+        </section>
 
-      <section id="trust" className="section-container">
-        <TrustSection />
-      </section>
+        <section id="trust" className="section-container snap-start">
+          <TrustSection />
+        </section>
 
-      <section id="privacy" className="section-container">
-        <PrivacySection />
-      </section>
+        <section id="privacy" className="section-container snap-start">
+          <PrivacySection />
+        </section>
 
-      <section id="demo" className="section-container">
-        <DemoSection />
-      </section>
+        <section id="demo" className="section-container snap-start">
+          <DemoSection />
+        </section>
 
-      <section id="vision" className="section-container">
-        <VisionSection />
-      </section>
+        <section id="vision" className="section-container snap-start">
+          <VisionSection />
+        </section>
 
-      <section id="get-started" className="section-container">
-        <GetStartedSection />
-      </section>
+        <section id="get-started" className="section-container snap-start">
+          <GetStartedSection />
+        </section>
+      </div>
 
       <SectionNavigation 
         currentSection={currentSection}

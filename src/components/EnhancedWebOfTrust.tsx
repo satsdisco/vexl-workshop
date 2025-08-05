@@ -86,24 +86,23 @@ export default function EnhancedWebOfTrust() {
   const reach = getTotalReach()
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto h-full flex flex-col">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="text-center mb-6"
       >
-        <h3 className="text-3xl mb-4" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
+        <h3 className="text-2xl md:text-3xl mb-3" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
           Your Network is <span className="text-vexl-yellow">Everyone's Network</span>
         </h3>
-        <p className="text-lg text-vexl-gray-400 max-w-3xl mx-auto">
+        <p className="text-base md:text-lg text-vexl-gray-400 max-w-3xl mx-auto">
           Non-Vexl users are bridges. Your mom connects you to her hairdresser who's a bitcoiner.
-          Every contact expands possibilities.
         </p>
       </motion.div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-6 flex-1 min-h-0">
         {/* Network Visualization */}
-        <div className="lg:col-span-2 bg-vexl-gray-900 border border-vexl-gray-800 p-8 relative h-[600px] overflow-hidden">
+        <div className="lg:col-span-2 bg-vexl-gray-900 border border-vexl-gray-800 p-6 relative h-[400px] md:h-[500px] overflow-hidden">
           <svg className="absolute inset-0 w-full h-full">
             <AnimatePresence>
               {contacts.map(contact => 
@@ -180,28 +179,28 @@ export default function EnhancedWebOfTrust() {
           </AnimatePresence>
 
           {/* Legend */}
-          <div className="absolute bottom-4 left-4 bg-vexl-gray-800/90 p-3 rounded">
-            <div className="text-xs space-y-1">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-vexl-yellow rounded-full"></div>
+          <div className="absolute bottom-2 left-2 bg-vexl-gray-800/90 p-2 rounded text-xs">
+            <div className="flex gap-4">
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 bg-vexl-yellow rounded-full"></div>
                 <span>You</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-vexl-gray-800 ring-1 ring-white rounded-full"></div>
-                <span>Vexl User</span>
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 bg-vexl-gray-800 ring-1 ring-white rounded-full"></div>
+                <span>Vexl</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-vexl-gray-700 ring-1 ring-vexl-gray-600 rounded-full"></div>
-                <span>Non-Vexl Bridge</span>
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 bg-vexl-gray-700 ring-1 ring-vexl-gray-600 rounded-full"></div>
+                <span>Bridge</span>
               </div>
             </div>
           </div>
         </div>
         
         {/* Controls and Info */}
-        <div className="space-y-4">
-          <div className="bg-vexl-gray-900 p-6 border border-vexl-gray-800">
-            <h4 className="text-xl mb-4" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>Network Stats</h4>
+        <div className="space-y-3 overflow-y-auto max-h-[500px]">
+          <div className="bg-vexl-gray-900 p-4 border border-vexl-gray-800">
+            <h4 className="text-lg mb-3" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>Network Stats</h4>
             <div className="space-y-3">
               <div>
                 <div className="text-3xl font-bold text-vexl-yellow">{reach.total}</div>
@@ -221,15 +220,15 @@ export default function EnhancedWebOfTrust() {
           </div>
 
           <div>
-            <h4 className="text-lg mb-3" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>Add Contacts:</h4>
+            <h4 className="text-base mb-2" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>Add Contacts:</h4>
             <div className="space-y-2">
               {CONTACT_TYPES.map(type => (
                 <motion.button
                   key={type.id}
                   onClick={() => addContact(type)}
-                  className="w-full bg-vexl-gray-800 hover:bg-vexl-gray-700 p-3 text-left transition-colors flex items-center gap-3"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-vexl-gray-800 hover:bg-vexl-gray-700 p-2 text-left transition-colors flex items-center gap-2"
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
                   disabled={contacts.some(c => c.id === type.id)}
                 >
                   <span className="text-2xl">{type.icon}</span>

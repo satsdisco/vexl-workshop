@@ -24,11 +24,6 @@ export default function HashExplanationDemo() {
         Your Privacy is <span className="text-vexl-yellow">Mathematically Guaranteed</span>
       </h3>
       
-      {/* Technical explanation in monospace */}
-      <div className="text-center mb-8 font-mono text-xs text-vexl-gray-600" style={{ fontFamily: 'Space Mono, monospace' }}>
-        <code>hash(phoneNumber + salt) = uniqueIdentifier</code>
-      </div>
-      
       <div className="grid lg:grid-cols-3 gap-8 items-center">
         {/* Your Phone */}
         <div className="relative">
@@ -128,9 +123,6 @@ export default function HashExplanationDemo() {
                   <div className="text-xs text-vexl-gray-500 mt-2">
                     One-way hash (irreversible)
                   </div>
-                  <div className="mt-2 font-mono text-xs text-vexl-gray-700" style={{ fontFamily: 'Space Mono, monospace' }}>
-                    <code>SHA-256</code>
-                  </div>
                 </motion.div>
               </AnimatePresence>
               
@@ -175,14 +167,6 @@ export default function HashExplanationDemo() {
         <p className="text-center mt-4 text-vexl-gray-400">
           Even if we wanted to spy on you (we don't), our architecture makes it impossible
         </p>
-        
-        {/* Cypherpunk quote */}
-        <div className="mt-6 pt-6 border-t border-vexl-gray-800">
-          <blockquote className="font-mono text-sm text-vexl-gray-600 italic text-center" style={{ fontFamily: 'Space Mono, monospace' }}>
-            "Privacy is necessary for an open society in the electronic age."
-            <cite className="block mt-2 text-xs not-italic">- Eric Hughes, A Cypherpunk's Manifesto</cite>
-          </blockquote>
-        </div>
       </motion.div>
     </div>
   )

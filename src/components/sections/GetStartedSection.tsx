@@ -225,17 +225,6 @@ export default function GetStartedSection() {
             <p className="text-3xl font-bold">
               Let's build the future of <span className="text-vexl-yellow">Bitcoin</span> together.
             </p>
-            
-            {/* ASCII art signature */}
-            <div className="mt-8 font-mono text-xs text-vexl-gray-800" style={{ fontFamily: 'Space Mono, monospace' }}>
-              <pre className="inline-block">
-{`
-╔═══════════════════════════════╗
-║  Be your own bank. Use Vexl.  ║
-╚═══════════════════════════════╝
-`}
-              </pre>
-            </div>
           </motion.div>
         </div>
       ) : (

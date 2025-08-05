@@ -37,8 +37,6 @@ export default function PrivacySection() {
         &gt;&gt;&gt; peer-to-peer electronic cash without financial institutions &lt;&lt;&lt;
       </motion.p>
 
-      {/* ASCII divider */}
-      <AsciiDivider message="CRYPTOGRAPHIC PRIVACY" className="mb-8 text-center" />
 
       <div className="mb-12">
         <div className="flex flex-wrap gap-4 justify-center mb-8">
@@ -186,24 +184,6 @@ export default function PrivacySection() {
         </motion.div>
       </div>
 
-      {/* ASCII art footer */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="mt-12 text-center font-mono text-xs text-vexl-gray-700"
-        style={{ fontFamily: 'Space Mono, monospace' }}
-      >
-        <pre className="inline-block">
-{`
-┌─────────────────────────────────────┐
-│  "Not your keys, not your coins"   │
-│  "Not your node, not your rules"   │
-│  "Not your privacy, not your life" │
-└─────────────────────────────────────┘
-`}
-        </pre>
-      </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}

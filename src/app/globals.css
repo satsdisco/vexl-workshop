@@ -40,15 +40,12 @@
     background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
   }
   
-  /* Desktop: fixed height for slides */
+  /* Desktop: scrollable slides */
   @media (min-width: 768px) {
     .section-container {
-      height: 100vh;
-      overflow-y: auto;
-      overflow-x: hidden;
-      justify-content: center;
-      align-items: center;
-      overscroll-behavior: contain;
+      min-height: 100vh;
+      padding-top: 80px; /* Account for header */
+      padding-bottom: 80px; /* Account for navigation */
     }
   }
   

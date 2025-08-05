@@ -111,8 +111,22 @@ export default function Home() {
     }
 
     window.addEventListener('keydown', handleKeyPress)
-    return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [isPresenterMode, isTimerRunning, sections, currentSection])
+    
+    // Prevent scroll wheel from changing slides on desktop
+    const handleWheel = (e: WheelEvent) => {
+      if (!isMobile) {
+        // Allow scrolling within the slide but not slide navigation
+        e.stopPropagation()
+      }
+    }
+    
+    window.addEventListener('wheel', handleWheel, { passive: true })
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+      window.removeEventListener('wheel', handleWheel)
+    }
+  }, [isPresenterMode, isTimerRunning, sections, currentSection, isMobile])
 
   // Render mobile version with normal scrolling
   if (isMobile) {
@@ -150,7 +164,7 @@ export default function Home() {
 
   // Desktop version with slide navigation
   return (
-    <main className="relative h-screen overflow-hidden">
+    <main className="relative h-screen flex flex-col">
       <Header />
       <Navigation 
         sections={sections} 
@@ -171,8 +185,8 @@ export default function Home() {
         />
       )}
 
-      {/* Slide Container */}
-      <div className="min-h-screen relative">
+      {/* Slide Container - Takes remaining height and allows scrolling */}
+      <div className="flex-1 relative overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.section
             key={currentSection}
@@ -180,15 +194,19 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -300 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="section-container"
+            className="absolute inset-0 overflow-y-auto overflow-x-hidden"
           >
-            {currentSection === 0 && <HookSection />}
-            {currentSection === 1 && <PitchSection />}
-            {currentSection === 2 && <TrustSection />}
-            {currentSection === 3 && <PrivacySection />}
-            {currentSection === 4 && <DemoSection />}
-            {currentSection === 5 && <VisionSection />}
-            {currentSection === 6 && <GetStartedSection />}
+            <div className="min-h-full px-6 py-20 md:px-12 lg:px-16">
+              <div className="w-full max-w-7xl mx-auto">
+                {currentSection === 0 && <HookSection />}
+                {currentSection === 1 && <PitchSection />}
+                {currentSection === 2 && <TrustSection />}
+                {currentSection === 3 && <PrivacySection />}
+                {currentSection === 4 && <DemoSection />}
+                {currentSection === 5 && <VisionSection />}
+                {currentSection === 6 && <GetStartedSection />}
+              </div>
+            </div>
           </motion.section>
         </AnimatePresence>
       </div>

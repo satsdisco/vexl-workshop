@@ -11,12 +11,13 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Image 
-            src="/logos/vexl/Logopack/Digital/Vexl logo white on transparent@2x.png"
+            src="/logos/vexl/Logopack - Secondary logo/Vexl Secondary logo Digital/secondary-logo-white.png"
             alt="Vexl"
-            width={120}
-            height={48}
+            width={100}
+            height={40}
             className="h-10 w-auto"
             priority
+            unoptimized
           />
           <span className="text-sm text-vexl-gray-500 hidden md:block">
             P2P Bitcoin Without KYC

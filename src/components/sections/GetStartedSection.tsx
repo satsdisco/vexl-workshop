@@ -40,9 +40,9 @@ export default function GetStartedSection() {
   ]
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto h-full flex flex-col">
       {/* Tab Navigation */}
-      <div className="flex justify-center gap-4 mb-12">
+      <div className="flex justify-center gap-4 mb-8">
         {tabs.map((tab) => (
           <motion.button
             key={tab.id}
@@ -61,12 +61,13 @@ export default function GetStartedSection() {
         ))}
       </div>
 
-      {activeTab === 'start' ? (
-        <div className="text-center">
+      <div className="flex-1 overflow-y-auto">
+        {activeTab === 'start' ? (
+          <div className="text-center">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl mb-16"
+            className="text-4xl md:text-6xl mb-12"
             style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
           >
             Ready to go <span className="text-vexl-yellow">No-KYC</span>?
@@ -76,7 +77,7 @@ export default function GetStartedSection() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="grid md:grid-cols-2 gap-8 mb-16"
+            className="grid md:grid-cols-2 gap-8 mb-12"
           >
             <div className="vexl-card">
               <div className="flex items-center justify-center gap-3 mb-6">
@@ -235,7 +236,7 @@ export default function GetStartedSection() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
-            className="mt-20 p-8 border-2 border-vexl-yellow"
+            className="mt-12 p-6 border-2 border-vexl-yellow"
           >
             <h4 className="text-2xl font-bold mb-6">Workshop Success Kit</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -262,7 +263,7 @@ export default function GetStartedSection() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
-            className="mt-16"
+            className="mt-12"
           >
             <p className="text-2xl text-vexl-gray-400 mb-4">
               Every person you onboard makes the network stronger.
@@ -271,10 +272,11 @@ export default function GetStartedSection() {
               Let's build the future of <span className="text-vexl-yellow">Bitcoin</span> together.
             </p>
           </motion.div>
-        </div>
-      ) : (
-        <SupportMission />
-      )}
+          </div>
+        ) : (
+          <SupportMission />
+        )}
+      </div>
     </div>
   )
 }

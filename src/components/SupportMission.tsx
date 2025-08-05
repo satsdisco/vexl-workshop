@@ -31,7 +31,7 @@ export default function SupportMission() {
       </div>
 
       {/* Impact Grid */}
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
+      <div className="grid md:grid-cols-3 gap-6 mb-8">
         <motion.div
           whileHover={{ scale: 1.05 }}
           className="p-6 bg-gradient-to-br from-green-950/30 to-transparent border border-green-900/50 rounded-lg text-center"

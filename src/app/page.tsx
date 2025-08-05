@@ -20,6 +20,7 @@ export default function Home() {
   const [currentSection, setCurrentSection] = useState(0)
   const [isPresenterMode, setIsPresenterMode] = useState(false)
   const [isTimerRunning, setIsTimerRunning] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   const sections = [
     { id: 'hook', name: 'Hook', duration: 2 },
@@ -39,6 +40,18 @@ export default function Home() {
     
     setCurrentSection(newSection)
   }
+
+  useEffect(() => {
+    // Check if mobile on mount and resize
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -101,6 +114,41 @@ export default function Home() {
     return () => window.removeEventListener('keydown', handleKeyPress)
   }, [isPresenterMode, isTimerRunning, sections, currentSection])
 
+  // Render mobile version with normal scrolling
+  if (isMobile) {
+    return (
+      <main className="relative">
+        <Header />
+        
+        {/* Mobile: All sections in one scrollable page */}
+        <div className="space-y-8 pb-20">
+          <div className="min-h-screen flex items-center justify-center px-4 py-12">
+            <HookSection />
+          </div>
+          <div className="min-h-screen px-4 py-12">
+            <PitchSection />
+          </div>
+          <div className="min-h-screen px-4 py-12">
+            <TrustSection />
+          </div>
+          <div className="min-h-screen px-4 py-12">
+            <PrivacySection />
+          </div>
+          <div className="min-h-screen px-4 py-12">
+            <DemoSection />
+          </div>
+          <div className="min-h-screen px-4 py-12">
+            <VisionSection />
+          </div>
+          <div className="min-h-screen px-4 py-12">
+            <GetStartedSection />
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  // Desktop version with slide navigation
   return (
     <main className="relative h-screen overflow-hidden">
       <Header />

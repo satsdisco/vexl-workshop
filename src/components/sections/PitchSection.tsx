@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 export default function PitchSection() {
   return (
-    <div className="max-w-5xl mx-auto w-full h-full overflow-y-auto">
+    <div className="max-w-5xl mx-auto w-full">
       <div className="text-center mb-16">
         <div className="mb-12">
           <VexlLogo className="w-48 h-auto mx-auto mb-8" />

@@ -5,16 +5,16 @@ import { Check, X } from 'lucide-react'
 
 export default function DataComparisonChart() {
   const dataPoints = [
-    { item: 'Your phone number', ratings: true, vexl: false },
     { item: 'Your email address', ratings: true, vexl: false },
     { item: 'Your full name', ratings: true, vexl: false },
+    { item: 'Your ID/passport', ratings: true, vexl: false },
     { item: 'Every transaction amount', ratings: true, vexl: false },
     { item: 'Transaction history', ratings: true, vexl: false },
     { item: 'Who you trade with', ratings: true, vexl: false },
     { item: 'Your location data', ratings: true, vexl: false },
     { item: 'Your trading patterns', ratings: true, vexl: false },
     { item: 'Your review history', ratings: true, vexl: false },
-    { item: 'Your device info', ratings: true, vexl: false },
+    { item: 'Your bank details', ratings: true, vexl: false },
   ]
 
   return (

@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import NeighborhoodTalentMap from '@/components/NeighborhoodTalentMap'
 import TrustComparison from '@/components/TrustComparison'
 import SkillSharingCarousel from '@/components/SkillSharingCarousel'
-import YourSkillsForm from '@/components/YourSkillsForm'
 import NetworkEffectCalculator from '@/components/NetworkEffectCalculator'
 import EnhancedWebOfTrust from '@/components/EnhancedWebOfTrust'
 
@@ -17,7 +16,6 @@ export default function VisionSection() {
     { id: 'talent', label: 'Talent Network', icon: '🌐' },
     { id: 'trust', label: 'Trust = Business', icon: '🤝' },
     { id: 'trades', label: 'Real Trades', icon: '🔄' },
-    { id: 'skills', label: 'Your Skills', icon: '💪' },
     { id: 'network', label: 'Network Power', icon: '📈' },
   ]
 
@@ -110,12 +108,6 @@ export default function VisionSection() {
           </div>
         )}
 
-        {activeTab === 'skills' && (
-          <div className="space-y-8">
-            <YourSkillsForm />
-          </div>
-        )}
-
         {activeTab === 'network' && (
           <div className="space-y-8">
             <NetworkEffectCalculator />
@@ -127,10 +119,10 @@ export default function VisionSection() {
       <div className="mt-16 p-6 bg-vexl-gray-900/30 rounded-lg border border-vexl-gray-800">
         <h4 className="text-sm font-bold text-vexl-gray-500 mb-2">PRESENTER NOTE:</h4>
         <p className="text-sm text-vexl-gray-400">
+          {activeTab === 'web' && "Add contacts to show network growth. Emphasize: non-Vexl users are bridges, not barriers. Your mom connects you to bitcoiners."}
           {activeTab === 'talent' && "Click on people to show their skills and connections. Ask: 'Who here has a skill they could monetize?'"}
           {activeTab === 'trust' && "Let audience choose. Most will pick the trusted option. Point out this is exactly what Vexl enables at scale."}
           {activeTab === 'trades' && "Let carousel run. These are real examples of P2P economy. Ask: 'What could you trade with your neighbors?'"}
-          {activeTab === 'skills' && "Get someone to volunteer their skills. Show them their potential customer base. Make it personal."}
           {activeTab === 'network' && "Adjust sliders together. Show how even introverts have massive economic networks through friends of friends."}
         </p>
       </div>

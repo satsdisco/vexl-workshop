@@ -7,6 +7,9 @@ import HookSection from '@/components/sections/HookSection'
 import PitchSection from '@/components/sections/PitchSection'
 import TrustSection from '@/components/sections/TrustSection'
 import PrivacySection from '@/components/sections/PrivacySection'
+import ProfileSetupSection from '@/components/sections/ProfileSetupSection'
+import FindingOffersSection from '@/components/sections/FindingOffersSection'
+import ContactTradingSection from '@/components/sections/ContactTradingSection'
 import DemoSection from '@/components/sections/DemoSection'
 import VisionSection from '@/components/sections/VisionSection'
 import GetStartedSection from '@/components/sections/GetStartedSection'
@@ -27,6 +30,9 @@ export default function Home() {
     { id: 'pitch', name: 'Vexl Pitch', duration: 3 },
     { id: 'trust', name: 'Trust > Ratings', duration: 5 },
     { id: 'privacy', name: 'Privacy First', duration: 5 },
+    { id: 'profile-setup', name: 'Profile Setup', duration: 2 },
+    { id: 'finding-offers', name: 'Finding Offers', duration: 2 },
+    { id: 'contact-trading', name: 'Contact & Trading', duration: 3 },
     { id: 'demo', name: 'Live Demo', duration: 10 },
     { id: 'vision', name: 'Your Network', duration: 8 },
     { id: 'get-started', name: 'Get Started', duration: 2 },
@@ -100,7 +106,7 @@ export default function Home() {
         }
         
         // Number keys for direct section navigation
-        if (e.key >= '1' && e.key <= '7') {
+        if (e.key >= '0' && e.key <= '9') {
           e.preventDefault()
           const sectionIndex = parseInt(e.key) - 1
           if (sectionIndex < sections.length) {
@@ -147,6 +153,15 @@ export default function Home() {
           </section>
           <section className="px-4 py-12">
             <PrivacySection />
+          </section>
+          <section className="px-4 py-12">
+            <ProfileSetupSection />
+          </section>
+          <section className="px-4 py-12">
+            <FindingOffersSection />
+          </section>
+          <section className="px-4 py-12">
+            <ContactTradingSection />
           </section>
           <section className="px-4 py-12">
             <DemoSection />
@@ -202,9 +217,12 @@ export default function Home() {
                 {currentSection === 1 && <PitchSection />}
                 {currentSection === 2 && <TrustSection />}
                 {currentSection === 3 && <PrivacySection />}
-                {currentSection === 4 && <DemoSection />}
-                {currentSection === 5 && <VisionSection />}
-                {currentSection === 6 && <GetStartedSection />}
+                {currentSection === 4 && <ProfileSetupSection />}
+                {currentSection === 5 && <FindingOffersSection />}
+                {currentSection === 6 && <ContactTradingSection />}
+                {currentSection === 7 && <DemoSection />}
+                {currentSection === 8 && <VisionSection />}
+                {currentSection === 9 && <GetStartedSection />}
               </div>
             </div>
           </motion.section>

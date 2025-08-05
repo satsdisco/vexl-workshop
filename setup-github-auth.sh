@@ -1,0 +1,50 @@
+#!/bin/bash
+
+echo "GitHub Authentication Setup for Vexl Workshop"
+echo "==========================================="
+echo ""
+echo "This script will help you set up GitHub authentication."
+echo ""
+
+# Check if gh CLI is available
+GH_PATH="/usr/local/Cellar/gh/2.76.2/bin/gh"
+if [ -f "$GH_PATH" ]; then
+    echo "✓ GitHub CLI found"
+    echo ""
+    echo "Option 1: Use GitHub CLI (Recommended)"
+    echo "Run this command and follow the prompts:"
+    echo ""
+    echo "  $GH_PATH auth login"
+    echo ""
+    echo "Choose:"
+    echo "  - GitHub.com"
+    echo "  - HTTPS"
+    echo "  - Paste authentication token"
+    echo "  - Paste your token"
+    echo ""
+fi
+
+echo "Option 2: Use Git Credential Store"
+echo "Run these commands:"
+echo ""
+echo "  git config --global credential.helper store"
+echo "  git push origin main"
+echo ""
+echo "When prompted:"
+echo "  Username: satsdisco"
+echo "  Password: [your-personal-access-token]"
+echo ""
+
+echo "Option 3: Set up a push alias with token"
+echo "Run this command (replace YOUR_TOKEN):"
+echo ""
+echo "  git remote set-url origin https://satsdisco:YOUR_TOKEN@github.com/satsdisco/vexl-workshop.git"
+echo ""
+echo "Then just: git push origin main"
+echo ""
+
+echo "----------------------------------------"
+echo "Need a token? Get one at:"
+echo "https://github.com/settings/tokens/new"
+echo "Required scopes: repo"
+echo "----------------------------------------"

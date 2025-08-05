@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Users, Shield, Eye } from 'lucide-react'
+import PhoneMockup from '@/components/PhoneMockup'
 
 export default function FindingOffersSection() {
   return (
@@ -26,26 +27,22 @@ export default function FindingOffersSection() {
       </motion.p>
 
       {/* Container showcase */}
-      <div className="grid lg:grid-cols-3 gap-6 mb-12">
+      <div className="grid lg:grid-cols-3 gap-8 mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-vexl-gray-900 border border-vexl-gray-800 p-6 rounded-none"
+          className="text-center"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <Users className="w-6 h-6 text-vexl-yellow" />
-            <h3 className="text-xl font-bold">Offers Feed</h3>
-          </div>
+          <PhoneMockup 
+            imageSrc="/screenshots/offers-feed.png"
+            imageAlt="Offers feed screenshot"
+            className="mb-4"
+          />
           
-          <div className="bg-vexl-gray-800 rounded-lg p-4 mb-4">
-            <Image
-              src="/screenshots/offers-feed.png"
-              alt="Offers feed screenshot"
-              width={300}
-              height={400}
-              className="w-full rounded-lg"
-            />
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Users className="w-5 h-5 text-vexl-yellow" />
+            <h3 className="text-lg font-bold">Offers Feed</h3>
           </div>
           
           <p className="text-sm text-vexl-gray-400">
@@ -58,21 +55,17 @@ export default function FindingOffersSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-vexl-gray-900 border border-vexl-gray-800 p-6 rounded-none"
+          className="text-center"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <Shield className="w-6 h-6 text-vexl-yellow" />
-            <h3 className="text-xl font-bold">Mutual Friends</h3>
-          </div>
+          <PhoneMockup 
+            imageSrc="/placeholder-image.png"
+            imageAlt="Mutual friends indicator"
+            className="mb-4"
+          />
           
-          <div className="bg-vexl-gray-800 rounded-lg p-4 mb-4">
-            <Image
-              src="/placeholder-image.png"
-              alt="Mutual friends indicator"
-              width={300}
-              height={400}
-              className="w-full rounded-lg"
-            />
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Shield className="w-5 h-5 text-vexl-yellow" />
+            <h3 className="text-lg font-bold">Mutual Friends</h3>
           </div>
           
           <p className="text-sm text-vexl-gray-400">
@@ -84,21 +77,17 @@ export default function FindingOffersSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-vexl-gray-900 border border-vexl-gray-800 p-6 rounded-none"
+          className="text-center"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <Eye className="w-6 h-6 text-vexl-yellow" />
-            <h3 className="text-xl font-bold">Offer Details</h3>
-          </div>
+          <PhoneMockup 
+            imageSrc="/placeholder-image.png"
+            imageAlt="Offer details view"
+            className="mb-4"
+          />
           
-          <div className="bg-vexl-gray-800 rounded-lg p-4 mb-4">
-            <Image
-              src="/placeholder-image.png"
-              alt="Offer details view"
-              width={300}
-              height={400}
-              className="w-full rounded-lg"
-            />
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Eye className="w-5 h-5 text-vexl-yellow" />
+            <h3 className="text-lg font-bold">Offer Details</h3>
           </div>
           
           <p className="text-sm text-vexl-gray-400">

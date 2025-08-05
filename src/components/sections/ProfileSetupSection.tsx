@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { QrCode, UserCheck, AlertCircle } from 'lucide-react'
+import PhoneMockup from '@/components/PhoneMockup'
 
 export default function ProfileSetupSection() {
   return (
@@ -39,15 +40,11 @@ export default function ProfileSetupSection() {
           </div>
           
           {/* Empty profile screenshot */}
-          <div className="bg-vexl-gray-800 rounded-lg p-4 mb-6">
-            <Image
-              src="/screenshots/profile-empty.png"
-              alt="Empty profile example"
-              width={400}
-              height={600}
-              className="w-full rounded-lg opacity-75"
-            />
-          </div>
+          <PhoneMockup 
+            imageSrc="/screenshots/profile-empty.png"
+            imageAlt="Empty profile example"
+            className="mb-6"
+          />
           
           <ul className="space-y-3 text-vexl-gray-400">
             <li className="flex items-start gap-2">
@@ -77,15 +74,11 @@ export default function ProfileSetupSection() {
           </div>
           
           {/* Complete profile screenshot */}
-          <div className="bg-vexl-gray-800 rounded-lg p-4 mb-6">
-            <Image
-              src="/screenshots/profile-complete.png"
-              alt="Complete profile example"
-              width={400}
-              height={600}
-              className="w-full rounded-lg"
-            />
-          </div>
+          <PhoneMockup 
+            imageSrc="/screenshots/profile-complete.png"
+            imageAlt="Complete profile example"
+            className="mb-6"
+          />
           
           <ul className="space-y-3 text-vexl-gray-400">
             <li className="flex items-start gap-2">

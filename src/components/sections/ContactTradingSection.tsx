@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { MessageCircle, UserCheck, CheckCircle2, Lock } from 'lucide-react'
+import PhoneMockup from '@/components/PhoneMockup'
 
 export default function ContactTradingSection() {
   const [checkedItems, setCheckedItems] = useState<number[]>([])
@@ -51,30 +52,28 @@ export default function ContactTradingSection() {
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-vexl-gray-900 border border-vexl-gray-800 p-6 rounded-none relative"
+          className="relative"
         >
-          <div className="absolute -top-4 -left-4 bg-vexl-yellow text-black w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl">
+          <div className="absolute -top-4 -left-4 bg-vexl-yellow text-black w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl z-10">
             1
           </div>
           
-          <div className="flex items-center gap-3 mb-4 mt-2">
-            <MessageCircle className="w-6 h-6 text-vexl-yellow" />
-            <h3 className="text-xl font-bold">Start Encrypted Chat</h3>
-          </div>
-          
-          <div className="bg-vexl-gray-800 rounded-lg p-4 mb-4">
-            <Image
-              src="/placeholder-image.png"
-              alt="Chat initiation screenshot"
-              width={300}
-              height={400}
-              className="w-full rounded-lg"
+          <div className="text-center">
+            <PhoneMockup 
+              imageSrc="/placeholder-image.png"
+              imageAlt="Chat initiation screenshot"
+              className="mb-4"
             />
-          </div>
-          
-          <div className="flex items-center gap-2 bg-green-900/20 border border-green-900/50 p-3 rounded">
-            <Lock className="w-5 h-5 text-green-500" />
-            <p className="text-sm text-green-400">E2E Encrypted</p>
+            
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <MessageCircle className="w-5 h-5 text-vexl-yellow" />
+              <h3 className="text-lg font-bold">Start Encrypted Chat</h3>
+            </div>
+            
+            <div className="flex items-center justify-center gap-2 bg-green-900/20 border border-green-900/50 py-2 px-4 rounded-full inline-flex">
+              <Lock className="w-4 h-4 text-green-500" />
+              <p className="text-sm text-green-400">E2E Encrypted</p>
+            </div>
           </div>
         </motion.div>
 
@@ -83,30 +82,28 @@ export default function ContactTradingSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-vexl-gray-900 border border-vexl-gray-800 p-6 rounded-none relative"
+          className="relative"
         >
-          <div className="absolute -top-4 -left-4 bg-vexl-yellow text-black w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl">
+          <div className="absolute -top-4 -left-4 bg-vexl-yellow text-black w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl z-10">
             2
           </div>
           
-          <div className="flex items-center gap-3 mb-4 mt-2">
-            <UserCheck className="w-6 h-6 text-vexl-yellow" />
-            <h3 className="text-xl font-bold">Reveal Identity</h3>
-          </div>
-          
-          <div className="bg-vexl-gray-800 rounded-lg p-4 mb-4">
-            <Image
-              src="/placeholder-image.png"
-              alt="Identity reveal process"
-              width={300}
-              height={400}
-              className="w-full rounded-lg"
+          <div className="text-center">
+            <PhoneMockup 
+              imageSrc="/placeholder-image.png"
+              imageAlt="Identity reveal process"
+              className="mb-4"
             />
+            
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <UserCheck className="w-5 h-5 text-vexl-yellow" />
+              <h3 className="text-lg font-bold">Reveal Identity</h3>
+            </div>
+            
+            <p className="text-sm text-vexl-gray-400">
+              Both parties choose when to share real names and photos
+            </p>
           </div>
-          
-          <p className="text-sm text-vexl-gray-400">
-            Both parties choose when to share real names and photos
-          </p>
         </motion.div>
 
         {/* Step 3: Trade Completion */}
@@ -114,30 +111,28 @@ export default function ContactTradingSection() {
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-vexl-gray-900 border border-vexl-gray-800 p-6 rounded-none relative"
+          className="relative"
         >
-          <div className="absolute -top-4 -left-4 bg-vexl-yellow text-black w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl">
+          <div className="absolute -top-4 -left-4 bg-vexl-yellow text-black w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl z-10">
             3
           </div>
           
-          <div className="flex items-center gap-3 mb-4 mt-2">
-            <CheckCircle2 className="w-6 h-6 text-vexl-yellow" />
-            <h3 className="text-xl font-bold">Complete Trade</h3>
-          </div>
-          
-          <div className="bg-vexl-gray-800 rounded-lg p-4 mb-4">
-            <Image
-              src="/placeholder-image.png"
-              alt="Trade completion checklist"
-              width={300}
-              height={400}
-              className="w-full rounded-lg"
+          <div className="text-center">
+            <PhoneMockup 
+              imageSrc="/placeholder-image.png"
+              imageAlt="Trade completion checklist"
+              className="mb-4"
             />
+            
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <CheckCircle2 className="w-5 h-5 text-vexl-yellow" />
+              <h3 className="text-lg font-bold">Complete Trade</h3>
+            </div>
+            
+            <p className="text-sm text-vexl-gray-400">
+              Follow the checklist to ensure smooth P2P exchange
+            </p>
           </div>
-          
-          <p className="text-sm text-vexl-gray-400">
-            Follow the checklist to ensure smooth P2P exchange
-          </p>
         </motion.div>
       </div>
 

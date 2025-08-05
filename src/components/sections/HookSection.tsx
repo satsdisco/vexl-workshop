@@ -36,24 +36,24 @@ export default function HookSection() {
         >
           <motion.div 
             whileHover={{ scale: 1.05, borderColor: "#FFD700" }}
-            className="vexl-card group border-2 border-vexl-gray-800 transition-all cursor-pointer"
+            className="p-8 bg-vexl-gray-900/50 backdrop-blur-sm border-2 border-vexl-gray-800 rounded-none transition-all cursor-pointer text-center"
           >
-            <div className="text-5xl text-vexl-white mb-3" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>500M+</div>
-            <p className="text-sm text-vexl-gray-500">KYC records leaked in crypto exchange hacks</p>
+            <div className="text-3xl lg:text-4xl text-vexl-white mb-4" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>500M+</div>
+            <p className="text-sm lg:text-base text-vexl-gray-500">KYC records leaked in crypto exchange hacks</p>
           </motion.div>
           <motion.div 
             whileHover={{ scale: 1.05, borderColor: "#FFD700" }}
-            className="vexl-card group border-2 border-vexl-gray-800 transition-all cursor-pointer"
+            className="p-8 bg-vexl-gray-900/50 backdrop-blur-sm border-2 border-vexl-gray-800 rounded-none transition-all cursor-pointer text-center"
           >
-            <div className="text-5xl text-vexl-white mb-3" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>100%</div>
-            <p className="text-sm text-vexl-gray-500">of your transactions tracked forever</p>
+            <div className="text-3xl lg:text-4xl text-vexl-white mb-4" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>100%</div>
+            <p className="text-sm lg:text-base text-vexl-gray-500">of your transactions tracked forever</p>
           </motion.div>
           <motion.div 
             whileHover={{ scale: 1.05, borderColor: "#FFD700" }}
-            className="vexl-card group border-2 border-vexl-gray-800 transition-all cursor-pointer"
+            className="p-8 bg-vexl-gray-900/50 backdrop-blur-sm border-2 border-vexl-gray-800 rounded-none transition-all cursor-pointer text-center"
           >
-            <div className="text-5xl text-vexl-white mb-3" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>0</div>
-            <p className="text-sm text-vexl-gray-500">privacy once you're in the system</p>
+            <div className="text-3xl lg:text-4xl text-vexl-white mb-4" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>0</div>
+            <p className="text-sm lg:text-base text-vexl-gray-500">privacy once you're in the system</p>
           </motion.div>
         </motion.div>
       </div>
@@ -62,19 +62,21 @@ export default function HookSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        className="mt-20 inline-flex items-center gap-3"
+        className="mt-20 flex justify-center"
       >
-        <span className="text-2xl" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>There's a better way</span>
-        <motion.svg 
-          animate={{ x: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-          className="w-8 h-8" 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-        </motion.svg>
+        <div className="inline-flex items-center gap-3">
+          <span className="text-2xl md:text-3xl" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>There's a better way</span>
+          <motion.svg 
+            animate={{ x: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+            className="w-8 h-8 md:w-10 md:h-10" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </motion.svg>
+        </div>
       </motion.div>
     </div>
   )

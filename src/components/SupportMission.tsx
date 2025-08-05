@@ -58,8 +58,8 @@ export default function SupportMission() {
         >
           <Bitcoin className="w-12 h-12 text-purple-500 mx-auto mb-4" />
           <h3 className="text-xl font-bold mb-2">Stay Independent</h3>
-          <p className="text-3xl font-bold text-purple-500 mb-2">0%</p>
-          <p className="text-sm text-vexl-gray-400">VC funding = 100% community owned</p>
+          <p className="text-3xl font-bold text-purple-500 mb-2">100%</p>
+          <p className="text-sm text-vexl-gray-400">Community funded, no VC control</p>
         </motion.div>
       </div>
 

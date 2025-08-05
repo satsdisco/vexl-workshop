@@ -1,4 +1,7 @@
 import VexlLogo from '@/components/VexlLogo'
+import { motion } from 'framer-motion'
+import { Heart, Shield, Users } from 'lucide-react'
+import Image from 'next/image'
 
 export default function PitchSection() {
   return (
@@ -65,6 +68,55 @@ export default function PitchSection() {
           <span className="font-bold text-xl">Android</span>
         </div>
       </div>
+
+      {/* Community Funding Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="mt-16 p-8 bg-gradient-to-br from-vexl-yellow/10 via-transparent to-vexl-yellow/5 rounded-2xl border border-vexl-yellow/30"
+      >
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 mb-4">
+            <Heart className="w-8 h-8 text-vexl-yellow" />
+            <h3 className="text-2xl font-bold">100% Community Funded</h3>
+            <Heart className="w-8 h-8 text-vexl-yellow" />
+          </div>
+          <p className="text-xl text-vexl-gray-300 mb-6">
+            No VCs. No Surveillance. No Compromise.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <div className="text-center p-6 bg-vexl-gray-900/50 rounded-lg">
+            <Shield className="w-12 h-12 text-green-500 mx-auto mb-3" />
+            <h4 className="font-bold mb-2">Grants → Community</h4>
+            <p className="text-sm text-vexl-gray-400">
+              Started with HRF & OpenSats grants, now powered by users like you
+            </p>
+          </div>
+          <div className="text-center p-6 bg-vexl-gray-900/50 rounded-lg">
+            <Users className="w-12 h-12 text-blue-500 mx-auto mb-3" />
+            <h4 className="font-bold mb-2">Built by Bitcoiners</h4>
+            <p className="text-sm text-vexl-gray-400">
+              For Bitcoiners who value privacy and freedom above profits
+            </p>
+          </div>
+          <div className="text-center p-6 bg-vexl-gray-900/50 rounded-lg">
+            <Heart className="w-12 h-12 text-red-500 mx-auto mb-3" />
+            <h4 className="font-bold mb-2">Your Support Matters</h4>
+            <p className="text-sm text-vexl-gray-400">
+              Every contribution helps us stay independent and surveillance-free
+            </p>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <p className="text-lg text-vexl-gray-300 italic">
+            "This workshop exists because of donations from people like you"
+          </p>
+        </div>
+      </motion.div>
     </div>
   )
 }

@@ -20,7 +20,7 @@ export default function Header() {
             unoptimized
           />
           <span className="text-sm text-vexl-gray-500 hidden md:block">
-            P2P Bitcoin Without KYC
+            P2P Bitcoin Without KYC • Community Funded
           </span>
         </div>
         

@@ -14,6 +14,7 @@ import Timer from '@/components/Timer'
 import PresenterMode from '@/components/PresenterMode'
 import SectionNavigation from '@/components/SectionNavigation'
 import KeyboardGuide from '@/components/KeyboardGuide'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0)
@@ -30,51 +31,13 @@ export default function Home() {
     { id: 'get-started', name: 'Get Started', duration: 2 },
   ]
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const container = document.querySelector('.overflow-y-auto')
-      if (!container) return
-      
-      const scrollPosition = container.scrollTop + window.innerHeight / 2
-      const sectionElements = sections.map(s => document.getElementById(s.id))
-      
-      sectionElements.forEach((el, index) => {
-        if (el) {
-          const { offsetTop, offsetHeight } = el
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setCurrentSection(index)
-          }
-        }
-      })
-    }
-
-    const container = document.querySelector('.overflow-y-auto')
-    if (container) {
-      container.addEventListener('scroll', handleScroll)
-      handleScroll()
-    }
-    
-    return () => {
-      const container = document.querySelector('.overflow-y-auto')
-      if (container) {
-        container.removeEventListener('scroll', handleScroll)
-      }
-    }
-  }, [sections])
 
   const navigateSection = (direction: 'prev' | 'next') => {
     const newSection = direction === 'next' 
       ? Math.min(currentSection + 1, sections.length - 1)
       : Math.max(currentSection - 1, 0)
     
-    const targetElement = document.getElementById(sections[newSection].id)
-    const container = document.querySelector('.overflow-y-auto')
-    if (targetElement && container) {
-      container.scrollTo({
-        top: targetElement.offsetTop,
-        behavior: 'smooth'
-      })
-    }
+    setCurrentSection(newSection)
   }
 
   useEffect(() => {
@@ -104,13 +67,11 @@ export default function Home() {
             break
           case 'Home':
             e.preventDefault()
-            const firstElement = document.getElementById(sections[0].id)
-            firstElement?.scrollIntoView({ behavior: 'smooth' })
+            setCurrentSection(0)
             break
           case 'End':
             e.preventDefault()
-            const lastElement = document.getElementById(sections[sections.length - 1].id)
-            lastElement?.scrollIntoView({ behavior: 'smooth' })
+            setCurrentSection(sections.length - 1)
             break
           case 'Escape':
             if (isPresenterMode) {
@@ -130,8 +91,7 @@ export default function Home() {
           e.preventDefault()
           const sectionIndex = parseInt(e.key) - 1
           if (sectionIndex < sections.length) {
-            const targetElement = document.getElementById(sections[sectionIndex].id)
-            targetElement?.scrollIntoView({ behavior: 'smooth' })
+            setCurrentSection(sectionIndex)
           }
         }
       }
@@ -139,7 +99,7 @@ export default function Home() {
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [isPresenterMode, isTimerRunning, sections])
+  }, [isPresenterMode, isTimerRunning, sections, currentSection])
 
   return (
     <main className="relative h-screen overflow-hidden">
@@ -163,34 +123,26 @@ export default function Home() {
         />
       )}
 
-      <div className="h-full overflow-y-auto overflow-x-hidden snap-y snap-mandatory">
-        <section id="hook" className="section-container snap-start">
-          <HookSection />
-        </section>
-
-        <section id="pitch" className="section-container snap-start">
-          <PitchSection />
-        </section>
-
-        <section id="trust" className="section-container snap-start">
-          <TrustSection />
-        </section>
-
-        <section id="privacy" className="section-container snap-start">
-          <PrivacySection />
-        </section>
-
-        <section id="demo" className="section-container snap-start">
-          <DemoSection />
-        </section>
-
-        <section id="vision" className="section-container snap-start">
-          <VisionSection />
-        </section>
-
-        <section id="get-started" className="section-container snap-start">
-          <GetStartedSection />
-        </section>
+      {/* Slide Container */}
+      <div className="h-full overflow-hidden relative">
+        <AnimatePresence mode="wait">
+          <motion.section
+            key={currentSection}
+            initial={{ opacity: 0, x: 300 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -300 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            className="section-container absolute inset-0"
+          >
+            {currentSection === 0 && <HookSection />}
+            {currentSection === 1 && <PitchSection />}
+            {currentSection === 2 && <TrustSection />}
+            {currentSection === 3 && <PrivacySection />}
+            {currentSection === 4 && <DemoSection />}
+            {currentSection === 5 && <VisionSection />}
+            {currentSection === 6 && <GetStartedSection />}
+          </motion.section>
+        </AnimatePresence>
       </div>
 
       <SectionNavigation 

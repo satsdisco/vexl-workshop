@@ -1,70 +1,130 @@
+'use client'
+
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import CircularEconomyViz from '@/components/CircularEconomyViz'
+import LocalNetworkMap from '@/components/LocalNetworkMap'
+import ImpactCalculator from '@/components/ImpactCalculator'
+import EconomyChallenge from '@/components/EconomyChallenge'
+
 export default function VisionSection() {
+  const [activeTab, setActiveTab] = useState('vision')
+
+  const tabs = [
+    { id: 'vision', label: 'Money Flow', icon: '💸' },
+    { id: 'network', label: 'Local Network', icon: '🗺️' },
+    { id: 'impact', label: 'Your Impact', icon: '📊' },
+    { id: 'challenge', label: 'Take Action', icon: '🎯' },
+  ]
+
   return (
-    <div className="max-w-4xl mx-auto">
-      <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
-        The Circular Economy Vision
-      </h2>
+    <div className="max-w-7xl mx-auto">
+      <motion.h2 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        className="text-4xl md:text-6xl font-black text-center mb-4"
+      >
+        Build Your Local <span className="text-vexl-yellow">Bitcoin Economy</span>
+      </motion.h2>
+      
+      <motion.p 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="text-xl text-center text-vexl-gray-400 mb-12 max-w-3xl mx-auto"
+      >
+        Stop letting banks extract wealth from your community. Keep money circulating locally with P2P bitcoin.
+      </motion.p>
 
-      <div className="space-y-12">
-        <div className="text-center">
-          <p className="text-2xl text-white/80 mb-8">
-            Imagine a world where bitcoin is <span className="text-vexl-orange font-semibold">money</span>,
-            <br />
-            not just an investment.
-          </p>
-        </div>
+      {/* Tab Navigation */}
+      <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {tabs.map((tab) => (
+          <motion.button
+            key={tab.id}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setActiveTab(tab.id)}
+            className={`px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transition-all ${
+              activeTab === tab.id
+                ? 'bg-vexl-yellow text-black'
+                : 'bg-vexl-gray-900 hover:bg-vexl-gray-800'
+            }`}
+          >
+            <span className="text-2xl">{tab.icon}</span>
+            <span>{tab.label}</span>
+          </motion.button>
+        ))}
+      </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <div className="w-24 h-24 mx-auto mb-4 bg-vexl-orange/20 rounded-full flex items-center justify-center">
-              <svg className="w-12 h-12 text-vexl-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
+      {/* Tab Content */}
+      <motion.div
+        key={activeTab}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.3 }}
+      >
+        {activeTab === 'vision' && (
+          <div className="space-y-8">
+            <CircularEconomyViz />
+            
+            <div className="mt-12 p-8 bg-gradient-to-r from-vexl-yellow/10 to-transparent border-l-4 border-vexl-yellow">
+              <h3 className="text-2xl font-bold mb-4">The Choice is Clear</h3>
+              <p className="text-vexl-gray-300 text-lg">
+                Every dollar you spend at a bank-dependent business eventually leaves your community. 
+                Every sat you spend P2P stays local, multiplying its impact 7x as it changes hands 
+                between neighbors, local shops, and service providers.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Local First</h3>
-            <p className="text-white/60">Buy coffee, pay rent, get paid - all in bitcoin, all in your community</p>
           </div>
+        )}
 
-          <div className="text-center">
-            <div className="w-24 h-24 mx-auto mb-4 bg-vexl-orange/20 rounded-full flex items-center justify-center">
-              <svg className="w-12 h-12 text-vexl-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
+        {activeTab === 'network' && (
+          <div className="space-y-8">
+            <LocalNetworkMap />
+            
+            <div className="grid md:grid-cols-3 gap-6 mt-8">
+              <div className="p-6 bg-vexl-gray-900/50 rounded-lg text-center">
+                <div className="text-4xl mb-3">🤝</div>
+                <h4 className="font-bold mb-2">Direct P2P</h4>
+                <p className="text-sm text-vexl-gray-400">No intermediaries extracting value</p>
+              </div>
+              <div className="p-6 bg-vexl-gray-900/50 rounded-lg text-center">
+                <div className="text-4xl mb-3">🔄</div>
+                <h4 className="font-bold mb-2">Circular Flow</h4>
+                <p className="text-sm text-vexl-gray-400">Money stays in your neighborhood</p>
+              </div>
+              <div className="p-6 bg-vexl-gray-900/50 rounded-lg text-center">
+                <div className="text-4xl mb-3">📈</div>
+                <h4 className="font-bold mb-2">Compound Growth</h4>
+                <p className="text-sm text-vexl-gray-400">Each connection strengthens all others</p>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">No Permission</h3>
-            <p className="text-white/60">No banks, no governments, no surveillance. Just people trading value</p>
           </div>
+        )}
 
-          <div className="text-center">
-            <div className="w-24 h-24 mx-auto mb-4 bg-vexl-orange/20 rounded-full flex items-center justify-center">
-              <svg className="w-12 h-12 text-vexl-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Network Effect</h3>
-            <p className="text-white/60">Every new user makes the network stronger. Every trade builds the future</p>
+        {activeTab === 'impact' && (
+          <div className="space-y-8">
+            <ImpactCalculator />
           </div>
-        </div>
+        )}
 
-        <div className="bg-vexl-gray/30 p-8 rounded-2xl">
-          <h3 className="text-2xl font-semibold mb-4">This is bigger than an app</h3>
-          <p className="text-lg text-white/80 mb-4">
-            Vexl is infrastructure for the bitcoin circular economy. When you use Vexl, you're not just trading - 
-            you're building a parallel economy that can't be stopped, censored, or surveilled.
-          </p>
-          <p className="text-lg text-white/80">
-            Every local community that adopts Vexl becomes a node in a global network of free trade. 
-            <span className="text-vexl-orange font-semibold"> Be part of the revolution.</span>
-          </p>
-        </div>
+        {activeTab === 'challenge' && (
+          <div className="space-y-8">
+            <EconomyChallenge />
+          </div>
+        )}
+      </motion.div>
 
-        <div className="text-center">
-          <p className="text-3xl font-bold">
-            The best time to start was yesterday.
-            <br />
-            <span className="text-vexl-orange">The second best time is now.</span>
-          </p>
-        </div>
+      {/* Presenter Notes */}
+      <div className="mt-16 p-6 bg-vexl-gray-900/30 rounded-lg border border-vexl-gray-800">
+        <h4 className="text-sm font-bold text-vexl-gray-500 mb-2">PRESENTER NOTE:</h4>
+        <p className="text-sm text-vexl-gray-400">
+          {activeTab === 'vision' && "Click 'Start Money Flow' to show the difference. Let it run for 10 seconds to build impact."}
+          {activeTab === 'network' && "Invite audience members to suggest local businesses. Add them live to show network effects."}
+          {activeTab === 'impact' && "Ask someone their monthly spending. Adjust sliders together to show their personal impact."}
+          {activeTab === 'challenge' && "Challenge the audience: 'Who can connect 5 businesses this week?' Create friendly competition."}
+        </p>
       </div>
     </div>
   )

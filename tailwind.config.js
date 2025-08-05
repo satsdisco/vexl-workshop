@@ -22,6 +22,7 @@ module.exports = {
           900: '#000000',
         },
         'vexl-yellow': '#FFD700',
+        'vexl-orange': '#FFA500',
       },
       fontFamily: {
         'satoshi': ['TT Satoshi', 'system-ui', 'sans-serif'],

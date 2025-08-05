@@ -124,7 +124,7 @@ export default function Home() {
       )}
 
       {/* Slide Container */}
-      <div className="min-h-screen overflow-hidden relative">
+      <div className="min-h-screen relative">
         <AnimatePresence mode="wait">
           <motion.section
             key={currentSection}
@@ -132,7 +132,7 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -300 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="section-container absolute inset-0 w-full"
+            className="section-container"
           >
             {currentSection === 0 && <HookSection />}
             {currentSection === 1 && <PitchSection />}

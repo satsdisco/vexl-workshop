@@ -37,21 +37,26 @@
 
 @layer components {
   .section-container {
-    @apply min-h-screen w-full flex flex-col px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-16 md:px-12 lg:px-16;
+    @apply min-h-screen w-full flex flex-col px-4 py-8 sm:px-6 sm:py-12 md:px-12 lg:px-16;
     background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
     overflow-y: auto;
     overflow-x: hidden;
     /* Allow scrolling within sections when needed */
     overscroll-behavior: contain;
-    /* Remove centering to allow natural flow on small screens */
+    /* Always start content from top to prevent cutoff */
     justify-content: flex-start;
     align-items: center;
+    /* Add safe area padding for mobile devices */
+    padding-top: max(2rem, env(safe-area-inset-top, 2rem));
+    padding-bottom: max(2rem, env(safe-area-inset-bottom, 2rem));
   }
   
-  /* On larger screens, center content vertically */
-  @media (min-height: 768px) {
+  /* On larger screens with enough height, center content vertically */
+  @media (min-height: 900px) {
     .section-container {
       @apply justify-center;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
     }
   }
   

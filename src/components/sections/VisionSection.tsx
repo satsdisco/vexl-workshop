@@ -7,11 +7,13 @@ import TrustComparison from '@/components/TrustComparison'
 import SkillSharingCarousel from '@/components/SkillSharingCarousel'
 import YourSkillsForm from '@/components/YourSkillsForm'
 import NetworkEffectCalculator from '@/components/NetworkEffectCalculator'
+import EnhancedWebOfTrust from '@/components/EnhancedWebOfTrust'
 
 export default function VisionSection() {
-  const [activeTab, setActiveTab] = useState('talent')
+  const [activeTab, setActiveTab] = useState('web')
 
   const tabs = [
+    { id: 'web', label: 'Web of Trust', icon: '🕸️' },
     { id: 'talent', label: 'Talent Network', icon: '🌐' },
     { id: 'trust', label: 'Trust = Business', icon: '🤝' },
     { id: 'trades', label: 'Real Trades', icon: '🔄' },
@@ -67,6 +69,12 @@ export default function VisionSection() {
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
       >
+        {activeTab === 'web' && (
+          <div className="space-y-8">
+            <EnhancedWebOfTrust />
+          </div>
+        )}
+
         {activeTab === 'talent' && (
           <div className="space-y-8">
             <NeighborhoodTalentMap />

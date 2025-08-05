@@ -11,9 +11,12 @@ export default function PitchSection() {
           <VexlLogo className="w-48 h-auto mx-auto mb-8" />
         </div>
         <h2 className="text-5xl md:text-7xl mb-6" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>
-          P2P Bitcoin trading.<br />
-          <span className="text-vexl-gray-500">No KYC. Ever.</span>
+          Your social network.<br />
+          <span className="text-vexl-yellow">With a Bitcoin layer.</span>
         </h2>
+        <p className="text-xl text-vexl-gray-400 max-w-2xl mx-auto">
+          Vexl isn't a marketplace - it's the strongest network that already exists: your phone contacts
+        </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-x-12 gap-y-8 mb-16">
@@ -22,19 +25,19 @@ export default function PitchSection() {
             <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
               <span className="text-vexl-yellow">→</span> What?
             </h3>
-            <p className="text-vexl-gray-400 pl-8">A mobile app that connects bitcoin buyers and sellers directly. Trade cash for sats with people in your community.</p>
+            <p className="text-vexl-gray-400 pl-8">Your existing social network, enhanced with bitcoin trading. Every contact is a potential trade partner.</p>
           </div>
           <div className="group">
             <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
               <span className="text-vexl-yellow">→</span> Why?
             </h3>
-            <p className="text-vexl-gray-400 pl-8">Because bitcoin was meant to be peer-to-peer. Not peer-to-surveillance-state-to-peer.</p>
+            <p className="text-vexl-gray-400 pl-8">Bitcoin as Satoshi intended - peer-to-peer, no middlemen. Real relationships, not fake ratings.</p>
           </div>
           <div className="group">
             <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
               <span className="text-vexl-yellow">→</span> Who?
             </h3>
-            <p className="text-vexl-gray-400 pl-8">Built by bitcoiners who got tired of the KYC bullshit. For anyone who values privacy and freedom.</p>
+            <p className="text-vexl-gray-400 pl-8">Open source, community-funded. Built for humans who value trust over algorithms.</p>
           </div>
         </div>
         
@@ -43,7 +46,7 @@ export default function PitchSection() {
             <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
               <span className="text-vexl-yellow">→</span> When?
             </h3>
-            <p className="text-vexl-gray-400 pl-8">Available now. Free forever. No token, no ICO, no bullshit.</p>
+            <p className="text-vexl-gray-400 pl-8">Available now. Free forever. No KYC because we're not a business extracting your data.</p>
           </div>
           <div className="group">
             <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
@@ -55,7 +58,7 @@ export default function PitchSection() {
             <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
               <span className="text-vexl-yellow">→</span> How?
             </h3>
-            <p className="text-vexl-gray-400 pl-8">No email. No ID. Just install and start trading. Let me show you...</p>
+            <p className="text-vexl-gray-400 pl-8">Import contacts. Find traders. Build trust. Every trade strengthens real relationships.</p>
           </div>
         </div>
       </div>

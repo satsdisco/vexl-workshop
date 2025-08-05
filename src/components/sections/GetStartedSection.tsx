@@ -133,7 +133,7 @@ export default function GetStartedSection() {
             transition={{ delay: 0.4 }}
             className="mb-16"
           >
-            <h3 className="text-3xl mb-8" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>Your First Trade in 4 Steps</h3>
+            <h3 className="text-3xl mb-8" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>Bitcoin as Satoshi <span className="text-vexl-yellow">Intended</span></h3>
             <div className="grid md:grid-cols-4 gap-6 text-left">
               {[
                 { icon: "📱", title: "Install", desc: "No signup required" },
@@ -153,6 +153,51 @@ export default function GetStartedSection() {
                   <p className="text-sm text-vexl-gray-400">{step.desc}</p>
                 </motion.div>
               ))}
+            </div>
+          </motion.div>
+
+          {/* Open Source Mission */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="mb-16 bg-vexl-gray-900 p-8 border border-vexl-gray-800"
+          >
+            <h3 className="text-2xl mb-6" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
+              This is Bitcoin, Not <span className="text-red-400">Fintech</span>
+            </h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h4 className="font-bold mb-3 text-vexl-yellow">What We Are:</h4>
+                <ul className="space-y-2 text-vexl-gray-300">
+                  <li>• Peer-to-peer, no middlemen</li>
+                  <li>• Open source, verifiable</li>
+                  <li>• Community-funded</li>
+                  <li>• Privacy-first by design</li>
+                  <li>• No tracking, no surveillance</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-bold mb-3 text-red-400">What We're Not:</h4>
+                <ul className="space-y-2 text-vexl-gray-300">
+                  <li>• Not a business extracting data</li>
+                  <li>• Not tracking your transactions</li>
+                  <li>• Not building reputation scores</li>
+                  <li>• Not selling to VCs</li>
+                  <li>• Not another fintech app</li>
+                </ul>
+              </div>
+            </div>
+            <div className="mt-6 text-center">
+              <a 
+                href="https://github.com/vexl-it/vexl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-vexl-yellow hover:underline"
+              >
+                <span>Verify Everything on GitHub</span>
+                <span>→</span>
+              </a>
             </div>
           </motion.div>
 

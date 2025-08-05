@@ -1,24 +1,36 @@
 import { motion } from 'framer-motion'
+import TrustVsRatings from '@/components/TrustVsRatings'
 
 export default function HookSection() {
   return (
-    <div className="max-w-5xl mx-auto text-center relative z-10">
+    <div className="max-w-6xl mx-auto relative z-10">
       <motion.h1 
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="text-6xl md:text-8xl mb-8 leading-tight"
+        className="text-6xl md:text-8xl mb-8 leading-tight text-center"
         style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
       >
-        <span className="text-vexl-yellow">KYC</span> is killing<br />Bitcoin
+        <span className="text-vexl-yellow">Ratings</span> are killing<br />peer-to-peer
       </motion.h1>
       
-      <div className="space-y-8 text-xl md:text-2xl text-vexl-gray-400 max-w-3xl mx-auto">
-        <p className="font-medium">
-          Every time you upload your ID to buy bitcoin,
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="text-center mb-12"
+      >
+        <p className="text-xl md:text-2xl text-vexl-gray-400 max-w-3xl mx-auto">
+          Every platform that tracks your reputation is building a surveillance database.
           <br />
-          you're building the surveillance state.
+          <span className="text-vexl-white font-semibold">There's a better way.</span>
         </p>
+      </motion.div>
+
+      {/* Trust vs Ratings Interactive Demo */}
+      <TrustVsRatings />
+
+      <div className="mt-16 space-y-8 text-xl md:text-2xl text-vexl-gray-400 max-w-3xl mx-auto text-center">
         
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -30,22 +42,22 @@ export default function HookSection() {
             whileHover={{ scale: 1.05, borderColor: "#FFD700" }}
             className="vexl-card group border-2 border-vexl-gray-800 transition-all cursor-pointer"
           >
-            <div className="text-5xl text-vexl-white mb-3" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>500M+</div>
-            <p className="text-sm text-vexl-gray-500">KYC records leaked in crypto exchange hacks</p>
+            <div className="text-5xl text-vexl-white mb-3" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>$50</div>
+            <p className="text-sm text-vexl-gray-500">buys 100 fake five-star reviews</p>
           </motion.div>
           <motion.div 
             whileHover={{ scale: 1.05, borderColor: "#FFD700" }}
             className="vexl-card group border-2 border-vexl-gray-800 transition-all cursor-pointer"
           >
             <div className="text-5xl text-vexl-white mb-3" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>100%</div>
-            <p className="text-sm text-vexl-gray-500">of your transactions tracked forever</p>
+            <p className="text-sm text-vexl-gray-500">of rating systems require surveillance</p>
           </motion.div>
           <motion.div 
             whileHover={{ scale: 1.05, borderColor: "#FFD700" }}
             className="vexl-card group border-2 border-vexl-gray-800 transition-all cursor-pointer"
           >
             <div className="text-5xl text-vexl-white mb-3" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>0</div>
-            <p className="text-sm text-vexl-gray-500">privacy once you're in the system</p>
+            <p className="text-sm text-vexl-gray-500">real trust in algorithmic ratings</p>
           </motion.div>
         </motion.div>
       </div>
@@ -56,7 +68,7 @@ export default function HookSection() {
         transition={{ duration: 0.8, delay: 0.6 }}
         className="mt-20 inline-flex items-center gap-3"
       >
-        <span className="text-2xl" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>There's a better way</span>
+        <span className="text-2xl" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>Vexl: Trust Without Surveillance</span>
         <motion.svg 
           animate={{ x: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}

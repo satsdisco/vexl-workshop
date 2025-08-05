@@ -93,10 +93,11 @@ export default function DemoSection() {
         >
           <div className="relative mx-auto max-w-sm">
             <motion.div
+              initial={{ boxShadow: "0 0 0 0 rgba(255, 215, 0, 0)" }}
               animate={{ 
                 boxShadow: ["0 0 0 0 rgba(255, 215, 0, 0)", "0 0 0 20px rgba(255, 215, 0, 0.1)", "0 0 0 0 rgba(255, 215, 0, 0)"]
               }}
-              transition={{ duration: 2, repeat: Infinity }}
+              transition={{ duration: 2, repeat: 0 }}
               className="absolute inset-0 rounded-[3rem]"
             />
             <div className="relative bg-black rounded-[3rem] p-3 shadow-2xl border border-vexl-gray-800">

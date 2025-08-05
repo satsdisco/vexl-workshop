@@ -2,17 +2,21 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import CircularEconomyViz from '@/components/CircularEconomyViz'
-import LocalNetworkMap from '@/components/LocalNetworkMap'
-import ImpactCalculator from '@/components/ImpactCalculator'
+import NeighborhoodTalentMap from '@/components/NeighborhoodTalentMap'
+import TrustComparison from '@/components/TrustComparison'
+import SkillSharingCarousel from '@/components/SkillSharingCarousel'
+import YourSkillsForm from '@/components/YourSkillsForm'
+import NetworkEffectCalculator from '@/components/NetworkEffectCalculator'
 
 export default function VisionSection() {
-  const [activeTab, setActiveTab] = useState('vision')
+  const [activeTab, setActiveTab] = useState('talent')
 
   const tabs = [
-    { id: 'vision', label: 'Money Flow', icon: '💸' },
-    { id: 'network', label: 'Local Network', icon: '🗺️' },
-    { id: 'impact', label: 'Your Impact', icon: '📊' },
+    { id: 'talent', label: 'Talent Network', icon: '🌐' },
+    { id: 'trust', label: 'Trust = Business', icon: '🤝' },
+    { id: 'trades', label: 'Real Trades', icon: '🔄' },
+    { id: 'skills', label: 'Your Skills', icon: '💪' },
+    { id: 'network', label: 'Network Power', icon: '📈' },
   ]
 
   return (
@@ -22,7 +26,7 @@ export default function VisionSection() {
         whileInView={{ opacity: 1, y: 0 }}
         className="text-4xl md:text-6xl font-black text-center mb-4"
       >
-        Build Your Local <span className="text-vexl-yellow">Bitcoin Economy</span>
+        Your Network is Your <span className="text-vexl-yellow">Net Worth</span>
       </motion.h2>
       
       <motion.p 
@@ -31,25 +35,25 @@ export default function VisionSection() {
         transition={{ delay: 0.1 }}
         className="text-xl text-center text-vexl-gray-400 mb-12 max-w-3xl mx-auto"
       >
-        Stop letting banks extract wealth from your community. Keep money circulating locally with P2P bitcoin.
+        Stop selling your time to one employer. Start serving your community with all your skills.
       </motion.p>
 
       {/* Tab Navigation */}
-      <div className="flex flex-wrap justify-center gap-4 mb-12">
+      <div className="flex flex-wrap justify-center gap-3 mb-12">
         {tabs.map((tab) => (
           <motion.button
             key={tab.id}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transition-all ${
+            className={`px-5 py-3 rounded-lg font-semibold flex items-center gap-2 transition-all ${
               activeTab === tab.id
                 ? 'bg-vexl-yellow text-black'
                 : 'bg-vexl-gray-900 hover:bg-vexl-gray-800'
             }`}
           >
-            <span className="text-2xl">{tab.icon}</span>
-            <span>{tab.label}</span>
+            <span className="text-xl">{tab.icon}</span>
+            <span className="hidden sm:inline">{tab.label}</span>
           </motion.button>
         ))}
       </div>
@@ -62,62 +66,86 @@ export default function VisionSection() {
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
       >
-        {activeTab === 'vision' && (
+        {activeTab === 'talent' && (
           <div className="space-y-8">
-            <CircularEconomyViz />
+            <NeighborhoodTalentMap />
             
             <div className="mt-12 p-8 bg-gradient-to-r from-vexl-yellow/10 to-transparent border-l-4 border-vexl-yellow">
-              <h3 className="text-2xl font-bold mb-4">The Choice is Clear</h3>
+              <h3 className="text-2xl font-bold mb-4">This is Your Real Economy</h3>
               <p className="text-vexl-gray-300 text-lg">
-                Every dollar you spend at a bank-dependent business eventually leaves your community. 
-                Every sat you spend P2P stays local, multiplying its impact 7x as it changes hands 
-                between neighbors, local shops, and service providers.
+                Every person in your network has skills. Every skill has value. Vexl connects these dots 
+                through trust relationships, not corporate platforms. Your plumber knows an electrician. 
+                Your barber knows a web developer. This is how economies actually work.
               </p>
             </div>
           </div>
         )}
 
-        {activeTab === 'network' && (
+        {activeTab === 'trust' && (
           <div className="space-y-8">
-            <LocalNetworkMap />
+            <TrustComparison />
+          </div>
+        )}
+
+        {activeTab === 'trades' && (
+          <div className="space-y-8">
+            <SkillSharingCarousel />
             
-            <div className="grid md:grid-cols-3 gap-6 mt-8">
-              <div className="p-6 bg-vexl-gray-900/50 rounded-lg text-center">
-                <div className="text-4xl mb-3">🤝</div>
-                <h4 className="font-bold mb-2">Direct P2P</h4>
-                <p className="text-sm text-vexl-gray-400">No intermediaries extracting value</p>
-              </div>
-              <div className="p-6 bg-vexl-gray-900/50 rounded-lg text-center">
-                <div className="text-4xl mb-3">🔄</div>
-                <h4 className="font-bold mb-2">Circular Flow</h4>
-                <p className="text-sm text-vexl-gray-400">Money stays in your neighborhood</p>
-              </div>
-              <div className="p-6 bg-vexl-gray-900/50 rounded-lg text-center">
-                <div className="text-4xl mb-3">📈</div>
-                <h4 className="font-bold mb-2">Compound Growth</h4>
-                <p className="text-sm text-vexl-gray-400">Each connection strengthens all others</p>
-              </div>
+            <div className="mt-8 text-center p-6 bg-vexl-gray-900/50 rounded-lg">
+              <h4 className="text-xl font-bold mb-3">Notice the Pattern?</h4>
+              <p className="text-vexl-gray-400">
+                No corporations. No platforms taking 20% fees. Just neighbors helping neighbors, 
+                settling up with bitcoin. This is the future of work.
+              </p>
             </div>
           </div>
         )}
 
-        {activeTab === 'impact' && (
+        {activeTab === 'skills' && (
           <div className="space-y-8">
-            <ImpactCalculator />
+            <YourSkillsForm />
           </div>
         )}
 
+        {activeTab === 'network' && (
+          <div className="space-y-8">
+            <NetworkEffectCalculator />
+          </div>
+        )}
       </motion.div>
 
       {/* Presenter Notes */}
       <div className="mt-16 p-6 bg-vexl-gray-900/30 rounded-lg border border-vexl-gray-800">
         <h4 className="text-sm font-bold text-vexl-gray-500 mb-2">PRESENTER NOTE:</h4>
         <p className="text-sm text-vexl-gray-400">
-          {activeTab === 'vision' && "Click 'Start Money Flow' to show the difference. Let it run for 10 seconds to build impact."}
-          {activeTab === 'network' && "Invite audience members to suggest local businesses. Add them live to show network effects."}
-          {activeTab === 'impact' && "Ask someone their monthly spending. Adjust sliders together to show their personal impact."}
+          {activeTab === 'talent' && "Click on people to show their skills and connections. Ask: 'Who here has a skill they could monetize?'"}
+          {activeTab === 'trust' && "Let audience choose. Most will pick the trusted option. Point out this is exactly what Vexl enables at scale."}
+          {activeTab === 'trades' && "Let carousel run. These are real examples of P2P economy. Ask: 'What could you trade with your neighbors?'"}
+          {activeTab === 'skills' && "Get someone to volunteer their skills. Show them their potential customer base. Make it personal."}
+          {activeTab === 'network' && "Adjust sliders together. Show how even introverts have massive economic networks through friends of friends."}
         </p>
       </div>
+
+      {/* Workshop Call to Action */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="mt-16 text-center p-8 bg-gradient-to-br from-vexl-yellow/20 via-transparent to-vexl-yellow/10 rounded-2xl border border-vexl-yellow/30"
+      >
+        <h3 className="text-3xl font-bold mb-4">Ready to Join the P2P Economy?</h3>
+        <p className="text-xl text-vexl-gray-300 mb-6 max-w-2xl mx-auto">
+          Your skills + Your network + Bitcoin = Economic freedom
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <button className="px-8 py-4 bg-vexl-yellow text-black font-bold rounded-lg hover:bg-yellow-400 transition-all hover:scale-105">
+            "I'm posting my first skill offer today!"
+          </button>
+          <button className="px-8 py-4 bg-vexl-gray-800 font-bold rounded-lg hover:bg-vexl-gray-700 transition-all">
+            "Show me local Vexl groups"
+          </button>
+        </div>
+      </motion.div>
     </div>
   )
 }

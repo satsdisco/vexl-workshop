@@ -117,32 +117,32 @@ export default function Home() {
   // Render mobile version with normal scrolling
   if (isMobile) {
     return (
-      <main className="relative">
+      <main className="min-h-screen">
         <Header />
         
         {/* Mobile: All sections in one scrollable page */}
-        <div className="space-y-8 pb-20">
-          <div className="min-h-screen flex items-center justify-center px-4 py-12">
+        <div className="pt-16">
+          <section className="min-h-screen flex items-center justify-center px-4 py-12">
             <HookSection />
-          </div>
-          <div className="min-h-screen px-4 py-12">
+          </section>
+          <section className="px-4 py-12">
             <PitchSection />
-          </div>
-          <div className="min-h-screen px-4 py-12">
+          </section>
+          <section className="px-4 py-12">
             <TrustSection />
-          </div>
-          <div className="min-h-screen px-4 py-12">
+          </section>
+          <section className="px-4 py-12">
             <PrivacySection />
-          </div>
-          <div className="min-h-screen px-4 py-12">
+          </section>
+          <section className="px-4 py-12">
             <DemoSection />
-          </div>
-          <div className="min-h-screen px-4 py-12">
+          </section>
+          <section className="px-4 py-12">
             <VisionSection />
-          </div>
-          <div className="min-h-screen px-4 py-12">
+          </section>
+          <section className="px-4 py-12 pb-20">
             <GetStartedSection />
-          </div>
+          </section>
         </div>
       </main>
     )

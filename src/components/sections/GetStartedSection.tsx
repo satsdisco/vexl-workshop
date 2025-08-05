@@ -197,6 +197,14 @@ export default function GetStartedSection() {
               >
                 Visit Website
               </a>
+              <a
+                href="https://vexl.it/community"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="vexl-button"
+              >
+                Join Our Community
+              </a>
               <button className="vexl-button">
                 Become Ambassador
               </button>

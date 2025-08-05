@@ -60,7 +60,7 @@ export default function ContactTradingSection() {
           
           <div className="text-center">
             <PhoneMockup 
-              imageSrc="/placeholder-image.png"
+              imageSrc="/screenshots/chat-start.png"
               imageAlt="Chat initiation screenshot"
               className="mb-4"
             />
@@ -90,7 +90,7 @@ export default function ContactTradingSection() {
           
           <div className="text-center">
             <PhoneMockup 
-              imageSrc="/placeholder-image.png"
+              imageSrc="/screenshots/identity-reveal.png"
               imageAlt="Identity reveal process"
               className="mb-4"
             />
@@ -119,7 +119,7 @@ export default function ContactTradingSection() {
           
           <div className="text-center">
             <PhoneMockup 
-              imageSrc="/placeholder-image.png"
+              imageSrc="/screenshots/trade-checklist.png"
               imageAlt="Trade completion checklist"
               className="mb-4"
             />

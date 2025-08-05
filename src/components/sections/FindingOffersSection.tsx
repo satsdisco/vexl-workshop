@@ -58,7 +58,7 @@ export default function FindingOffersSection() {
           className="text-center"
         >
           <PhoneMockup 
-            imageSrc="/placeholder-image.png"
+            imageSrc="/screenshots/mutual-friends.png"
             imageAlt="Mutual friends indicator"
             className="mb-4"
           />
@@ -80,7 +80,7 @@ export default function FindingOffersSection() {
           className="text-center"
         >
           <PhoneMockup 
-            imageSrc="/placeholder-image.png"
+            imageSrc="/screenshots/offer-details.png"
             imageAlt="Offer details view"
             className="mb-4"
           />

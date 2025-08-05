@@ -19,8 +19,8 @@ export default function Header() {
             priority
             unoptimized
           />
-          <span className="text-sm text-vexl-gray-500 hidden md:block">
-            P2P Bitcoin Without KYC • Community Funded
+          <span className="text-sm text-vexl-gray-500 hidden md:block font-mono" style={{ fontFamily: 'Space Mono, monospace' }}>
+            P2P Bitcoin Without KYC <span className="text-vexl-gray-700">•</span> Community Funded
           </span>
         </div>
         

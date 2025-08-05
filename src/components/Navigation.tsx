@@ -19,9 +19,9 @@ export default function Navigation({ sections, currentSection }: NavigationProps
             aria-label={`Navigate to ${section.name}`}
           >
             <div className={`nav-dot ${currentSection === index ? 'active' : ''}`} />
-            <span className={`text-sm font-medium transition-opacity duration-300 ${
+            <span className={`text-sm transition-opacity duration-300 ${
               currentSection === index ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-            }`}>
+            }`} style={{ fontFamily: 'TT Satoshi', fontWeight: 500 }}>
               {section.name}
             </span>
           </button>

@@ -66,7 +66,8 @@ export default function GetStartedSection() {
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-black mb-16"
+            className="text-5xl md:text-7xl mb-16"
+            style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
           >
             Ready to go <span className="text-vexl-yellow">No-KYC</span>?
           </motion.h2>
@@ -132,7 +133,7 @@ export default function GetStartedSection() {
             transition={{ delay: 0.4 }}
             className="mb-16"
           >
-            <h3 className="text-3xl font-bold mb-8">Your First Trade in 4 Steps</h3>
+            <h3 className="text-3xl mb-8" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>Your First Trade in 4 Steps</h3>
             <div className="grid md:grid-cols-4 gap-6 text-left">
               {[
                 { icon: "📱", title: "Install", desc: "No signup required" },
@@ -161,7 +162,7 @@ export default function GetStartedSection() {
             transition={{ delay: 0.8 }}
             className="space-y-8"
           >
-            <h3 className="text-3xl font-bold">Join the Revolution</h3>
+            <h3 className="text-3xl" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>Join the Revolution</h3>
             <div className="flex flex-wrap gap-4 justify-center">
               <a
                 href="https://t.me/vexl"
@@ -224,6 +225,17 @@ export default function GetStartedSection() {
             <p className="text-3xl font-bold">
               Let's build the future of <span className="text-vexl-yellow">Bitcoin</span> together.
             </p>
+            
+            {/* ASCII art signature */}
+            <div className="mt-8 font-mono text-xs text-vexl-gray-800" style={{ fontFamily: 'Space Mono, monospace' }}>
+              <pre className="inline-block">
+{`
+╔═══════════════════════════════╗
+║  Be your own bank. Use Vexl.  ║
+╚═══════════════════════════════╝
+`}
+              </pre>
+            </div>
           </motion.div>
         </div>
       ) : (

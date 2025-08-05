@@ -64,7 +64,7 @@ export default function WebOfTrustDemo() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h3 className="text-3xl font-bold text-center mb-8">
+      <h3 className="text-3xl text-center mb-8" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
         Build Your <span className="text-vexl-yellow">Web of Trust</span>
       </h3>
       
@@ -152,7 +152,7 @@ export default function WebOfTrustDemo() {
         </div>
         
         <div className="space-y-4">
-          <h4 className="text-xl font-bold mb-4">Add Your Contacts:</h4>
+          <h4 className="text-xl mb-4" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>Add Your Contacts:</h4>
           <div className="grid grid-cols-2 gap-3">
             {CONTACT_TYPES.map(type => (
               <motion.button
@@ -172,7 +172,7 @@ export default function WebOfTrustDemo() {
           </div>
           
           <div className="mt-6 p-4 bg-gradient-to-r from-vexl-yellow/20 to-transparent border-l-4 border-vexl-yellow">
-            <h5 className="font-bold mb-2">Network Growth:</h5>
+            <h5 className="mb-2" style={{ fontFamily: 'TT Satoshi', fontWeight: 600 }}>Network Growth:</h5>
             <p className="text-sm text-vexl-gray-400">
               Each contact connects you to their network. Your pizza guy knows other bitcoiners. 
               Your dog walker trades with their clients. The network effect is real!
@@ -194,7 +194,7 @@ export default function WebOfTrustDemo() {
         transition={{ delay: 0.5 }}
         className="mt-8 p-6 bg-red-900/20 border border-red-500/30"
       >
-        <h5 className="font-bold text-red-400 mb-2">⚠️ Selective Import = Network Isolation</h5>
+        <h5 className="text-red-400 mb-2" style={{ fontFamily: 'TT Satoshi', fontWeight: 600 }}>⚠️ Selective Import = Network Isolation</h5>
         <p className="text-sm">
           Only importing "close friends" kills your trading opportunities. 
           The magic happens when you include ALL your bitcoin-friendly contacts - 

@@ -24,7 +24,8 @@ export default function VisionSection() {
       <motion.h2 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        className="text-4xl md:text-6xl font-black text-center mb-4"
+        className="text-4xl md:text-6xl text-center mb-4"
+        style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
       >
         Your Network is Your <span className="text-vexl-yellow">Net Worth</span>
       </motion.h2>

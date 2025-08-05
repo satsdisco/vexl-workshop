@@ -6,19 +6,39 @@ import Image from 'next/image'
 import WebOfTrustDemo from '@/components/WebOfTrustDemo'
 import HashExplanationDemo from '@/components/HashExplanationDemo'
 import ContactImportDemo from '@/components/ContactImportDemo'
+import WhitepaperBackground from '@/components/WhitepaperBackground'
+import AsciiDivider from '@/components/AsciiDivider'
 
 export default function PrivacySection() {
   const [activeDemo, setActiveDemo] = useState<'web' | 'hash' | 'import'>('web')
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto relative">
+      {/* Whitepaper background - only visible in hash demo */}
+      {activeDemo === 'hash' && <WhitepaperBackground />}
+      
       <motion.h2 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        className="text-5xl md:text-7xl font-black text-center mb-16"
+        className="text-5xl md:text-7xl text-center mb-8 relative z-10"
+        style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
       >
         Privacy <span className="text-vexl-yellow">First</span>
       </motion.h2>
+      
+      {/* Cypherpunk subtitle */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="text-center mb-12 font-mono text-sm text-vexl-gray-500 relative z-10"
+        style={{ fontFamily: 'Space Mono, monospace' }}
+      >
+        &gt;&gt;&gt; peer-to-peer electronic cash without financial institutions &lt;&lt;&lt;
+      </motion.p>
+
+      {/* ASCII divider */}
+      <AsciiDivider message="CRYPTOGRAPHIC PRIVACY" className="mb-8 text-center" />
 
       <div className="mb-12">
         <div className="flex flex-wrap gap-4 justify-center mb-8">
@@ -81,7 +101,7 @@ export default function PrivacySection() {
           className="space-y-8"
         >
           <div className="vexl-card group hover:border-vexl-yellow transition-all">
-            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+            <h3 className="text-2xl mb-4 flex items-center gap-3" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>
               <span className="text-vexl-yellow text-3xl">🔒</span>
               Phone Number Never Leaves Your Device
             </h3>
@@ -91,7 +111,7 @@ export default function PrivacySection() {
           </div>
 
           <div className="vexl-card group hover:border-vexl-yellow transition-all">
-            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+            <h3 className="text-2xl mb-4 flex items-center gap-3" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>
               <span className="text-vexl-yellow text-3xl">🛡️</span>
               Microservices Can't Communicate
             </h3>
@@ -101,7 +121,7 @@ export default function PrivacySection() {
           </div>
 
           <div className="vexl-card group hover:border-vexl-yellow transition-all">
-            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+            <h3 className="text-2xl mb-4 flex items-center gap-3" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>
               <span className="text-vexl-yellow text-3xl">🌐</span>
               Open Source & Nonprofit
             </h3>
@@ -165,6 +185,25 @@ export default function PrivacySection() {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* ASCII art footer */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="mt-12 text-center font-mono text-xs text-vexl-gray-700"
+        style={{ fontFamily: 'Space Mono, monospace' }}
+      >
+        <pre className="inline-block">
+{`
+┌─────────────────────────────────────┐
+│  "Not your keys, not your coins"   │
+│  "Not your node, not your rules"   │
+│  "Not your privacy, not your life" │
+└─────────────────────────────────────┘
+`}
+        </pre>
+      </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}

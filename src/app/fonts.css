@@ -1,0 +1,82 @@
+/* Monument Extended Font Family */
+@font-face {
+  font-family: 'Monument Extended';
+  src: url('/fonts/Monument Extended/MonumentExtended-Black.otf') format('opentype'),
+       url('/fonts/Monument Extended/MonumentExtended-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Monument Extended';
+  src: url('/fonts/Monument Extended/MonumentExtended-Bold.otf') format('opentype'),
+       url('/fonts/Monument Extended/MonumentExtended-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Monument Extended';
+  src: url('/fonts/Monument Extended/MonumentExtended-Regular.otf') format('opentype'),
+       url('/fonts/Monument Extended/MonumentExtended-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Monument Extended';
+  src: url('/fonts/Monument Extended/MonumentExtended-Light.otf') format('opentype'),
+       url('/fonts/Monument Extended/MonumentExtended-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Monument Extended';
+  src: url('/fonts/Monument Extended/MonumentExtended-Thin.otf') format('opentype'),
+       url('/fonts/Monument Extended/MonumentExtended-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* TT Satoshi Font Family */
+@font-face {
+  font-family: 'TT Satoshi';
+  src: url('/fonts/TTSatoshi/TTSatoshi-Bold.otf') format('opentype'),
+       url('/fonts/TTSatoshi/TT Satoshi Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Satoshi';
+  src: url('/fonts/TTSatoshi/TTSatoshi-DemiBold.otf') format('opentype'),
+       url('/fonts/TTSatoshi/TT Satoshi DemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Satoshi';
+  src: url('/fonts/TTSatoshi/TTSatoshi-Medium.otf') format('opentype'),
+       url('/fonts/TTSatoshi/TT Satoshi Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Satoshi';
+  src: url('/fonts/TTSatoshi/TTSatoshi-Regular.otf') format('opentype'),
+       url('/fonts/TTSatoshi/TT Satoshi Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

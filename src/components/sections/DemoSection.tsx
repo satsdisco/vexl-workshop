@@ -39,7 +39,8 @@ export default function DemoSection() {
       <motion.h2 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        className="text-5xl md:text-7xl font-black text-center mb-16"
+        className="text-5xl md:text-7xl text-center mb-16"
+        style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
       >
         Zero to <span className="text-vexl-yellow">Sats</span> in 4 Steps
       </motion.h2>
@@ -63,7 +64,7 @@ export default function DemoSection() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <h3 className="text-xl font-bold mb-2">{step.title}</h3>
+                <h3 className="text-xl mb-2" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>{step.title}</h3>
                 <p className={`mb-3 ${currentStep === index ? 'text-black/80' : 'text-vexl-gray-400'}`}>
                   {step.description}
                 </p>

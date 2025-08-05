@@ -12,6 +12,7 @@ import GetStartedSection from '@/components/sections/GetStartedSection'
 import Timer from '@/components/Timer'
 import PresenterMode from '@/components/PresenterMode'
 import SectionNavigation from '@/components/SectionNavigation'
+import KeyboardGuide from '@/components/KeyboardGuide'
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0)
@@ -48,22 +49,6 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [sections])
 
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'p' && e.metaKey) {
-        e.preventDefault()
-        setIsPresenterMode(!isPresenterMode)
-      }
-      if (e.key === ' ' && e.shiftKey) {
-        e.preventDefault()
-        setIsTimerRunning(!isTimerRunning)
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyPress)
-    return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [isPresenterMode, isTimerRunning])
-
   const navigateSection = (direction: 'prev' | 'next') => {
     const newSection = direction === 'next' 
       ? Math.min(currentSection + 1, sections.length - 1)
@@ -74,6 +59,70 @@ export default function Home() {
       targetElement.scrollIntoView({ behavior: 'smooth' })
     }
   }
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // Presenter mode toggle
+      if (e.key === 'p' && e.metaKey) {
+        e.preventDefault()
+        setIsPresenterMode(!isPresenterMode)
+      }
+      
+      // Timer control
+      if (e.key === ' ' && e.shiftKey) {
+        e.preventDefault()
+        setIsTimerRunning(!isTimerRunning)
+      }
+      
+      // Navigation controls
+      if (!e.metaKey && !e.shiftKey && !e.altKey) {
+        switch(e.key) {
+          case 'ArrowLeft':
+            e.preventDefault()
+            navigateSection('prev')
+            break
+          case 'ArrowRight':
+            e.preventDefault()
+            navigateSection('next')
+            break
+          case 'Home':
+            e.preventDefault()
+            const firstElement = document.getElementById(sections[0].id)
+            firstElement?.scrollIntoView({ behavior: 'smooth' })
+            break
+          case 'End':
+            e.preventDefault()
+            const lastElement = document.getElementById(sections[sections.length - 1].id)
+            lastElement?.scrollIntoView({ behavior: 'smooth' })
+            break
+          case 'Escape':
+            if (isPresenterMode) {
+              setIsPresenterMode(false)
+            }
+            break
+          case ' ':
+            if (isTimerRunning) {
+              e.preventDefault()
+              setIsTimerRunning(false)
+            }
+            break
+        }
+        
+        // Number keys for direct section navigation
+        if (e.key >= '1' && e.key <= '6') {
+          e.preventDefault()
+          const sectionIndex = parseInt(e.key) - 1
+          if (sectionIndex < sections.length) {
+            const targetElement = document.getElementById(sections[sectionIndex].id)
+            targetElement?.scrollIntoView({ behavior: 'smooth' })
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [isPresenterMode, isTimerRunning, sections])
 
   return (
     <main className="relative">
@@ -126,6 +175,8 @@ export default function Home() {
         totalSections={sections.length}
         onNavigate={navigateSection}
       />
+      
+      <KeyboardGuide />
     </main>
   )
 }

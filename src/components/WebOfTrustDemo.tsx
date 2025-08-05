@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 
 interface Contact {
   id: string
@@ -13,12 +14,12 @@ interface Contact {
 }
 
 const CONTACT_TYPES = [
-  { id: 'satoshi', name: 'Satoshi Nakamoto', icon: '₿' },
-  { id: 'grandma', name: 'Grandma', icon: '👵' },
-  { id: 'friend', name: 'Best Friend', icon: '🤝' },
-  { id: 'gym', name: 'Gym Buddy', icon: '💪' },
-  { id: 'barber', name: 'Your Barber', icon: '💈' },
-  { id: 'neighbor', name: 'Cool Neighbor', icon: '🏠' },
+  { id: 'satoshi', name: 'Satoshi Nakamoto', icon: '₿', avatar: '/avatars/avatar2.svg' },
+  { id: 'grandma', name: 'Grandma', icon: '👵', avatar: '/avatars/avatar3.svg' },
+  { id: 'friend', name: 'Best Friend', icon: '🤝', avatar: '/avatars/avatar4.svg' },
+  { id: 'gym', name: 'Gym Buddy', icon: '💪', avatar: '/avatars/avatar5.svg' },
+  { id: 'barber', name: 'Your Barber', icon: '💈', avatar: '/avatars/avatar6.svg' },
+  { id: 'neighbor', name: 'Cool Neighbor', icon: '🏠', avatar: '/avatars/avatar7.svg' },
 ]
 
 export default function WebOfTrustDemo() {
@@ -109,17 +110,27 @@ export default function WebOfTrustDemo() {
                 style={{ left: `${contact.x}%`, top: `${contact.y}%` }}
               >
                 <div className={`
-                  rounded-full flex items-center justify-center font-bold
+                  rounded-full flex items-center justify-center font-bold overflow-hidden
                   ${contact.level === 0 
-                    ? 'w-20 h-20 bg-vexl-yellow text-black text-2xl' 
+                    ? 'w-20 h-20 ring-4 ring-vexl-yellow shadow-lg shadow-vexl-yellow/50' 
                     : contact.level === 1
-                    ? 'w-16 h-16 bg-vexl-white text-black text-xl'
-                    : 'w-12 h-12 bg-vexl-gray-600 text-white text-sm'
+                    ? 'w-16 h-16 ring-2 ring-vexl-white shadow-md'
+                    : 'w-12 h-12 ring-1 ring-vexl-gray-600'
                   }
                 `}>
-                  {contact.id === 'you' ? '👤' : 
-                   CONTACT_TYPES.find(t => t.id === contact.id)?.icon || 
-                   contact.name.charAt(0)}
+                  {contact.id === 'you' ? (
+                    <div className="w-full h-full bg-vexl-yellow flex items-center justify-center">
+                      <span className="text-2xl">👤</span>
+                    </div>
+                  ) : (
+                    <Image
+                      src={CONTACT_TYPES.find(t => t.id === contact.id)?.avatar || '/avatars/default-avatar.png'}
+                      alt={contact.name}
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
                 </div>
                 {contact.level < 2 && (
                   <span className="absolute top-full mt-1 left-1/2 -translate-x-1/2 text-xs whitespace-nowrap">

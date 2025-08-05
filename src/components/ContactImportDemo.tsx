@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 
 interface ContactCategory {
   id: string
@@ -10,6 +11,7 @@ interface ContactCategory {
   contacts: number
   networkMultiplier: number
   icon: string
+  avatars: string[]
 }
 
 const CONTACT_CATEGORIES: ContactCategory[] = [
@@ -19,7 +21,8 @@ const CONTACT_CATEGORIES: ContactCategory[] = [
     description: 'Your inner circle',
     contacts: 5,
     networkMultiplier: 2,
-    icon: '👫'
+    icon: '👫',
+    avatars: ['/avatars/avatar2.svg', '/avatars/avatar3.svg', '/avatars/avatar4.svg']
   },
   {
     id: 'acquaintances',
@@ -27,7 +30,8 @@ const CONTACT_CATEGORIES: ContactCategory[] = [
     description: 'People you know casually',
     contacts: 20,
     networkMultiplier: 3,
-    icon: '👋'
+    icon: '👋',
+    avatars: ['/avatars/avatar5.svg', '/avatars/avatar6.svg', '/avatars/avatar7.svg']
   },
   {
     id: 'services',
@@ -35,7 +39,8 @@ const CONTACT_CATEGORIES: ContactCategory[] = [
     description: 'Barber, mechanic, cleaner',
     contacts: 15,
     networkMultiplier: 5,
-    icon: '🔧'
+    icon: '🔧',
+    avatars: ['/avatars/avatar8.svg', '/avatars/avatar9.svg', '/avatars/avatar10.svg']
   },
   {
     id: 'businesses',
@@ -43,7 +48,8 @@ const CONTACT_CATEGORIES: ContactCategory[] = [
     description: 'Shops, restaurants, cafes',
     contacts: 25,
     networkMultiplier: 4,
-    icon: '🏪'
+    icon: '🏪',
+    avatars: ['/avatars/avatar2.svg', '/avatars/avatar5.svg', '/avatars/avatar8.svg']
   },
   {
     id: 'community',
@@ -51,7 +57,8 @@ const CONTACT_CATEGORIES: ContactCategory[] = [
     description: 'Gym, clubs, meetups',
     contacts: 30,
     networkMultiplier: 6,
-    icon: '🏋️'
+    icon: '🏋️',
+    avatars: ['/avatars/avatar3.svg', '/avatars/avatar6.svg', '/avatars/avatar9.svg']
   }
 ]
 
@@ -105,6 +112,18 @@ export default function ContactImportDemo() {
                     <div className="text-xs text-vexl-gray-500 mt-1">
                       ~{category.contacts} contacts → {category.contacts * category.networkMultiplier} network reach
                     </div>
+                  </div>
+                  <div className="flex -space-x-2">
+                    {category.avatars?.slice(0, 3).map((avatar, i) => (
+                      <Image
+                        key={i}
+                        src={avatar}
+                        alt=""
+                        width={32}
+                        height={32}
+                        className="w-8 h-8 rounded-full border-2 border-vexl-gray-900"
+                      />
+                    ))}
                   </div>
                 </label>
               </motion.div>

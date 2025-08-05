@@ -1,6 +1,8 @@
+import { motion } from 'framer-motion'
+
 export default function HookSection() {
   return (
-    <div className="max-w-5xl mx-auto text-center">
+    <div className="max-w-5xl mx-auto text-center relative z-10">
       <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight">
         <span className="text-vexl-yellow">KYC</span> is killing<br />Bitcoin
       </h1>
@@ -25,7 +27,7 @@ export default function HookSection() {
             <div className="text-5xl font-black text-vexl-white mb-3">0</div>
             <p className="text-sm text-vexl-gray-500">privacy once you're in the system</p>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       <div className="mt-20 inline-flex items-center gap-3">

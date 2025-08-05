@@ -20,9 +20,9 @@ export default function KeyboardGuide() {
   }, [isOpen])
   
   const shortcuts = [
-    { key: '← →', description: 'Navigate sections' },
+    { key: '← →', description: 'Navigate slides' },
     { key: 'Home/End', description: 'Jump to first/last' },
-    { key: '1-6', description: 'Jump to section' },
+    { key: '1-7', description: 'Jump to slide' },
     { key: 'Cmd+P', description: 'Presenter mode' },
     { key: 'Shift+Space', description: 'Timer control' },
     { key: 'Esc', description: 'Exit mode/overlay' },

@@ -1,6 +1,7 @@
 'use client'
 
-import { ChevronUp, ChevronDown } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 interface SectionNavigationProps {
   currentSection: number
@@ -13,47 +14,69 @@ export default function SectionNavigation({ currentSection, totalSections, onNav
   const isLastSection = currentSection === totalSections - 1
 
   return (
-    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 flex items-center gap-4">
-      <div className="absolute inset-0 bg-gradient-to-r from-vexl-yellow/10 via-transparent to-vexl-yellow/10 blur-3xl -z-10" />
-      <button
+    <>
+      {/* Left Navigation Button */}
+      <motion.button
         onClick={() => onNavigate('prev')}
         disabled={isFirstSection}
         className={`
-          group p-4 rounded-full bg-vexl-black/90 backdrop-blur-md border border-vexl-gray-800
-          transition-all duration-300 hover:scale-110 relative overflow-hidden
+          fixed left-8 top-1/2 -translate-y-1/2 p-4 md:p-6
+          bg-vexl-black/90 backdrop-blur-md border-2 border-vexl-gray-800
+          rounded-xl transition-all duration-300 z-50
           ${isFirstSection 
-            ? 'opacity-30 cursor-not-allowed' 
-            : 'hover:bg-vexl-gray-900 hover:border-vexl-yellow hover:shadow-lg hover:shadow-vexl-yellow/20'
+            ? 'opacity-0 pointer-events-none' 
+            : 'hover:bg-vexl-gray-900 hover:border-vexl-yellow hover:shadow-lg hover:shadow-vexl-yellow/20 hover:scale-105'
           }
         `}
-        aria-label="Previous section"
+        whileHover={{ x: -4 }}
+        whileTap={{ scale: 0.95 }}
+        aria-label="Previous slide"
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-vexl-yellow/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        <ChevronUp className="w-6 h-6 text-white relative z-10" />
-      </button>
+        <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-white" strokeWidth={3} />
+      </motion.button>
 
-      <div className="px-6 py-3 bg-vexl-black/90 backdrop-blur-md rounded-full border border-vexl-gray-800 shadow-inner">
-        <span className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-vexl-gray-400 to-vexl-gray-200">
-          {currentSection + 1} / {totalSections}
-        </span>
-      </div>
-
-      <button
+      {/* Right Navigation Button */}
+      <motion.button
         onClick={() => onNavigate('next')}
         disabled={isLastSection}
         className={`
-          group p-4 rounded-full bg-vexl-black/90 backdrop-blur-md border border-vexl-gray-800
-          transition-all duration-300 hover:scale-110 relative overflow-hidden
+          fixed right-8 top-1/2 -translate-y-1/2 p-4 md:p-6
+          bg-vexl-black/90 backdrop-blur-md border-2 border-vexl-gray-800
+          rounded-xl transition-all duration-300 z-50
           ${isLastSection 
-            ? 'opacity-30 cursor-not-allowed' 
-            : 'hover:bg-vexl-gray-900 hover:border-vexl-yellow hover:shadow-lg hover:shadow-vexl-yellow/20'
+            ? 'opacity-0 pointer-events-none' 
+            : 'hover:bg-vexl-gray-900 hover:border-vexl-yellow hover:shadow-lg hover:shadow-vexl-yellow/20 hover:scale-105'
           }
         `}
-        aria-label="Next section"
+        whileHover={{ x: 4 }}
+        whileTap={{ scale: 0.95 }}
+        aria-label="Next slide"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-vexl-yellow/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        <ChevronDown className="w-6 h-6 text-white relative z-10" />
-      </button>
-    </div>
+        <ChevronRight className="w-8 h-8 md:w-10 md:h-10 text-white" strokeWidth={3} />
+      </motion.button>
+
+      {/* Bottom Progress Bar and Counter */}
+      <div className="fixed bottom-0 left-0 right-0 z-50">
+        {/* Progress Bar */}
+        <div className="h-1 bg-vexl-gray-800">
+          <motion.div
+            className="h-full bg-vexl-yellow"
+            initial={{ width: '0%' }}
+            animate={{ width: `${((currentSection + 1) / totalSections) * 100}%` }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          />
+        </div>
+        
+        {/* Slide Counter */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+          <div className="px-6 py-3 bg-vexl-black/90 backdrop-blur-md rounded-full border border-vexl-gray-800">
+            <span className="text-lg font-medium">
+              <span className="text-vexl-yellow">{currentSection + 1}</span>
+              <span className="text-vexl-gray-500"> / {totalSections}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </>
   )
 }

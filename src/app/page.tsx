@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Navigation from '@/components/Navigation'
 import HookSection from '@/components/sections/HookSection'
 import PitchSection from '@/components/sections/PitchSection'
+import TrustSection from '@/components/sections/TrustSection'
 import PrivacySection from '@/components/sections/PrivacySection'
 import DemoSection from '@/components/sections/DemoSection'
 import VisionSection from '@/components/sections/VisionSection'
@@ -22,9 +23,10 @@ export default function Home() {
   const sections = [
     { id: 'hook', name: 'Hook', duration: 2 },
     { id: 'pitch', name: 'Vexl Pitch', duration: 3 },
+    { id: 'trust', name: 'Trust > Ratings', duration: 5 },
     { id: 'privacy', name: 'Privacy First', duration: 5 },
     { id: 'demo', name: 'Live Demo', duration: 10 },
-    { id: 'vision', name: 'Circular Economy', duration: 8 },
+    { id: 'vision', name: 'Your Network', duration: 8 },
     { id: 'get-started', name: 'Get Started', duration: 2 },
   ]
 
@@ -109,7 +111,7 @@ export default function Home() {
         }
         
         // Number keys for direct section navigation
-        if (e.key >= '1' && e.key <= '6') {
+        if (e.key >= '1' && e.key <= '7') {
           e.preventDefault()
           const sectionIndex = parseInt(e.key) - 1
           if (sectionIndex < sections.length) {
@@ -152,6 +154,10 @@ export default function Home() {
 
       <section id="pitch" className="section-container">
         <PitchSection />
+      </section>
+
+      <section id="trust" className="section-container">
+        <TrustSection />
       </section>
 
       <section id="privacy" className="section-container">

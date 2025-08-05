@@ -116,18 +116,6 @@ export default function VisionSection() {
         )}
       </motion.div>
 
-      {/* Presenter Notes */}
-      <div className="mt-16 p-6 bg-vexl-gray-900/30 rounded-lg border border-vexl-gray-800">
-        <h4 className="text-sm font-bold text-vexl-gray-500 mb-2">PRESENTER NOTE:</h4>
-        <p className="text-sm text-vexl-gray-400">
-          {activeTab === 'web' && "Add contacts to show network growth. Emphasize: non-Vexl users are bridges, not barriers. Your mom connects you to bitcoiners."}
-          {activeTab === 'talent' && "Click on people to show their skills and connections. Ask: 'Who here has a skill they could monetize?'"}
-          {activeTab === 'trust' && "Let audience choose. Most will pick the trusted option. Point out this is exactly what Vexl enables at scale."}
-          {activeTab === 'trades' && "Let carousel run. These are real examples of P2P economy. Ask: 'What could you trade with your neighbors?'"}
-          {activeTab === 'network' && "Adjust sliders together. Show how even introverts have massive economic networks through friends of friends."}
-        </p>
-      </div>
-
       {/* Workshop Call to Action */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}

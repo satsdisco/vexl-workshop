@@ -40,7 +40,7 @@ export default function FindingOffersSection() {
           
           <div className="bg-vexl-gray-800 rounded-lg p-4 mb-4">
             <Image
-              src="/placeholder-image.png"
+              src="/screenshots/offers-feed.png"
               alt="Offers feed screenshot"
               width={300}
               height={400}

@@ -38,14 +38,14 @@ export default function ProfileSetupSection() {
             <h3 className="text-2xl font-bold">Empty Profile = Lost Opportunities</h3>
           </div>
           
-          {/* Placeholder for screenshot */}
+          {/* Empty profile screenshot */}
           <div className="bg-vexl-gray-800 rounded-lg p-4 mb-6">
             <Image
-              src="/placeholder-image.png"
+              src="/screenshots/profile-empty.png"
               alt="Empty profile example"
               width={400}
               height={600}
-              className="w-full rounded-lg opacity-50"
+              className="w-full rounded-lg opacity-75"
             />
           </div>
           
@@ -76,10 +76,10 @@ export default function ProfileSetupSection() {
             <h3 className="text-2xl font-bold">Complete Profile = Trust Builder</h3>
           </div>
           
-          {/* Placeholder for screenshot */}
+          {/* Complete profile screenshot */}
           <div className="bg-vexl-gray-800 rounded-lg p-4 mb-6">
             <Image
-              src="/placeholder-image.png"
+              src="/screenshots/profile-complete.png"
               alt="Complete profile example"
               width={400}
               height={600}

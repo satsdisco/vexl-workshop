@@ -52,7 +52,7 @@ export default function PitchSection() {
             <h3 className="text-2xl font-bold mb-3 flex items-center gap-2">
               <span className="text-vexl-yellow">→</span> How?
             </h3>
-            <p className="text-vexl-gray-400 pl-8">No email. No phone number. No ID. Just install and start trading. Let me show you...</p>
+            <p className="text-vexl-gray-400 pl-8">No email. No ID. Just install and start trading. Let me show you...</p>
           </div>
         </div>
       </div>

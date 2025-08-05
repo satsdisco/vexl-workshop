@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import CircularEconomyViz from '@/components/CircularEconomyViz'
 import LocalNetworkMap from '@/components/LocalNetworkMap'
 import ImpactCalculator from '@/components/ImpactCalculator'
-import EconomyChallenge from '@/components/EconomyChallenge'
 
 export default function VisionSection() {
   const [activeTab, setActiveTab] = useState('vision')
@@ -14,7 +13,6 @@ export default function VisionSection() {
     { id: 'vision', label: 'Money Flow', icon: '💸' },
     { id: 'network', label: 'Local Network', icon: '🗺️' },
     { id: 'impact', label: 'Your Impact', icon: '📊' },
-    { id: 'challenge', label: 'Take Action', icon: '🎯' },
   ]
 
   return (
@@ -109,11 +107,6 @@ export default function VisionSection() {
           </div>
         )}
 
-        {activeTab === 'challenge' && (
-          <div className="space-y-8">
-            <EconomyChallenge />
-          </div>
-        )}
       </motion.div>
 
       {/* Presenter Notes */}
@@ -123,7 +116,6 @@ export default function VisionSection() {
           {activeTab === 'vision' && "Click 'Start Money Flow' to show the difference. Let it run for 10 seconds to build impact."}
           {activeTab === 'network' && "Invite audience members to suggest local businesses. Add them live to show network effects."}
           {activeTab === 'impact' && "Ask someone their monthly spending. Adjust sliders together to show their personal impact."}
-          {activeTab === 'challenge' && "Challenge the audience: 'Who can connect 5 businesses this week?' Create friendly competition."}
         </p>
       </div>
     </div>

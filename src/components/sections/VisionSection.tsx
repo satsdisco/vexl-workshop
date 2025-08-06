@@ -16,7 +16,6 @@ export default function VisionSection() {
     { id: 'talent', label: 'Talent Network', icon: '🌐' },
     { id: 'trust', label: 'Trust = Business', icon: '🤝' },
     { id: 'trades', label: 'Real Trades', icon: '🔄' },
-    { id: 'network', label: 'Network Power', icon: '📈' },
   ]
 
   return (
@@ -109,11 +108,6 @@ export default function VisionSection() {
           </div>
         )}
 
-        {activeTab === 'network' && (
-          <div className="space-y-8">
-            <NetworkEffectCalculator />
-          </div>
-        )}
       </motion.div>
 
       {/* Workshop Call to Action */}

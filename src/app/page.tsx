@@ -10,6 +10,7 @@ import PrivacySection from '@/components/sections/PrivacySection'
 import ProfileSetupSection from '@/components/sections/ProfileSetupSection'
 import FindingOffersSection from '@/components/sections/FindingOffersSection'
 import ContactTradingSection from '@/components/sections/ContactTradingSection'
+import ClubsSection from '@/components/sections/ClubsSection'
 import DemoSection from '@/components/sections/DemoSection'
 import VisionSection from '@/components/sections/VisionSection'
 import GetStartedSection from '@/components/sections/GetStartedSection'
@@ -33,6 +34,7 @@ export default function Home() {
     { id: 'profile-setup', name: 'Profile Setup', duration: 2 },
     { id: 'finding-offers', name: 'Finding Offers', duration: 2 },
     { id: 'contact-trading', name: 'Contact & Trading', duration: 3 },
+    { id: 'clubs', name: 'Vexl Clubs', duration: 3 },
     { id: 'demo', name: 'Live Demo', duration: 10 },
     { id: 'vision', name: 'Your Network', duration: 8 },
     { id: 'get-started', name: 'Get Started', duration: 2 },
@@ -164,6 +166,9 @@ export default function Home() {
             <ContactTradingSection />
           </section>
           <section className="px-4 py-12">
+            <ClubsSection />
+          </section>
+          <section className="px-4 py-12">
             <DemoSection />
           </section>
           <section className="px-4 py-12">
@@ -220,9 +225,10 @@ export default function Home() {
                 {currentSection === 4 && <ProfileSetupSection />}
                 {currentSection === 5 && <FindingOffersSection />}
                 {currentSection === 6 && <ContactTradingSection />}
-                {currentSection === 7 && <DemoSection />}
-                {currentSection === 8 && <VisionSection />}
-                {currentSection === 9 && <GetStartedSection />}
+                {currentSection === 7 && <ClubsSection />}
+                {currentSection === 8 && <DemoSection />}
+                {currentSection === 9 && <VisionSection />}
+                {currentSection === 10 && <GetStartedSection />}
               </div>
             </div>
           </motion.section>

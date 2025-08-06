@@ -1,23 +1,20 @@
 import { motion } from 'framer-motion'
-import { useContentManager } from '@/hooks/useContentManager'
+import { useCMSContent } from '@/hooks/useCMSContent'
 
 export default function HookSection() {
-  const { content } = useContentManager({
-    sectionId: 'hookSection',
-    fallbackContent: {
-      title: 'KYC is killing Bitcoin',
-      subtitle: 'Your network is your net worth. Start with the people you already trust.',
-      stats: [
-        { value: '93%', label: 'of Bitcoin trades tracked' },
-        { value: '1984', label: 'surveillance state' },
-        { value: 'P2P', label: 'is the solution' }
-      ]
-    },
-    mergeStrategy: 'merge'
-  })
+  const { content, loading } = useCMSContent('hookSection')
+  
+  // Use CMS content or fallback
+  const title = content.title || 'KYC is killing Bitcoin'
+  const subtitle = content.subtitle || 'Your network is your net worth. Start with the people you already trust.'
+  const stats = content.stats || [
+    { value: '93%', label: 'of Bitcoin trades tracked' },
+    { value: '1984', label: 'surveillance state' },
+    { value: 'P2P', label: 'is the solution' }
+  ]
   
   // Parse title to maintain the KYC highlighting
-  const titleParts = content.title?.split(' ') || ['KYC', 'is', 'killing', 'Bitcoin']
+  const titleParts = title.split(' ')
   const firstWord = titleParts[0]
   const restOfTitle = titleParts.slice(1).join(' ')
   
@@ -44,7 +41,7 @@ export default function HookSection() {
         className="text-center mb-12"
       >
         <p className="text-xl md:text-2xl text-vexl-gray-400 max-w-3xl mx-auto">
-          {content.subtitle}
+          {subtitle}
         </p>
       </motion.div>
 
@@ -56,7 +53,7 @@ export default function HookSection() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16"
         >
-          {content.stats?.map((stat, index) => {
+          {stats.map((stat, index) => {
             const bgColors = ['bg-vexl-yellow text-vexl-black', 'bg-vexl-black', 'bg-vexl-green-dark text-vexl-white']
             const borderColors = ['border-vexl-black', 'border-vexl-yellow', 'border-vexl-black']
             const accentColors = ['bg-vexl-pink', 'bg-vexl-green-light', 'bg-vexl-yellow']

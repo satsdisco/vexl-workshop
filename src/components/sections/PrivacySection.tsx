@@ -8,9 +8,20 @@ import HashExplanationDemo from '@/components/HashExplanationDemo'
 import ContactImportDemo from '@/components/ContactImportDemo'
 import WhitepaperBackground from '@/components/WhitepaperBackground'
 import DataComparisonChart from '@/components/DataComparisonChart'
+import { useCMSContent } from '@/hooks/useCMSContent'
 
 export default function PrivacySection() {
   const [activeDemo, setActiveDemo] = useState<'comparison' | 'hash' | 'import'>('comparison')
+  const { content } = useCMSContent('privacySection')
+  
+  // Use CMS content with fallbacks
+  const title = content.title || 'Privacy First'
+  const subtitle = content.subtitle || 'We refuse to track your trades because we refuse to become a honeypot'
+  const features = content.features || [
+    { icon: '🔒', title: 'No Surveillance By Design', description: 'Rating systems require tracking every transaction. We chose trust over surveillance.' },
+    { icon: '🛡️', title: 'Your History Stays Yours', description: 'Your trading history belongs to you, not our database.' },
+    { icon: '🌐', title: 'Verify Everything', description: 'Open source means you can verify we\'re not tracking you.' }
+  ]
 
   return (
     <div className="max-w-7xl mx-auto relative">
@@ -23,7 +34,15 @@ export default function PrivacySection() {
         className="text-5xl md:text-7xl text-center mb-8 relative z-10"
         style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
       >
-        Privacy <span className="text-vexl-yellow">First</span>
+        {title.split(' ').map((word, i) => (
+          <span key={i}>
+            {i === title.split(' ').length - 1 ? (
+              <span className="text-vexl-yellow">{word}</span>
+            ) : (
+              <>{word} </>
+            )}
+          </span>
+        ))}
       </motion.h2>
       
       {/* Philosophy Statement */}
@@ -33,7 +52,7 @@ export default function PrivacySection() {
         transition={{ delay: 0.3 }}
         className="text-center mb-12 text-lg text-vexl-gray-400 relative z-10"
       >
-        We refuse to track your trades because we refuse to become a honeypot
+        {subtitle}
       </motion.p>
 
 
@@ -97,35 +116,17 @@ export default function PrivacySection() {
           transition={{ delay: 0.2 }}
           className="space-y-8"
         >
-          <div className="vexl-card group hover:border-vexl-yellow transition-all">
-            <h3 className="text-2xl mb-4 flex items-center gap-3" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>
-              <span className="text-vexl-yellow text-3xl">🔒</span>
-              No Surveillance By Design
-            </h3>
-            <p className="text-vexl-gray-400">
-              Rating systems require tracking every transaction. We chose trust over surveillance.
-            </p>
-          </div>
-
-          <div className="vexl-card group hover:border-vexl-yellow transition-all">
-            <h3 className="text-2xl mb-4 flex items-center gap-3" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>
-              <span className="text-vexl-yellow text-3xl">🛡️</span>
-              Your History Stays Yours
-            </h3>
-            <p className="text-vexl-gray-400">
-              Your trading history belongs to you, not our database. Privacy isn't a feature - it's our foundation.
-            </p>
-          </div>
-
-          <div className="vexl-card group hover:border-vexl-yellow transition-all">
-            <h3 className="text-2xl mb-4 flex items-center gap-3" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>
-              <span className="text-vexl-yellow text-3xl">🌐</span>
-              Verify Everything
-            </h3>
-            <p className="text-vexl-gray-400">
-              Open source means you can verify we're not tracking you. No hidden surveillance, no data collection.
-            </p>
-          </div>
+          {features.map((feature, index) => (
+            <div key={index} className="vexl-card group hover:border-vexl-yellow transition-all">
+              <h3 className="text-2xl mb-4 flex items-center gap-3" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>
+                <span className="text-vexl-yellow text-3xl">{feature.icon}</span>
+                {feature.title}
+              </h3>
+              <p className="text-vexl-gray-400">
+                {feature.description}
+              </p>
+            </div>
+          ))}
         </motion.div>
 
         <motion.div

@@ -27,7 +27,7 @@ export default function AdminLogin() {
       if (data.success) {
         // Store token in localStorage
         localStorage.setItem('vexl-admin-token', data.token)
-        router.push('/admin')
+        router.push('/admin/cms')
       } else {
         setError('Invalid password')
       }

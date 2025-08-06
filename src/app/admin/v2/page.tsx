@@ -7,6 +7,7 @@ import RichTextEditor from '@/components/admin/RichTextEditor'
 import DataTableEditor from '@/components/admin/DataTableEditor'
 import ToggleManager from '@/components/admin/ToggleManager'
 import ConfigurationPanel from '@/components/admin/ConfigurationPanel'
+import TemplateManager from '@/components/admin/TemplateManager'
 import { 
   Save, LogOut, FileText, Grid, Settings, Eye, 
   Download, Upload, Palette, Users, Package,
@@ -402,39 +403,12 @@ export default function AdvancedAdminDashboard() {
 
       case 'templates':
         return (
-          <div className="space-y-4">
-            <div className="bg-vexl-gray-900 rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-4">Available Templates</h3>
-              <div className="grid grid-cols-2 gap-4">
-                {templates.map(template => (
-                  <div key={template.id} className="p-4 bg-vexl-gray-800 rounded-lg">
-                    <h4 className="font-semibold mb-2">{template.name}</h4>
-                    <p className="text-sm text-vexl-gray-400 mb-3">{template.description}</p>
-                    <button
-                      onClick={() => applyTemplate(template.name)}
-                      className="px-3 py-1 bg-vexl-yellow text-vexl-black text-sm font-semibold rounded hover:bg-vexl-yellow/90"
-                    >
-                      Apply Template
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="bg-vexl-gray-900 rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-4">Save Current as Template</h3>
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  placeholder="Template name..."
-                  className="flex-1 px-4 py-2 bg-vexl-gray-800 rounded-lg"
-                />
-                <button className="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700">
-                  Save Template
-                </button>
-              </div>
-            </div>
-          </div>
+          <TemplateManager 
+            onApply={(templateKey) => {
+              // Reload content after applying template
+              loadContent()
+            }}
+          />
         )
 
       default:

@@ -2,8 +2,18 @@
 
 import { motion } from 'framer-motion'
 import TrustVsRatings from '@/components/TrustVsRatings'
+import { useSlideContent } from '@/hooks/useSlideContent'
 
 export default function TrustSection() {
+  const { content } = useSlideContent('trustSection', {
+    title: 'Trust beats Ratings',
+    subtitle: 'Ratings create surveillance databases. Real trust creates freedom.',
+    items: [
+      { id: '1', title: 'No Fake Reviews', content: "Your friend's recommendation can't be bought or manipulated" },
+      { id: '2', title: 'No Surveillance', content: 'No central database tracking who trades with whom' },
+      { id: '3', title: 'Real Accountability', content: 'Social reputation matters when trading with your network' }
+    ]
+  })
   return (
     <div className="max-w-6xl mx-auto">
       <motion.div
@@ -16,11 +26,11 @@ export default function TrustSection() {
           className="text-6xl md:text-8xl mb-8 leading-tight"
           style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
         >
-          <span className="text-vexl-yellow">Trust</span> beats<br />Ratings
+          {content.title}
         </h1>
         
         <p className="text-xl md:text-2xl text-vexl-gray-400 max-w-3xl mx-auto">
-          Ratings create surveillance databases. Real trust creates freedom.
+          {content.subtitle}
         </p>
       </motion.div>
 

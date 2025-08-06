@@ -2,15 +2,19 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import crypto from 'crypto'
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
-
-if (!ADMIN_PASSWORD) {
-  throw new Error('ADMIN_PASSWORD environment variable is not set')
-}
-
 export async function POST(request: NextRequest) {
   try {
     const { password } = await request.json()
+    
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
+    
+    if (!ADMIN_PASSWORD) {
+      console.error('ADMIN_PASSWORD environment variable is not set')
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Server configuration error' 
+      }, { status: 500 })
+    }
     
     if (password === ADMIN_PASSWORD) {
       // Generate secure token

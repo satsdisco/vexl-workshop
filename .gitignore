@@ -28,6 +28,12 @@ yarn-error.log*
 .env.local
 .env.production
 .env.development
+.env.vercel.local
+
+# Credentials and secrets
+CREDENTIALS_INFO.md
+*credentials*
+*password*
 
 # Vercel
 .vercel

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Save, RefreshCw, Eye, LogOut, Check, AlertCircle } from 'lucide-react'
+import { Save, RefreshCw, Eye, LogOut, Check, AlertCircle, Sparkles, Home } from 'lucide-react'
 import VexlLogo from '@/components/VexlLogo'
 
 export default function CMSAdmin() {
@@ -107,24 +107,31 @@ export default function CMSAdmin() {
     }
   }
 
-  const initializeDefaults = async () => {
-    if (confirm('This will reset all content to defaults. Are you sure?')) {
+  const applyDefaultTemplate = async () => {
+    if (confirm('This will reset all content to the default template. Are you sure?')) {
       try {
-        const response = await fetch('/api/admin/init-cms', {
-          method: 'POST',
+        const response = await fetch('/api/admin/templates/apply', {
+          method: 'PUT',
           headers: {
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('vexl-admin-token')}`
-          }
+          },
+          body: JSON.stringify({ templateName: 'default' })
         })
         const data = await response.json()
         if (data.success) {
-          showNotification('success', 'Content initialized with defaults')
+          showNotification('success', 'Default template applied successfully')
           await loadContent()
+          setHasChanges(false)
         }
       } catch (error) {
-        showNotification('error', 'Failed to initialize content')
+        showNotification('error', 'Failed to apply default template')
       }
     }
+  }
+
+  const openTemplates = () => {
+    router.push('/admin/templates')
   }
 
   return (
@@ -148,11 +155,19 @@ export default function CMSAdmin() {
             </a>
             
             <button
-              onClick={initializeDefaults}
+              onClick={openTemplates}
               className="flex items-center gap-2 px-4 py-2 bg-vexl-gray-800 hover:bg-vexl-gray-700 rounded-lg"
             >
-              <RefreshCw size={18} />
-              Reset to Defaults
+              <Sparkles size={18} />
+              Templates
+            </button>
+            
+            <button
+              onClick={applyDefaultTemplate}
+              className="flex items-center gap-2 px-4 py-2 bg-red-900/20 hover:bg-red-900/30 text-red-400 rounded-lg border border-red-900"
+            >
+              <Home size={18} />
+              Reset to Default
             </button>
             
             <button

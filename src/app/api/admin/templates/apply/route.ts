@@ -4,10 +4,10 @@ import { templates } from '@/lib/templates'
 
 export async function PUT(request: NextRequest) {
   try {
-    const { templateName } = await request.json()
-    const templateKey = templateName
+    const { templateName, customTemplate } = await request.json()
     
-    const template = templates[templateKey as keyof typeof templates]
+    // If custom template is provided, use it; otherwise look up built-in templates
+    let template = customTemplate || templates[templateName as keyof typeof templates]
     if (!template) {
       return NextResponse.json({ 
         success: false, 

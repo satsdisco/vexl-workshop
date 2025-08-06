@@ -1,6 +1,79 @@
 // Preset templates for different audiences and use cases
 
 export const templates = {
+  default: {
+    name: 'Default Template',
+    description: 'Original Vexl workshop presentation - balanced approach for all audiences',
+    slides: {
+      hookSection: {
+        title: 'KYC is killing Bitcoin',
+        subtitle: 'Your network is your net worth. Start with the people you already trust.',
+        stats: [
+          { id: 'stat1', value: '93%', label: 'of Bitcoin trades tracked' },
+          { id: 'stat2', value: '1984', label: 'surveillance state' },
+          { id: 'stat3', value: 'P2P', label: 'is the solution' }
+        ]
+      },
+      pitchSection: {
+        title: 'What is Vexl?',
+        subtitle: 'The peer-to-peer Bitcoin marketplace',
+        description: 'Trade Bitcoin with people you trust, not corporations that track you.'
+      },
+      trustSection: {
+        title: 'Trust > Ratings',
+        subtitle: 'Your network is more valuable than stranger reviews',
+        description: 'A friend of a friend is worth more than a 5-star stranger.'
+      },
+      privacySection: {
+        title: 'Privacy First',
+        subtitle: 'We refuse to track your trades because we refuse to become a honeypot'
+      },
+      profileSetupSection: {
+        title: 'Quick Setup',
+        subtitle: 'Get started in 60 seconds'
+      },
+      findingOffersSection: {
+        title: 'Find Offers',
+        subtitle: 'Browse your network'
+      },
+      contactTradingSection: {
+        title: 'Safe Trading',
+        subtitle: 'Connect and trade securely'
+      },
+      clubsSection: {
+        title: 'Vexl Clubs',
+        subtitle: 'Expand your trading network'
+      },
+      demoSection: {
+        title: 'Live Demo',
+        subtitle: 'See it in action'
+      },
+      visionSection: {
+        title: 'Your Network Matters',
+        subtitle: 'Build your Bitcoin community'
+      },
+      getStartedSection: {
+        title: 'Get Started Today',
+        subtitle: 'Join the P2P revolution'
+      }
+    },
+    features: {
+      showContactImport: true,
+      showNetworkVisualization: true,
+      showEconomicCalculator: true,
+      showSkillSharing: true,
+      showTrustComparison: true,
+      showDemoSection: true,
+      showGamification: true
+    },
+    config: {
+      technicalLevel: 'intermediate',
+      focusArea: 'balanced',
+      economicMultiplier: 1,
+      primaryColor: '#FF9500'
+    }
+  },
+  
   bitcoinMaximalist: {
     name: 'Bitcoin Maximalist',
     description: 'Focus on sovereignty, privacy, and peer-to-peer ideals',

@@ -16,6 +16,7 @@ interface TemplateApplicatorProps {
 }
 
 const templateIcons = {
+  default: Zap,
   bitcoinMaximalist: Shield,
   businessFocus: Building,
   communityBuilder: Users,
@@ -24,6 +25,7 @@ const templateIcons = {
 }
 
 const templateColors = {
+  default: 'from-vexl-yellow to-yellow-600',
   bitcoinMaximalist: 'from-orange-500 to-yellow-600',
   businessFocus: 'from-blue-500 to-indigo-600',
   communityBuilder: 'from-green-500 to-emerald-600',

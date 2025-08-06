@@ -1,8 +1,20 @@
 import { motion } from 'framer-motion'
-import { useContent } from '@/hooks/useContent'
+import { useContentManager } from '@/hooks/useContentManager'
 
 export default function HookSection() {
-  const { content } = useContent('hookSection')
+  const { content } = useContentManager({
+    sectionId: 'hookSection',
+    fallbackContent: {
+      title: 'KYC is killing Bitcoin',
+      subtitle: 'Your network is your net worth. Start with the people you already trust.',
+      stats: [
+        { value: '93%', label: 'of Bitcoin trades tracked' },
+        { value: '1984', label: 'surveillance state' },
+        { value: 'P2P', label: 'is the solution' }
+      ]
+    },
+    mergeStrategy: 'merge'
+  })
   
   // Parse title to maintain the KYC highlighting
   const titleParts = content.title?.split(' ') || ['KYC', 'is', 'killing', 'Bitcoin']

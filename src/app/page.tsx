@@ -1,24 +1,29 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense, lazy } from 'react'
+import dynamic from 'next/dynamic'
 import Header from '@/components/Header'
 import Navigation from '@/components/Navigation'
-import HookSection from '@/components/sections/HookSection'
-import PitchSection from '@/components/sections/PitchSection'
-import TrustSection from '@/components/sections/TrustSection'
-import PrivacySection from '@/components/sections/PrivacySection'
-import ProfileSetupSection from '@/components/sections/ProfileSetupSection'
-import FindingOffersSection from '@/components/sections/FindingOffersSection'
-import ContactTradingSection from '@/components/sections/ContactTradingSection'
-import ClubsSection from '@/components/sections/ClubsSection'
-import DemoSection from '@/components/sections/DemoSection'
-import VisionSection from '@/components/sections/VisionSection'
-import GetStartedSection from '@/components/sections/GetStartedSection'
 import Timer from '@/components/Timer'
 import PresenterMode from '@/components/PresenterMode'
 import SectionNavigation from '@/components/SectionNavigation'
 import KeyboardGuide from '@/components/KeyboardGuide'
 import { AnimatePresence, motion } from 'framer-motion'
+
+// Dynamic imports for code splitting
+const HookSection = dynamic(() => import('@/components/sections/HookSection'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center"><div className="animate-pulse">Loading...</div></div>
+})
+const PitchSection = dynamic(() => import('@/components/sections/PitchSection'))
+const TrustSection = dynamic(() => import('@/components/sections/TrustSection'))
+const PrivacySection = dynamic(() => import('@/components/sections/PrivacySection'))
+const ProfileSetupSection = dynamic(() => import('@/components/sections/ProfileSetupSection'))
+const FindingOffersSection = dynamic(() => import('@/components/sections/FindingOffersSection'))
+const ContactTradingSection = dynamic(() => import('@/components/sections/ContactTradingSection'))
+const ClubsSection = dynamic(() => import('@/components/sections/ClubsSection'))
+const DemoSection = dynamic(() => import('@/components/sections/DemoSection'))
+const VisionSection = dynamic(() => import('@/components/sections/VisionSection'))
+const GetStartedSection = dynamic(() => import('@/components/sections/GetStartedSection'))
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0)

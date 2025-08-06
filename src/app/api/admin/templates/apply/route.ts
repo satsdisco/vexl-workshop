@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { templates } from '@/lib/templates'
 
-export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest) {
   try {
-    const { templateKey } = await request.json()
+    const { templateName } = await request.json()
+    const templateKey = templateName
     
     const template = templates[templateKey as keyof typeof templates]
     if (!template) {
@@ -48,11 +49,14 @@ export async function POST(request: NextRequest) {
       for (const [feature, enabled] of Object.entries(template.features)) {
         await prisma.featureToggle.upsert({
           where: { feature },
-          update: { enabled: enabled as boolean },
+          update: { 
+            enabled: enabled as boolean,
+            config: JSON.stringify({ source: 'template', templateName })
+          },
           create: { 
             feature, 
             enabled: enabled as boolean,
-            section: null
+            config: JSON.stringify({ source: 'template', templateName })
           }
         })
       }

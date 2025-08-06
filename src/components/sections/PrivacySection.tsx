@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import OptimizedImage from '@/components/OptimizedImage'
 import WebOfTrustDemo from '@/components/WebOfTrustDemo'
 import HashExplanationDemo from '@/components/HashExplanationDemo'
 import ContactImportDemo from '@/components/ContactImportDemo'
@@ -183,20 +183,22 @@ export default function PrivacySection() {
         className="mt-16 text-center"
       >
         <div className="inline-flex items-center gap-8 p-6 bg-vexl-gray-900/50 border border-vexl-gray-800">
-          <Image 
+          <OptimizedImage 
             src="/logos/human rights foundation /HRF-Logo.png" 
             alt="Human Rights Foundation" 
             width={120} 
             height={60}
             className="opacity-80 hover:opacity-100 transition-opacity"
+            priority={false}
           />
           <span className="text-vexl-gray-600">+</span>
-          <Image 
+          <OptimizedImage 
             src="/logos/opensats/opensats-logo.png" 
             alt="OpenSats" 
             width={120} 
             height={60}
             className="opacity-80 hover:opacity-100 transition-opacity"
+            priority={false}
           />
           <span className="text-vexl-gray-600">=</span>
           <span className="font-bold text-xl">100% Nonprofit</span>

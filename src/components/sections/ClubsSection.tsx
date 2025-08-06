@@ -78,7 +78,7 @@ export default function ClubsSection() {
                   {/* Avatar circle formation */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="relative w-full h-full">
-                      {[...Array(8)].map((_, i) => {
+                      {[2, 3, 4, 5, 6, 7, 8, 9].map((avatarNum, i) => {
                         const angle = (i * 45) * Math.PI / 180
                         const radius = 120
                         const x = Math.cos(angle) * radius + 160
@@ -90,10 +90,16 @@ export default function ClubsSection() {
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ delay: 0.3 + i * 0.1 }}
-                            className="absolute w-16 h-16 bg-vexl-gray-800 rounded-full flex items-center justify-center border-2 border-vexl-yellow/30"
-                            style={{ left: x - 32, top: y - 32 }}
+                            className="absolute w-20 h-20 bg-vexl-gray-800 rounded-full flex items-center justify-center border-2 border-vexl-yellow/30 overflow-hidden"
+                            style={{ left: x - 40, top: y - 40 }}
                           >
-                            <Users className="w-8 h-8 text-vexl-yellow" />
+                            <Image
+                              src={`/avatars/avatar${avatarNum}.svg`}
+                              alt={`Avatar ${avatarNum}`}
+                              width={60}
+                              height={60}
+                              className="object-cover"
+                            />
                           </motion.div>
                         )
                       })}

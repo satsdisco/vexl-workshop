@@ -10,6 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Note: For production, you can switch to PostgreSQL by changing:
+// provider = "postgresql"
+// And updating your DATABASE_URL accordingly
+
 // Main content model for slide text content
 model SlideContent {
   id          String   @id @default(cuid())

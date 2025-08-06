@@ -124,7 +124,7 @@ export default function ClubsSection() {
                   className="mt-8"
                 >
                   <PhoneMockup 
-                    imageSrc="/placeholder-image.png"
+                    imageSrc="/screenshots/club-interface.png"
                     imageAlt="Club interface"
                   />
                 </motion.div>
@@ -210,25 +210,25 @@ export default function ClubsSection() {
                     step: 1,
                     title: "Join via QR/invite",
                     desc: "Scan club QR code or receive direct invite",
-                    image: "/placeholder-image.png"
+                    image: "/screenshots/club-join-qr.png"
                   },
                   {
                     step: 2,
                     title: "Moderator approval",
                     desc: "Verified by trusted community members",
-                    image: "/placeholder-image.png"
+                    image: "/screenshots/club-moderator-approval.png"
                   },
                   {
                     step: 3,
                     title: "Trade within club",
                     desc: "Access offers from all club members",
-                    image: "/placeholder-image.png"
+                    image: "/screenshots/club-trading.png"
                   },
                   {
                     step: 4,
                     title: "Graduate to direct connections",
                     desc: "Build your personal network over time",
-                    image: "/placeholder-image.png"
+                    image: "/screenshots/club-graduate.png"
                   }
                 ].map((item, index) => (
                   <motion.div

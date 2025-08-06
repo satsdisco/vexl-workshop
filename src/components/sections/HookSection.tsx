@@ -1,6 +1,14 @@
 import { motion } from 'framer-motion'
+import { useContent } from '@/hooks/useContent'
 
 export default function HookSection() {
+  const { content } = useContent('hookSection')
+  
+  // Parse title to maintain the KYC highlighting
+  const titleParts = content.title?.split(' ') || ['KYC', 'is', 'killing', 'Bitcoin']
+  const firstWord = titleParts[0]
+  const restOfTitle = titleParts.slice(1).join(' ')
+  
   return (
     <div className="max-w-6xl mx-auto relative z-10">
       <motion.h1 
@@ -11,10 +19,10 @@ export default function HookSection() {
         style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
       >
         <span className="text-vexl-yellow relative">
-          KYC
+          {firstWord}
           <span className="absolute bottom-0 left-0 w-full h-2 bg-vexl-yellow"></span>
         </span>{' '}
-        is killing<br />Bitcoin
+        {restOfTitle}
       </motion.h1>
       
       <motion.div 
@@ -24,9 +32,7 @@ export default function HookSection() {
         className="text-center mb-12"
       >
         <p className="text-xl md:text-2xl text-vexl-gray-400 max-w-3xl mx-auto">
-          Every time you upload your ID to buy bitcoin,
-          <br />
-          you're building the surveillance state.
+          {content.subtitle}
         </p>
       </motion.div>
 
@@ -38,30 +44,23 @@ export default function HookSection() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16"
         >
-          <motion.div 
-            whileHover={{ scale: 1.05 }}
-            className="p-8 bg-vexl-yellow text-vexl-black border-4 border-vexl-black transition-all cursor-pointer text-center relative overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-20 h-20 bg-vexl-pink rounded-full -translate-x-1/2 translate-y-1/2 opacity-50"></div>
-            <div className="text-3xl lg:text-4xl mb-4 uppercase relative z-10" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>500M+</div>
-            <p className="text-sm lg:text-base font-semibold relative z-10">KYC records leaked in crypto exchange hacks</p>
-          </motion.div>
-          <motion.div 
-            whileHover={{ scale: 1.05 }}
-            className="p-8 bg-vexl-black border-4 border-vexl-yellow transition-all cursor-pointer text-center relative overflow-hidden"
-          >
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-vexl-green-light rounded-full translate-x-1/2 -translate-y-1/2 opacity-30"></div>
-            <div className="text-3xl lg:text-4xl text-vexl-yellow mb-4 uppercase relative z-10" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>100%</div>
-            <p className="text-sm lg:text-base text-vexl-white relative z-10">of your transactions tracked forever</p>
-          </motion.div>
-          <motion.div 
-            whileHover={{ scale: 1.05 }}
-            className="p-8 bg-vexl-green-dark text-vexl-white border-4 border-vexl-black transition-all cursor-pointer text-center relative overflow-hidden"
-          >
-            <div className="absolute top-0 left-0 w-24 h-24 bg-vexl-yellow rounded-full -translate-x-1/2 -translate-y-1/2 opacity-40"></div>
-            <div className="text-3xl lg:text-4xl mb-4 uppercase relative z-10" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>0</div>
-            <p className="text-sm lg:text-base relative z-10">privacy once you're in the system</p>
-          </motion.div>
+          {content.stats?.map((stat, index) => {
+            const bgColors = ['bg-vexl-yellow text-vexl-black', 'bg-vexl-black', 'bg-vexl-green-dark text-vexl-white']
+            const borderColors = ['border-vexl-black', 'border-vexl-yellow', 'border-vexl-black']
+            const accentColors = ['bg-vexl-pink', 'bg-vexl-green-light', 'bg-vexl-yellow']
+            
+            return (
+              <motion.div 
+                key={stat.id}
+                whileHover={{ scale: 1.05 }}
+                className={`p-8 ${bgColors[index]} border-4 ${borderColors[index]} transition-all cursor-pointer text-center relative overflow-hidden`}
+              >
+                <div className={`absolute ${index === 0 ? 'top-0 right-0' : index === 1 ? 'bottom-0 left-0' : 'top-0 left-0'} ${index === 1 ? 'w-32 h-32' : 'w-20 h-20'} ${accentColors[index]} rounded-full ${index === 0 ? '-translate-x-1/2 translate-y-1/2' : index === 1 ? 'translate-x-1/2 -translate-y-1/2' : '-translate-x-1/2 -translate-y-1/2'} opacity-${index === 0 ? '50' : index === 1 ? '30' : '40'}`}></div>
+                <div className={`text-3xl lg:text-4xl ${index === 1 ? 'text-vexl-yellow' : ''} mb-4 uppercase relative z-10`} style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>{stat.value}</div>
+                <p className={`text-sm lg:text-base ${index === 0 ? 'font-semibold' : index === 1 ? 'text-vexl-white' : ''} relative z-10`}>{stat.label}</p>
+              </motion.div>
+            )
+          })}
         </motion.div>
       </div>
 
@@ -72,7 +71,7 @@ export default function HookSection() {
         className="mt-20 flex justify-center"
       >
         <div className="inline-flex items-center gap-3 bg-vexl-black px-8 py-4 border-4 border-vexl-yellow">
-          <span className="text-2xl md:text-3xl text-vexl-yellow" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>There's a better way</span>
+          <span className="text-2xl md:text-3xl text-vexl-yellow" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>{content.cta}</span>
           <motion.svg 
             animate={{ x: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}

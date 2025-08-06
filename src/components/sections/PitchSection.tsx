@@ -2,8 +2,10 @@ import VexlLogo from '@/components/VexlLogo'
 import { motion } from 'framer-motion'
 import { Heart, Shield, Users } from 'lucide-react'
 import Image from 'next/image'
+import { useContent } from '@/hooks/useContent'
 
 export default function PitchSection() {
+  const { content } = useContent('pitchSection')
   return (
     <div className="max-w-5xl mx-auto w-full">
       <div className="text-center mb-16">
@@ -11,55 +13,34 @@ export default function PitchSection() {
           <VexlLogo className="w-48 h-auto mx-auto mb-8" />
         </div>
         <h2 className="text-5xl md:text-7xl mb-6" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>
-          Your social network.<br />
-          <span className="text-vexl-yellow">With a Bitcoin layer.</span>
+          {content.title}<br />
+          <span className="text-vexl-yellow">{content.subtitle}</span>
         </h2>
         <p className="text-xl text-vexl-gray-400 max-w-2xl mx-auto">
-          Vexl isn't a marketplace - it's the strongest network that already exists: your phone contacts
+          {content.description}
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-x-12 gap-y-8 mb-16">
         <div className="space-y-8">
-          <div className="group">
-            <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
-              <span className="text-vexl-yellow">→</span> What?
-            </h3>
-            <p className="text-vexl-gray-400 pl-8">Your existing social network, enhanced with bitcoin trading. Every contact is a potential trade partner.</p>
-          </div>
-          <div className="group">
-            <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
-              <span className="text-vexl-yellow">→</span> Why?
-            </h3>
-            <p className="text-vexl-gray-400 pl-8">Bitcoin as Satoshi intended - peer-to-peer, no middlemen. Real relationships, not fake ratings.</p>
-          </div>
-          <div className="group">
-            <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
-              <span className="text-vexl-yellow">→</span> Who?
-            </h3>
-            <p className="text-vexl-gray-400 pl-8">Open source, community-funded. Built for humans who value trust over algorithms.</p>
-          </div>
+          {content.items?.slice(0, 3).map((item) => (
+            <div key={item.id} className="group">
+              <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
+                <span className="text-vexl-yellow">→</span> {item.title}
+              </h3>
+              <p className="text-vexl-gray-400 pl-8">{item.content}</p>
+            </div>
+          ))}
         </div>
-        
         <div className="space-y-8">
-          <div className="group">
-            <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
-              <span className="text-vexl-yellow">→</span> When?
-            </h3>
-            <p className="text-vexl-gray-400 pl-8">Available now. Free forever. No KYC because we're not a business extracting your data.</p>
-          </div>
-          <div className="group">
-            <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
-              <span className="text-vexl-yellow">→</span> Where?
-            </h3>
-            <p className="text-vexl-gray-400 pl-8">Wherever people want to trade bitcoin for cash. Starting with your local community.</p>
-          </div>
-          <div className="group">
-            <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
-              <span className="text-vexl-yellow">→</span> How?
-            </h3>
-            <p className="text-vexl-gray-400 pl-8">Import contacts. Find traders. Build trust. Every trade strengthens real relationships.</p>
-          </div>
+          {content.items?.slice(3, 6).map((item) => (
+            <div key={item.id} className="group">
+              <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
+                <span className="text-vexl-yellow">→</span> {item.title}
+              </h3>
+              <p className="text-vexl-gray-400 pl-8">{item.content}</p>
+            </div>
+          ))}
         </div>
       </div>
 

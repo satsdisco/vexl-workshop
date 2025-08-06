@@ -5,8 +5,10 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import QRCode from 'qrcode'
 import SupportMission from '@/components/SupportMission'
+import { useContent } from '@/hooks/useContent'
 
 export default function GetStartedSection() {
+  const { content } = useContent('getStartedSection')
   const [showQR, setShowQR] = useState(false)
   const [downloadQR, setDownloadQR] = useState('')
   const [activeTab, setActiveTab] = useState<'start' | 'support'>('start')
@@ -59,7 +61,7 @@ export default function GetStartedSection() {
             className="text-4xl md:text-6xl mb-12"
             style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
           >
-            Ready to go <span className="text-vexl-yellow">No-KYC</span>?
+            {content.title || 'Ready to join the revolution?'}
           </motion.h2>
 
           <motion.div 

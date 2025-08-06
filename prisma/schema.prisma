@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Main content model for slide text content
+model SlideContent {
+  id          String   @id @default(cuid())
+  sectionId   String   @unique
+  title       String?
+  subtitle    String?
+  description String?
+  cta         String?
+  content     String   // JSON string for flexible content
+  version     Int      @default(1)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Component-specific data (contacts, businesses, skills, etc.)
+model ComponentData {
+  id            String   @id @default(cuid())
+  componentId   String   @unique
+  componentType String   // 'contacts', 'businesses', 'skills', 'trades', etc.
+  data          String   // JSON array of items
+  config        String   // JSON configuration object
+  toggles       String   // JSON toggles object
+  version       Int      @default(1)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// Global configuration for the presentation
+model GlobalConfig {
+  id                String   @id @default(cuid())
+  key               String   @unique
+  value             String   // JSON value
+  category          String   // 'theme', 'features', 'audience', etc.
+  description       String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// Media assets (images, icons, screenshots)
+model MediaAsset {
+  id          String   @id @default(cuid())
+  filename    String
+  url         String
+  type        String   // 'image', 'icon', 'screenshot'
+  alt         String?
+  section     String?  // Which section it belongs to
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Preset templates for different audiences
+model PresetTemplate {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  config      String   // JSON configuration
+  slides      String   // JSON slide configurations
+  components  String   // JSON component configurations
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Feature toggles for sections and components
+model FeatureToggle {
+  id          String   @id @default(cuid())
+  feature     String   @unique
+  enabled     Boolean  @default(true)
+  section     String?
+  config      String?  // JSON additional configuration
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Content versions for rollback capability
+model ContentVersion {
+  id          String   @id @default(cuid())
+  entityType  String   // 'slide', 'component', 'config'
+  entityId    String
+  content     String   // JSON snapshot of content
+  version     Int
+  createdBy   String   @default("admin")
+  createdAt   DateTime @default(now())
+  
+  @@index([entityType, entityId])
+}
+
+// Admin session management
+model AdminSession {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}

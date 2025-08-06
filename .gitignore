@@ -43,3 +43,10 @@ public/worker-*.js.map
 
 # Admin edited content
 public/content.json
+/src/generated/prisma
+
+# Database
+prisma/*.db
+prisma/*.db-journal
+*.db
+*.db-journal

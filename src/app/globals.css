@@ -10,7 +10,12 @@
   :root {
     --vexl-black: #000000;
     --vexl-white: #FFFFFF;
-    --vexl-yellow: #FFD700;
+    --vexl-yellow: #FCCD6C;
+    --vexl-green-dark: #28332A;
+    --vexl-green-mid: #3D4D41;
+    --vexl-green-base: #5D7763;
+    --vexl-green-light: #ACD9B7;
+    --vexl-pink: #FCC5F3;
   }
 
   html {
@@ -37,7 +42,7 @@
 @layer components {
   .section-container {
     @apply w-full flex flex-col px-4 py-8 sm:px-6 sm:py-12 md:px-12 lg:px-16;
-    background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+    background: transparent;
   }
   
   /* Desktop: scrollable slides */
@@ -63,7 +68,7 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+    background: radial-gradient(circle, rgba(252, 205, 108, 0.1) 0%, transparent 50%);
     animation: pulse 10s ease-in-out infinite;
     pointer-events: none;
   }
@@ -87,27 +92,27 @@
   }
 
   .vexl-button {
-    @apply bg-vexl-white text-vexl-black px-6 py-3 sm:px-8 sm:py-4 rounded-lg text-base sm:text-lg hover:bg-vexl-yellow hover:shadow-2xl hover:shadow-vexl-yellow/30 transition-all transform hover:scale-105;
+    @apply bg-vexl-yellow text-vexl-black px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg hover:bg-vexl-white hover:shadow-2xl hover:shadow-vexl-yellow/30 transition-all transform hover:scale-105 border-2 border-vexl-black;
     font-family: 'TT Satoshi', sans-serif;
     font-weight: 700;
   }
   
   /* Typography improvements - Vexl Brand Guidelines */
   h1 {
-    @apply text-3xl sm:text-4xl md:text-5xl lg:text-7xl tracking-tight leading-none;
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-7xl tracking-tight leading-none uppercase;
     font-family: 'Monument Extended', sans-serif;
     font-weight: 900;
-    text-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+    text-shadow: 0 4px 20px rgba(252, 205, 108, 0.3);
   }
   
   h2 {
-    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight leading-tight;
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight leading-tight uppercase;
     font-family: 'Monument Extended', sans-serif;
     font-weight: 700;
   }
   
   h3 {
-    @apply text-xl sm:text-2xl md:text-3xl;
+    @apply text-xl sm:text-2xl md:text-3xl uppercase;
     font-family: 'Monument Extended', sans-serif;
     font-weight: 700;
   }
@@ -130,7 +135,7 @@
   }
 
   .vexl-card {
-    @apply bg-vexl-gray-900/50 backdrop-blur-sm border border-vexl-gray-800 rounded-none p-8;
+    @apply bg-vexl-black border-4 border-vexl-yellow p-8;
   }
 
   @keyframes scroll-left {

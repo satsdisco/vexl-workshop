@@ -10,6 +10,14 @@ module.exports = {
       colors: {
         'vexl-black': '#000000',
         'vexl-white': '#FFFFFF',
+        'vexl-yellow': '#FCCD6C',
+        'vexl-green': {
+          'dark': '#28332A',
+          'mid': '#3D4D41',
+          'base': '#5D7763',
+          'light': '#ACD9B7',
+        },
+        'vexl-pink': '#FCC5F3',
         'vexl-gray': {
           100: '#FBFBFB',
           200: '#F5F5F5',
@@ -21,8 +29,6 @@ module.exports = {
           800: '#161616',
           900: '#000000',
         },
-        'vexl-yellow': '#FFD700',
-        'vexl-orange': '#FFA500',
       },
       fontFamily: {
         'satoshi': ['TT Satoshi', 'system-ui', 'sans-serif'],

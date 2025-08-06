@@ -6,7 +6,7 @@ export default function Header() {
     <motion.header
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-vexl-gray-800"
+      className="fixed top-0 left-0 right-0 z-50 bg-vexl-black border-b-4 border-vexl-yellow"
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -19,8 +19,8 @@ export default function Header() {
             priority
             unoptimized
           />
-          <span className="text-sm text-vexl-gray-500 hidden md:block font-mono" style={{ fontFamily: 'Space Mono, monospace' }}>
-            P2P Bitcoin Without KYC <span className="text-vexl-gray-700">•</span> Community Funded
+          <span className="text-sm text-vexl-white hidden md:block uppercase font-bold" style={{ fontFamily: 'Monument Extended' }}>
+            P2P Bitcoin Without KYC
           </span>
         </div>
         
@@ -29,18 +29,20 @@ export default function Header() {
             href="https://vexl.it"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm hover:text-vexl-yellow transition-colors"
+            className="text-sm text-vexl-white hover:text-vexl-yellow transition-colors font-bold uppercase"
             whileHover={{ scale: 1.05 }}
+            style={{ fontFamily: 'TT Satoshi' }}
           >
             vexl.it
           </motion.a>
-          <Image 
-            src="/logos/vexl/symbol/Vexl Sunglasses Digital/White glasses.svg"
-            alt="Vexl Symbol"
-            width={30}
-            height={30}
-            className="opacity-80"
-          />
+          <div className="bg-vexl-yellow p-2">
+            <Image 
+              src="/logos/vexl/symbol/Vexl Sunglasses Digital/Black glasses.svg"
+              alt="Vexl Symbol"
+              width={30}
+              height={30}
+            />
+          </div>
         </div>
       </div>
     </motion.header>

@@ -1,3 +1,11 @@
+# CRITICAL RULES - MUST FOLLOW
+
+1. **Never mention "Claude Code," AI, or any AI assistant in commit messages, code, or comments.**
+2. **All commit messages must use the format: <type>[scope]: <description> [body] [optional footer].**
+3. **Always ask for confirmation before committing.**
+
+---
+
 # Local Rules for Claude
 
 ## Git Commit Guidelines

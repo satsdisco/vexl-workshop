@@ -7,10 +7,14 @@ export default function HookSection() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="text-6xl md:text-8xl mb-8 leading-tight text-center"
+        className="text-6xl md:text-8xl mb-8 leading-tight text-center uppercase"
         style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}
       >
-        <span className="text-vexl-yellow">KYC</span> is killing<br />Bitcoin
+        <span className="text-vexl-yellow relative">
+          KYC
+          <span className="absolute bottom-0 left-0 w-full h-2 bg-vexl-yellow"></span>
+        </span>{' '}
+        is killing<br />Bitcoin
       </motion.h1>
       
       <motion.div 
@@ -35,25 +39,28 @@ export default function HookSection() {
           className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16"
         >
           <motion.div 
-            whileHover={{ scale: 1.05, borderColor: "#FFD700" }}
-            className="p-8 bg-vexl-gray-900/50 backdrop-blur-sm border-2 border-vexl-gray-800 rounded-none transition-all cursor-pointer text-center"
+            whileHover={{ scale: 1.05 }}
+            className="p-8 bg-vexl-yellow text-vexl-black border-4 border-vexl-black transition-all cursor-pointer text-center relative overflow-hidden"
           >
-            <div className="text-3xl lg:text-4xl text-vexl-white mb-4" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>500M+</div>
-            <p className="text-sm lg:text-base text-vexl-gray-500">KYC records leaked in crypto exchange hacks</p>
+            <div className="absolute top-0 right-0 w-20 h-20 bg-vexl-pink rounded-full -translate-x-1/2 translate-y-1/2 opacity-50"></div>
+            <div className="text-3xl lg:text-4xl mb-4 uppercase relative z-10" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>500M+</div>
+            <p className="text-sm lg:text-base font-semibold relative z-10">KYC records leaked in crypto exchange hacks</p>
           </motion.div>
           <motion.div 
-            whileHover={{ scale: 1.05, borderColor: "#FFD700" }}
-            className="p-8 bg-vexl-gray-900/50 backdrop-blur-sm border-2 border-vexl-gray-800 rounded-none transition-all cursor-pointer text-center"
+            whileHover={{ scale: 1.05 }}
+            className="p-8 bg-vexl-black border-4 border-vexl-yellow transition-all cursor-pointer text-center relative overflow-hidden"
           >
-            <div className="text-3xl lg:text-4xl text-vexl-white mb-4" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>100%</div>
-            <p className="text-sm lg:text-base text-vexl-gray-500">of your transactions tracked forever</p>
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-vexl-green-light rounded-full translate-x-1/2 -translate-y-1/2 opacity-30"></div>
+            <div className="text-3xl lg:text-4xl text-vexl-yellow mb-4 uppercase relative z-10" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>100%</div>
+            <p className="text-sm lg:text-base text-vexl-white relative z-10">of your transactions tracked forever</p>
           </motion.div>
           <motion.div 
-            whileHover={{ scale: 1.05, borderColor: "#FFD700" }}
-            className="p-8 bg-vexl-gray-900/50 backdrop-blur-sm border-2 border-vexl-gray-800 rounded-none transition-all cursor-pointer text-center"
+            whileHover={{ scale: 1.05 }}
+            className="p-8 bg-vexl-green-dark text-vexl-white border-4 border-vexl-black transition-all cursor-pointer text-center relative overflow-hidden"
           >
-            <div className="text-3xl lg:text-4xl text-vexl-white mb-4" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>0</div>
-            <p className="text-sm lg:text-base text-vexl-gray-500">privacy once you're in the system</p>
+            <div className="absolute top-0 left-0 w-24 h-24 bg-vexl-yellow rounded-full -translate-x-1/2 -translate-y-1/2 opacity-40"></div>
+            <div className="text-3xl lg:text-4xl mb-4 uppercase relative z-10" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>0</div>
+            <p className="text-sm lg:text-base relative z-10">privacy once you're in the system</p>
           </motion.div>
         </motion.div>
       </div>
@@ -64,12 +71,12 @@ export default function HookSection() {
         transition={{ duration: 0.8, delay: 0.6 }}
         className="mt-20 flex justify-center"
       >
-        <div className="inline-flex items-center gap-3">
-          <span className="text-2xl md:text-3xl" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>There's a better way</span>
+        <div className="inline-flex items-center gap-3 bg-vexl-black px-8 py-4 border-4 border-vexl-yellow">
+          <span className="text-2xl md:text-3xl text-vexl-yellow" style={{ fontFamily: 'TT Satoshi', fontWeight: 700 }}>There's a better way</span>
           <motion.svg 
             animate={{ x: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-8 h-8 md:w-10 md:h-10" 
+            className="w-8 h-8 md:w-10 md:h-10 text-vexl-yellow" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"

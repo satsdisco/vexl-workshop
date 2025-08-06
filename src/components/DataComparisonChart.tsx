@@ -6,6 +6,13 @@ import { Check, X } from 'lucide-react'
 export default function DataComparisonChart() {
   const dataPoints = [
     { 
+      item: 'Phone number', 
+      details: 'Used for contact sharing but never seen or stored by Vexl',
+      kyc: true, 
+      vexl: 'special',
+      vexlText: 'USED BUT NOT KNOWN'
+    },
+    { 
       item: 'Government-issued photo ID', 
       details: 'Passport, national ID, driver\'s license',
       kyc: true, 
@@ -38,12 +45,6 @@ export default function DataComparisonChart() {
     { 
       item: 'Proof of address', 
       details: 'Utility bill, bank statement, rental contract',
-      kyc: true, 
-      vexl: false 
-    },
-    { 
-      item: 'Phone number', 
-      details: 'For 2FA and account recovery',
       kyc: true, 
       vexl: false 
     },
@@ -130,7 +131,11 @@ export default function DataComparisonChart() {
               )}
             </div>
             <div className="col-span-2 p-4 text-center bg-green-900/5">
-              {point.vexl ? (
+              {point.vexl === 'special' ? (
+                <div className="flex items-center justify-center">
+                  <span className="text-yellow-400 font-medium text-xs">{point.vexlText}</span>
+                </div>
+              ) : point.vexl ? (
                 <Check className="w-5 h-5 text-red-400 mx-auto" />
               ) : (
                 <div className="flex items-center justify-center gap-2">

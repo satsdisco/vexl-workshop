@@ -210,7 +210,7 @@ export default function ClubsSection() {
                     step: 1,
                     title: "Join via QR/invite",
                     desc: "Scan club QR code or receive direct invite",
-                    image: "/screenshots/club-join-qr.png"
+                    image: "/screenshots/club-join-qr.png.png"
                   },
                   {
                     step: 2,

@@ -92,4 +92,4 @@ After setup, access your admin panel at:
 - `https://your-domain.vercel.app/admin`
 - `https://your-domain.vercel.app/admin/v2`
 
-Password: `P2Pnokyc` (change this in production!)
+Password: Set via ADMIN_PASSWORD environment variable in Vercel dashboard

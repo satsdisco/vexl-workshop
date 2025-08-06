@@ -3,12 +3,26 @@ import { seedDatabase } from '@/lib/seed-database'
 
 export async function POST(request: NextRequest) {
   try {
-    // Simple auth check
+    // Proper token-based auth check
     const authHeader = request.headers.get('authorization')
-    if (!authHeader || !authHeader.includes('P2Pnokyc')) {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json({ 
         success: false, 
         error: 'Unauthorized' 
+      }, { status: 401 })
+    }
+    
+    // Validate the token
+    const token = authHeader.split(' ')[1]
+    const { prisma } = await import('@/lib/prisma')
+    const session = await prisma.adminSession.findUnique({
+      where: { token }
+    })
+    
+    if (!session || session.expiresAt < new Date()) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Invalid or expired token' 
       }, { status: 401 })
     }
     

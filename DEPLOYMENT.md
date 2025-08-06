@@ -12,7 +12,7 @@ You need to set the following environment variables in your Vercel project:
 
 ```
 DATABASE_URL=file:/tmp/dev.db
-ADMIN_PASSWORD=P2Pnokyc
+ADMIN_PASSWORD=your_secure_password_here
 ```
 
 **Note**: For production, consider using a proper database:
@@ -59,7 +59,7 @@ No additional build configuration needed!
 
 - Basic Admin: `/admin`
 - Advanced Admin: `/admin/v2`
-- Default Password: `P2Pnokyc` (change in production!)
+- Set password via ADMIN_PASSWORD environment variable
 
 ## Troubleshooting
 

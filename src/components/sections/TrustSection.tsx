@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import TrustVsRatings from '@/components/TrustVsRatings'
 import { useSlideContent } from '@/hooks/useSlideContent'
+import { useFeatures } from '@/hooks/useFeatures'
 
 export default function TrustSection() {
   const { content } = useSlideContent('trustSection', {
@@ -14,6 +15,9 @@ export default function TrustSection() {
       { id: '3', title: 'Real Accountability', content: 'Social reputation matters when trading with your network' }
     ]
   })
+  
+  const { isEnabled } = useFeatures()
+  const showWebOfTrust = isEnabled('webOfTrust')
   return (
     <div className="max-w-6xl mx-auto">
       <motion.div
@@ -35,7 +39,7 @@ export default function TrustSection() {
       </motion.div>
 
       {/* Trust vs Ratings Interactive Demo */}
-      <TrustVsRatings />
+      {showWebOfTrust && <TrustVsRatings />}
 
       {/* Key Messages */}
       <motion.div

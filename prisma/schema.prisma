@@ -87,6 +87,19 @@ model FeatureToggle {
   updatedAt DateTime @updatedAt
 }
 
+// Feature configuration for workshop features
+model FeatureConfig {
+  id          String   @id @default(cuid())
+  featureId   String   @unique
+  name        String
+  description String
+  enabled     Boolean  @default(true)
+  section     String?
+  settings    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 // Content versions for rollback capability
 model ContentVersion {
   id         String   @id @default(cuid())

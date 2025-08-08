@@ -152,7 +152,7 @@ export default function DropZoneEditor({
 
       {/* Render additional elements if they exist */}
       {content.additionalElements?.map((element: any) => {
-        const Tag = element.type as keyof JSX.IntrinsicElements
+        const Tag = element.type as keyof React.JSX.IntrinsicElements
         return (
           <Tag key={element.id} className="mt-4 text-white">
             {element.content}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { 
   Edit3, Save, Eye, EyeOff, Type, Plus, Trash2,
@@ -13,6 +13,7 @@ import VexlLogo from '@/components/VexlLogo'
 // Import actual sections to preview
 import dynamic from 'next/dynamic'
 const HookSection = dynamic(() => import('@/components/sections/HookSection'))
+const EditableHookSection = dynamic(() => import('@/components/sections/EditableHookSection'))
 const TrustSection = dynamic(() => import('@/components/sections/TrustSection'))
 const PrivacySection = dynamic(() => import('@/components/sections/PrivacySection'))
 
@@ -107,6 +108,8 @@ export default function WorkshopVisualEditor() {
   const [sectionContent, setSectionContent] = useState<Record<string, any>>({})
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const currentSection = SECTIONS[currentSectionIndex]
 
@@ -166,6 +169,15 @@ export default function WorkshopVisualEditor() {
         [key]: value
       }
     }))
+    setHasUnsavedChanges(true)
+    
+    // Auto-save after 1 second of no changes
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current)
+    }
+    saveTimeoutRef.current = setTimeout(() => {
+      saveContent()
+    }, 1000)
   }
 
   const updateArrayItem = (sectionId: string, arrayKey: string, index: number, field: string, value: any) => {
@@ -255,7 +267,7 @@ export default function WorkshopVisualEditor() {
         })
       })
       
-      alert('Content saved successfully!')
+      setHasUnsavedChanges(false)
       
     } catch (error) {
       console.error('Error saving content:', error)
@@ -265,7 +277,10 @@ export default function WorkshopVisualEditor() {
     }
   }
 
-  const getValue = (sectionId: string, key: string, defaultValue: any) => {
+  const getValue = (sectionId: string, key: string = '', defaultValue: any = {}) => {
+    if (key === '') {
+      return sectionContent[sectionId] || defaultValue
+    }
     return sectionContent[sectionId]?.[key] || defaultValue
   }
 
@@ -331,11 +346,17 @@ export default function WorkshopVisualEditor() {
 
             <button
               onClick={saveContent}
-              disabled={saving}
-              className="flex items-center space-x-1 px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
+              disabled={saving || !hasUnsavedChanges}
+              className={`flex items-center space-x-1 px-3 py-1 rounded transition-colors ${
+                hasUnsavedChanges 
+                  ? 'bg-green-600 text-white hover:bg-green-700' 
+                  : 'bg-vexl-gray-800 text-vexl-gray-400'
+              } disabled:opacity-50`}
             >
               <Save className="w-4 h-4" />
-              <span className="text-sm">{saving ? 'Saving...' : 'Save All'}</span>
+              <span className="text-sm">
+                {saving ? 'Saving...' : hasUnsavedChanges ? 'Save Changes' : 'Saved'}
+              </span>
             </button>
           </div>
         </div>
@@ -428,11 +449,27 @@ export default function WorkshopVisualEditor() {
         )}
 
         {/* Preview Area */}
-        <div className="flex-1 overflow-auto bg-black">
+        <div className="flex-1 overflow-auto bg-black relative">
+          {/* Edit Mode Indicator */}
+          {editMode && (
+            <div className="absolute top-4 left-4 z-50 bg-vexl-yellow text-black px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2">
+              <Edit3 className="w-4 h-4" />
+              Click any text to edit
+            </div>
+          )}
+          
           <div className={`${devicePreview === 'mobile' ? 'max-w-md mx-auto' : ''} min-h-screen`}>
             {/* Force refresh of section by updating CMS content */}
             <div className="min-h-screen flex items-center justify-center p-8">
-              <currentSection.component />
+              {editMode && currentSection.id === 'hookSection' ? (
+                <EditableHookSection
+                  content={getValue(currentSection.id, '', {})}
+                  onUpdate={(key, value) => updateField(currentSection.id, key, value)}
+                  editMode={editMode}
+                />
+              ) : (
+                <currentSection.component />
+              )}
             </div>
           </div>
         </div>

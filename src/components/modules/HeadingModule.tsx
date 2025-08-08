@@ -1,81 +1,48 @@
-import { motion } from 'framer-motion'
+'use client'
 
 interface HeadingModuleProps {
-  text?: string
-  subtext?: string
-  highlightWord?: string
-  config?: {
-    size?: 'sm' | 'md' | 'lg' | 'xl'
-    alignment?: 'left' | 'center' | 'right'
-    animate?: boolean
-  }
+  config?: any
+  content?: any
 }
 
-export default function HeadingModule({ 
-  text = 'Heading Text', 
-  subtext, 
-  highlightWord,
-  config = {} 
-}: HeadingModuleProps) {
-  const { size = 'xl', alignment = 'center', animate = true } = config
+export default function HeadingModule({ config, content }: HeadingModuleProps) {
+  const text = content?.text || 'Add your heading text'
+  const subtext = content?.subtext || ''
+  const highlightWord = content?.highlightWord || ''
+  const size = config?.size || content?.size || 'xl'
+  const alignment = config?.alignment || content?.alignment || 'center'
 
   const sizeClasses = {
-    sm: 'text-2xl md:text-3xl',
-    md: 'text-3xl md:text-5xl',
-    lg: 'text-5xl md:text-7xl',
-    xl: 'text-6xl md:text-8xl'
+    sm: 'text-2xl',
+    md: 'text-3xl',
+    lg: 'text-4xl',
+    xl: 'text-5xl'
   }
 
-  const alignmentClasses = {
+  const alignClasses = {
     left: 'text-left',
     center: 'text-center',
     right: 'text-right'
   }
 
-  // Highlight specific word if provided
-  const renderText = () => {
-    if (!highlightWord || !text.includes(highlightWord)) {
-      return text
-    }
-
-    const parts = text.split(highlightWord)
-    return (
-      <>
-        {parts[0]}
-        <span className="text-vexl-yellow relative">
-          {highlightWord}
-          <span className="absolute bottom-0 left-0 w-full h-2 bg-vexl-yellow"></span>
-        </span>
-        {parts.slice(1).join(highlightWord)}
-      </>
+  const highlightText = (text: string) => {
+    if (!highlightWord) return text
+    const parts = text.split(new RegExp(`(${highlightWord})`, 'gi'))
+    return parts.map((part, i) => 
+      part.toLowerCase() === highlightWord.toLowerCase() 
+        ? <span key={i} className="text-vexl-yellow">{part}</span>
+        : part
     )
   }
 
-  const content = (
-    <div className={`${alignmentClasses[alignment]} w-full`}>
-      <h1 
-        className={`${sizeClasses[size]} mb-4 leading-tight font-black`}
-        style={{ fontFamily: 'Monument Extended, sans-serif' }}
-      >
-        {renderText()}
+  return (
+    <div className={`w-full h-full flex flex-col justify-center p-4 ${alignClasses[alignment as keyof typeof alignClasses]}`}>
+      <h1 className={`font-bold text-white mb-2 ${sizeClasses[size as keyof typeof sizeClasses]}`}>
+        {highlightText(text)}
       </h1>
       {subtext && (
-        <p className="text-lg md:text-xl text-vexl-gray-400">
-          {subtext}
-        </p>
+        <p className="text-lg text-vexl-gray-400">{subtext}</p>
       )}
     </div>
-  )
-
-  if (!animate) return content
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
-      {content}
-    </motion.div>
   )
 }

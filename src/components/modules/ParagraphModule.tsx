@@ -1,16 +1,13 @@
+'use client'
+
 interface ParagraphModuleProps {
-  text?: string
-  config?: {
-    fontSize?: 'sm' | 'base' | 'lg' | 'xl'
-    columns?: number
-  }
+  config?: any
+  content?: any
 }
 
-export default function ParagraphModule({ 
-  text = 'Enter your paragraph text here...', 
-  config = {} 
-}: ParagraphModuleProps) {
-  const { fontSize = 'base', columns = 1 } = config
+export default function ParagraphModule({ config, content }: ParagraphModuleProps) {
+  const text = content?.text || 'Add your paragraph text here. You can write multiple lines of content that will be displayed beautifully.'
+  const fontSize = config?.fontSize || content?.fontSize || 'base'
 
   const sizeClasses = {
     sm: 'text-sm',
@@ -19,15 +16,11 @@ export default function ParagraphModule({
     xl: 'text-xl'
   }
 
-  const columnClasses = {
-    1: '',
-    2: 'md:columns-2 gap-8',
-    3: 'md:columns-3 gap-8'
-  }
-
   return (
-    <p className={`${sizeClasses[fontSize]} ${columnClasses[columns]} text-vexl-gray-300 leading-relaxed`}>
-      {text}
-    </p>
+    <div className="w-full h-full flex items-center justify-center p-4">
+      <p className={`text-white leading-relaxed ${sizeClasses[fontSize as keyof typeof sizeClasses]}`}>
+        {text}
+      </p>
+    </div>
   )
 }

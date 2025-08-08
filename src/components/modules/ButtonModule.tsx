@@ -1,22 +1,14 @@
-import { motion } from 'framer-motion'
-import { ExternalLink } from 'lucide-react'
+'use client'
 
 interface ButtonModuleProps {
-  text?: string
-  url?: string
-  config?: {
-    style?: 'primary' | 'secondary' | 'outline'
-    size?: 'small' | 'medium' | 'large'
-    fullWidth?: boolean
-  }
+  config?: any
+  content?: any
 }
 
-export default function ButtonModule({ 
-  text = 'Click Here', 
-  url = '#',
-  config = {} 
-}: ButtonModuleProps) {
-  const { style = 'primary', size = 'large', fullWidth = false } = config
+export default function ButtonModule({ config, content }: ButtonModuleProps) {
+  const text = content?.text || 'Click Here'
+  const url = content?.url || '#'
+  const style = config?.style || content?.style || 'primary'
 
   const styleClasses = {
     primary: 'bg-vexl-yellow text-black hover:bg-vexl-yellow/90',
@@ -24,34 +16,14 @@ export default function ButtonModule({
     outline: 'border-2 border-vexl-yellow text-vexl-yellow hover:bg-vexl-yellow hover:text-black'
   }
 
-  const sizeClasses = {
-    small: 'px-4 py-2 text-sm',
-    medium: 'px-6 py-3 text-base',
-    large: 'px-8 py-4 text-lg'
-  }
-
-  const handleClick = () => {
-    if (url.startsWith('http')) {
-      window.open(url, '_blank')
-    } else {
-      window.location.href = url
-    }
-  }
-
   return (
-    <motion.button
-      onClick={handleClick}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className={`
-        ${styleClasses[style]} 
-        ${sizeClasses[size]} 
-        ${fullWidth ? 'w-full' : ''} 
-        rounded-lg font-bold transition-colors flex items-center justify-center space-x-2
-      `}
-    >
-      <span>{text}</span>
-      {url.startsWith('http') && <ExternalLink className="w-4 h-4" />}
-    </motion.button>
+    <div className="w-full h-full flex items-center justify-center p-4">
+      <button
+        onClick={() => url !== '#' && window.open(url, '_blank')}
+        className={`px-8 py-4 font-bold rounded-lg transition-all transform hover:scale-105 ${styleClasses[style as keyof typeof styleClasses]}`}
+      >
+        {text}
+      </button>
+    </div>
   )
 }

@@ -563,10 +563,37 @@ export default function SlideBuilderV2() {
                     {field.type === 'text' && (
                       <input
                         type="text"
-                        value={selectedModuleInstance.content[field.key] || ''}
+                        value={selectedModuleInstance.content[field.key] || selectedModuleInstance.config[field.key] || ''}
                         onChange={(e) => handleUpdateModule({
                           ...selectedModuleInstance,
-                          content: { ...selectedModuleInstance.content, [field.key]: e.target.value }
+                          content: { ...selectedModuleInstance.content, [field.key]: e.target.value },
+                          config: { ...selectedModuleInstance.config, [field.key]: e.target.value }
+                        })}
+                        placeholder={field.placeholder}
+                        className="w-full px-2 py-1 bg-vexl-gray-800 text-white rounded text-sm"
+                      />
+                    )}
+                    {field.type === 'textarea' && (
+                      <textarea
+                        value={selectedModuleInstance.content[field.key] || selectedModuleInstance.config[field.key] || ''}
+                        onChange={(e) => handleUpdateModule({
+                          ...selectedModuleInstance,
+                          content: { ...selectedModuleInstance.content, [field.key]: e.target.value },
+                          config: { ...selectedModuleInstance.config, [field.key]: e.target.value }
+                        })}
+                        placeholder={field.placeholder}
+                        rows={3}
+                        className="w-full px-2 py-1 bg-vexl-gray-800 text-white rounded text-sm"
+                      />
+                    )}
+                    {field.type === 'number' && (
+                      <input
+                        type="number"
+                        value={selectedModuleInstance.content[field.key] || selectedModuleInstance.config[field.key] || ''}
+                        onChange={(e) => handleUpdateModule({
+                          ...selectedModuleInstance,
+                          content: { ...selectedModuleInstance.content, [field.key]: parseInt(e.target.value) },
+                          config: { ...selectedModuleInstance.config, [field.key]: parseInt(e.target.value) }
                         })}
                         placeholder={field.placeholder}
                         className="w-full px-2 py-1 bg-vexl-gray-800 text-white rounded text-sm"
@@ -574,21 +601,39 @@ export default function SlideBuilderV2() {
                     )}
                     {field.type === 'boolean' && (
                       <button
-                        onClick={() => handleUpdateModule({
-                          ...selectedModuleInstance,
-                          content: { 
-                            ...selectedModuleInstance.content, 
-                            [field.key]: !selectedModuleInstance.content[field.key] 
-                          }
-                        })}
+                        onClick={() => {
+                          const currentValue = selectedModuleInstance.content[field.key] ?? selectedModuleInstance.config[field.key] ?? false
+                          handleUpdateModule({
+                            ...selectedModuleInstance,
+                            content: { ...selectedModuleInstance.content, [field.key]: !currentValue },
+                            config: { ...selectedModuleInstance.config, [field.key]: !currentValue }
+                          })
+                        }}
                         className={`px-3 py-1 rounded text-sm ${
-                          selectedModuleInstance.content[field.key] 
+                          (selectedModuleInstance.content[field.key] ?? selectedModuleInstance.config[field.key])
                             ? 'bg-vexl-yellow text-black' 
                             : 'bg-vexl-gray-800 text-white'
                         }`}
                       >
-                        {selectedModuleInstance.content[field.key] ? 'On' : 'Off'}
+                        {(selectedModuleInstance.content[field.key] ?? selectedModuleInstance.config[field.key]) ? 'On' : 'Off'}
                       </button>
+                    )}
+                    {field.type === 'select' && (
+                      <select
+                        value={selectedModuleInstance.content[field.key] || selectedModuleInstance.config[field.key] || ''}
+                        onChange={(e) => handleUpdateModule({
+                          ...selectedModuleInstance,
+                          content: { ...selectedModuleInstance.content, [field.key]: e.target.value },
+                          config: { ...selectedModuleInstance.config, [field.key]: e.target.value }
+                        })}
+                        className="w-full px-2 py-1 bg-vexl-gray-800 text-white rounded text-sm"
+                      >
+                        {field.options?.map((option: any) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
                     )}
                   </div>
                 ))}

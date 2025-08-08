@@ -126,7 +126,7 @@ function ConfigPanel({ asset, onSave, onClose }: any) {
             ) : (
               <input
                 type="text"
-                value={value}
+                value={value as string}
                 onChange={(e) => setConfig({ ...config, [key]: e.target.value })}
                 className="w-full px-3 py-2 bg-vexl-gray-800 text-white rounded"
               />

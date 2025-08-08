@@ -36,7 +36,7 @@ interface NetworkVisualizationProps {
 export default function NetworkVisualization({ config, width = 600, height = 400 }: NetworkVisualizationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [hoveredNode, setHoveredNode] = useState<string | null>(null)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number>(0)
   const timeRef = useRef(0)
 
   const defaultNodes: Node[] = [

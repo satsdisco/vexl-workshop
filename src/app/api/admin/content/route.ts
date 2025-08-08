@@ -1,51 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { PrismaClient } from '@prisma/client';
 import { defaultContent } from '@/data/defaultContent';
 
-// In-memory storage for Vercel deployment
-let inMemoryContent: any = null;
-
-const CONTENT_FILE = path.join(process.cwd(), 'public', 'content.json');
-const IS_VERCEL = process.env.VERCEL === '1';
-
-async function getContent() {
-  // Use in-memory storage on Vercel
-  if (IS_VERCEL) {
-    return inMemoryContent || defaultContent;
-  }
-  
-  // Use file system locally
-  try {
-    const data = await fs.readFile(CONTENT_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch (error) {
-    return defaultContent;
-  }
-}
-
-async function saveContent(content: any) {
-  // Use in-memory storage on Vercel
-  if (IS_VERCEL) {
-    inMemoryContent = content;
-    return;
-  }
-  
-  // Use file system locally
-  const dir = path.dirname(CONTENT_FILE);
-  try {
-    await fs.access(dir);
-  } catch {
-    await fs.mkdir(dir, { recursive: true });
-  }
-  await fs.writeFile(CONTENT_FILE, JSON.stringify(content, null, 2));
-}
+const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
   try {
-    const content = await getContent();
-    return NextResponse.json({ success: true, content });
+    // Get all content from database
+    const contents = await prisma.content.findMany();
+    
+    // Convert array to object keyed by sectionId
+    const contentMap: any = {};
+    contents.forEach(item => {
+      contentMap[item.sectionId] = item.data;
+    });
+    
+    // Merge with defaults for any missing sections
+    const fullContent = {
+      ...defaultContent,
+      ...contentMap
+    };
+    
+    return NextResponse.json({ 
+      success: true, 
+      content: fullContent 
+    });
   } catch (error) {
+    console.error('Error loading content:', error);
     return NextResponse.json({ 
       success: false, 
       error: 'Failed to load content',
@@ -56,7 +37,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    // Simple auth check - verify token exists
+    // Simple auth check
     const authHeader = request.headers.get('authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json({ 
@@ -71,21 +52,26 @@ export async function POST(request: NextRequest) {
     // Handle the content - it should be the full content object
     const contentToSave = body.content || body;
     
-    // Load existing content
-    const existingContent = await getContent();
+    // Save each section to database
+    const updates = [];
+    for (const [sectionId, data] of Object.entries(contentToSave)) {
+      if (typeof data === 'object' && data !== null) {
+        updates.push(
+          prisma.content.upsert({
+            where: { sectionId },
+            update: { data },
+            create: { sectionId, data }
+          })
+        );
+      }
+    }
     
-    // Merge with existing content
-    const mergedContent = {
-      ...existingContent,
-      ...contentToSave
-    };
-    
-    await saveContent(mergedContent);
+    // Execute all updates
+    await Promise.all(updates);
     
     return NextResponse.json({ 
       success: true, 
-      message: 'Content saved successfully',
-      content: mergedContent
+      message: 'Content saved successfully'
     });
   } catch (error) {
     console.error('Error saving content:', error);
@@ -99,8 +85,18 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    // Reset to default content
-    await fs.unlink(CONTENT_FILE).catch(() => {});
+    // Simple auth check
+    const authHeader = request.headers.get('authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Unauthorized' 
+      }, { status: 401 });
+    }
+    
+    // Delete all content to reset to defaults
+    await prisma.content.deleteMany({});
+    
     return NextResponse.json({ 
       success: true, 
       message: 'Content reset to defaults' 

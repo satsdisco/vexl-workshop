@@ -24,10 +24,11 @@ export default function UniversalEditableSection({
 
     const handleClick = (e: MouseEvent) => {
       e.stopPropagation()
+      e.preventDefault()
       const target = e.target as HTMLElement
       
       // Check if the element contains text and is not already being edited
-      if (target.textContent && !target.contentEditable) {
+      if (target.textContent && target.contentEditable !== 'true') {
         makeEditable(target)
       }
     }

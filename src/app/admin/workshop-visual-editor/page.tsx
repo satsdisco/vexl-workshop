@@ -23,7 +23,7 @@ const ClubsSection = dynamic(() => import('@/components/sections/ClubsSection'))
 const DemoSection = dynamic(() => import('@/components/sections/DemoSection'))
 const VisionSection = dynamic(() => import('@/components/sections/VisionSection'))
 const GetStartedSection = dynamic(() => import('@/components/sections/GetStartedSection'))
-const UniversalEditableSection = dynamic(() => import('@/components/sections/UniversalEditableSection'))
+const SimpleEditableSection = dynamic(() => import('@/components/sections/SimpleEditableSection'))
 
 // Section configuration
 const SECTIONS = [
@@ -643,7 +643,7 @@ export default function WorkshopVisualEditor() {
             {/* Force refresh of section by updating CMS content */}
             <div className="min-h-screen flex items-center justify-center p-8">
               {editMode ? (
-                <UniversalEditableSection
+                <SimpleEditableSection
                   sectionId={currentSection.id}
                   content={getValue(currentSection.id, '', {})}
                   onUpdate={(key, value) => {
@@ -668,7 +668,7 @@ export default function WorkshopVisualEditor() {
                   editMode={editMode}
                 >
                   <currentSection.component />
-                </UniversalEditableSection>
+                </SimpleEditableSection>
               ) : (
                 <currentSection.component />
               )}

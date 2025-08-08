@@ -74,7 +74,27 @@ const SECTIONS = [
           { icon: '🛡️', title: 'YOUR HISTORY STAYS YOURS', description: 'Your trading history belongs to you, not our database.' },
           { icon: '✓', title: 'VERIFY EVERYTHING', description: 'Open source means you can verify we\'re not tracking you.' }
         ]
-      }
+      },
+      {
+        key: 'contactCategories',
+        label: 'Contact Import Categories',
+        type: 'array',
+        fields: [
+          { key: 'icon', label: 'Icon', type: 'text' },
+          { key: 'name', label: 'Category Name', type: 'text' },
+          { key: 'description', label: 'Description', type: 'text' },
+          { key: 'count', label: 'Contact Count', type: 'text' }
+        ],
+        default: [
+          { icon: '👥', name: 'Close Friends', description: 'Your inner circle', count: '~5 contacts → 10 network reach' },
+          { icon: '🤝', name: 'Acquaintances', description: 'People you know casually', count: '~20 contacts → 60 network reach' },
+          { icon: '🛠️', name: 'Service Providers', description: 'Barber, mechanic, cleaner', count: '~15 contacts → 75 network reach' },
+          { icon: '🏪', name: 'Local Businesses', description: 'Shops, restaurants, cafes', count: '~25 contacts → 100 network reach' },
+          { icon: '🏘️', name: 'Community Groups', description: 'Gym, clubs, meetups', count: '~30 contacts → 180 network reach' }
+        ]
+      },
+      { key: 'warningTitle', label: 'Warning Title', type: 'text', default: 'Limited Network Warning' },
+      { key: 'warningMessage', label: 'Warning Message', type: 'textarea', default: 'Only importing close friends severely limits your trading opportunities. Your barber might be the bridge to 50+ bitcoin traders!' }
     ]
   }
 ]
@@ -108,14 +128,31 @@ export default function WorkshopVisualEditor() {
         const data = await response.json()
         const contentMap: Record<string, any> = {}
         
-        data.content.forEach((item: any) => {
-          contentMap[item.sectionId] = item.content
-        })
+        // Handle both array and object responses
+        if (Array.isArray(data.content)) {
+          data.content.forEach((item: any) => {
+            contentMap[item.sectionId] = item.content
+          })
+        } else if (data.content) {
+          // If it's a single object, use it directly
+          Object.keys(data.content).forEach(key => {
+            contentMap[key] = data.content[key]
+          })
+        }
         
         setSectionContent(contentMap)
       }
     } catch (error) {
       console.error('Error loading content:', error)
+      // Set default content if loading fails
+      const defaultContent: Record<string, any> = {}
+      SECTIONS.forEach(section => {
+        defaultContent[section.id] = {}
+        section.fields.forEach(field => {
+          defaultContent[section.id][field.key] = field.default
+        })
+      })
+      setSectionContent(defaultContent)
     } finally {
       setLoading(false)
     }

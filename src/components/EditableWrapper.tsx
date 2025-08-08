@@ -6,7 +6,7 @@ import { Edit2 } from 'lucide-react'
 interface EditableWrapperProps {
   value: string
   onChange: (value: string) => void
-  tag?: keyof JSX.IntrinsicElements
+  tag?: keyof React.JSX.IntrinsicElements
   className?: string
   children?: React.ReactNode
   editMode?: boolean

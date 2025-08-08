@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { 
   Save, RefreshCw, Eye, LogOut, Settings, 
-  Sparkles, Home, Monitor, Sliders, 
+  Sparkles, Home, Monitor, Sliders, Layers,
   ToggleLeft, ToggleRight, ChevronDown, ChevronRight,
   Code, Users, MessageSquare, Map, QrCode, Network
 } from 'lucide-react'
@@ -195,6 +195,14 @@ export default function WorkshopAdmin() {
             </div>
             
             <div className="flex items-center space-x-4">
+              <button
+                onClick={() => router.push('/admin/slide-builder')}
+                className="flex items-center space-x-2 px-4 py-2 text-vexl-gray-400 hover:text-white transition-colors"
+              >
+                <Layers className="w-4 h-4" />
+                <span>Slide Builder</span>
+              </button>
+              
               <button
                 onClick={() => window.open('/', '_blank')}
                 className="flex items-center space-x-2 px-4 py-2 text-vexl-gray-400 hover:text-white transition-colors"

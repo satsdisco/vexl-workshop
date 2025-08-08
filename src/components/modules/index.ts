@@ -1,0 +1,16 @@
+// Module placeholder components - will be replaced with full implementations
+
+export { default as ParagraphModule } from './ParagraphModule'
+export { default as QuoteModule } from './QuoteModule'
+export { default as MarketMapModule } from './MarketMapModule'
+export { default as HashingVizModule } from './HashingVizModule'
+export { default as QRScannerModule } from './QRScannerModule'
+export { default as ContactImporterModule } from './ContactImporterModule'
+export { default as ImageModule } from './ImageModule'
+export { default as VideoModule } from './VideoModule'
+export { default as IconModule } from './IconModule'
+export { default as ComparisonModule } from './ComparisonModule'
+export { default as ChartModule } from './ChartModule'
+export { default as TimelineModule } from './TimelineModule'
+export { default as CodeBlockModule } from './CodeBlockModule'
+export { default as ButtonModule } from './ButtonModule'

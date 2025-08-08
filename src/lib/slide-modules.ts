@@ -477,6 +477,62 @@ export const availableModules: SlideModule[] = [
         { value: 'outline', label: 'Outline' }
       ]}
     ]
+  },
+  {
+    id: 'network-visualization',
+    type: 'networkVisualization',
+    name: 'Network Visualization',
+    description: 'Interactive trust network web',
+    icon: '🕸️',
+    category: 'interactive',
+    defaultConfig: {
+      showLabels: true,
+      animated: true,
+      interactive: true
+    },
+    editableFields: [
+      { key: 'showLabels', label: 'Show Labels', type: 'boolean' },
+      { key: 'animated', label: 'Animated', type: 'boolean' },
+      { key: 'interactive', label: 'Interactive', type: 'boolean' }
+    ]
+  },
+  {
+    id: 'contact-import-demo',
+    type: 'contactImportDemo',
+    name: 'Contact Import Demo',
+    description: 'Interactive contact categorization',
+    icon: '📲',
+    category: 'interactive',
+    defaultConfig: {
+      showWarning: true
+    },
+    editableFields: [
+      { key: 'showWarning', label: 'Show Warning', type: 'boolean' },
+      { key: 'warningMessage', label: 'Warning Message', type: 'text', placeholder: 'Custom warning text...' }
+    ]
+  },
+  {
+    id: 'phone-mockup',
+    type: 'phoneMockup',
+    name: 'Phone Mockup',
+    description: 'iPhone with app screens',
+    icon: '📱',
+    category: 'visual',
+    defaultConfig: {
+      device: 'iphone14pro',
+      screen: 'offer-feed',
+      angle: 0
+    },
+    editableFields: [
+      { key: 'screen', label: 'Screen', type: 'select', options: [
+        { value: 'offer-feed', label: 'Offer Feed' },
+        { value: 'common-friends', label: 'Common Friends' },
+        { value: 'chat', label: 'Chat' },
+        { value: 'network', label: 'Network' }
+      ]},
+      { key: 'angle', label: 'Rotation Angle', type: 'number', placeholder: '0' },
+      { key: 'scale', label: 'Scale', type: 'number', placeholder: '1' }
+    ]
   }
 ]
 

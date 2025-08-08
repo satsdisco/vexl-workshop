@@ -11,6 +11,7 @@ import VexlLogo from '@/components/VexlLogo'
 import { availableModules, slideLayouts, SlideConfig, ModuleInstance } from '@/lib/slide-modules'
 import { DndProvider, useDrag, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import ModuleRenderer from '@/components/modules/ModuleRenderer'
 
 // Module palette item component
 function ModulePaletteItem({ module }: { module: any }) {
@@ -86,24 +87,16 @@ function SlideCanvas({ slide, onUpdateModule, onDeleteModule, selectedModule, on
               height: `${moduleInstance.position.height}%`
             }}
           >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-2xl">{module.icon}</span>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onDeleteModule(moduleInstance.id)
-                }}
-                className="text-red-500 hover:text-red-400"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="text-sm font-medium text-white">{module.name}</div>
-            {moduleInstance.content.text && (
-              <div className="text-xs text-vexl-gray-400 mt-1 truncate">
-                {moduleInstance.content.text}
-              </div>
-            )}
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onDeleteModule(moduleInstance.id)
+              }}
+              className="absolute top-2 right-2 text-red-500 hover:text-red-400 z-10"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+            <ModuleRenderer moduleInstance={moduleInstance} moduleType={module.type} />
           </div>
         )
       })}

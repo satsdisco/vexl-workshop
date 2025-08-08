@@ -96,16 +96,16 @@ function EditableText({
     )
   }
 
-  const Tag = tag as keyof JSX.IntrinsicElements
+  const Component = tag as any
 
   return (
-    <Tag
+    <Component
       onClick={() => setIsEditing(true)}
       className={`cursor-pointer hover:bg-vexl-yellow/10 transition-colors rounded px-2 py-1 ${className}`}
       style={style}
     >
       {value || <span className="opacity-50">{placeholder}</span>}
-    </Tag>
+    </Component>
   )
 }
 

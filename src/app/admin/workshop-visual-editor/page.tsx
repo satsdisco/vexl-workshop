@@ -13,9 +13,17 @@ import VexlLogo from '@/components/VexlLogo'
 // Import actual sections to preview
 import dynamic from 'next/dynamic'
 const HookSection = dynamic(() => import('@/components/sections/HookSection'))
-const EditableHookSection = dynamic(() => import('@/components/sections/EditableHookSection'))
+const PitchSection = dynamic(() => import('@/components/sections/PitchSection'))
 const TrustSection = dynamic(() => import('@/components/sections/TrustSection'))
 const PrivacySection = dynamic(() => import('@/components/sections/PrivacySection'))
+const ProfileSetupSection = dynamic(() => import('@/components/sections/ProfileSetupSection'))
+const FindingOffersSection = dynamic(() => import('@/components/sections/FindingOffersSection'))
+const ContactTradingSection = dynamic(() => import('@/components/sections/ContactTradingSection'))
+const ClubsSection = dynamic(() => import('@/components/sections/ClubsSection'))
+const DemoSection = dynamic(() => import('@/components/sections/DemoSection'))
+const VisionSection = dynamic(() => import('@/components/sections/VisionSection'))
+const GetStartedSection = dynamic(() => import('@/components/sections/GetStartedSection'))
+const UniversalEditableSection = dynamic(() => import('@/components/sections/UniversalEditableSection'))
 
 // Section configuration
 const SECTIONS = [
@@ -39,6 +47,33 @@ const SECTIONS = [
           { id: 'stat1', value: '500M+', label: 'KYC records leaked in crypto exchange hacks' },
           { id: 'stat2', value: '100%', label: 'of your transactions tracked forever' },
           { id: 'stat3', value: '0', label: 'privacy once you\'re in the system' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'pitchSection',
+    name: 'Vexl Pitch',
+    component: PitchSection,
+    fields: [
+      { key: 'title', label: 'Main Title', type: 'text', default: 'Your social network.' },
+      { key: 'subtitle', label: 'Subtitle', type: 'text', default: 'With a Bitcoin layer.' },
+      { key: 'description', label: 'Description', type: 'textarea', default: "Vexl isn't a marketplace - it's the strongest network that already exists: your phone contacts" },
+      {
+        key: 'items',
+        label: 'Pitch Items',
+        type: 'array',
+        fields: [
+          { key: 'title', label: 'Title', type: 'text' },
+          { key: 'content', label: 'Content', type: 'textarea' }
+        ],
+        default: [
+          { id: 'what', title: 'What?', content: 'Your existing social network, enhanced with bitcoin trading.' },
+          { id: 'why', title: 'Why?', content: 'Bitcoin as Satoshi intended - peer-to-peer, no middlemen.' },
+          { id: 'who', title: 'Who?', content: 'Open source, community-funded. Built for humans who value trust.' },
+          { id: 'when', title: 'When?', content: 'Available now. Free forever. No KYC because we\'re not a business.' },
+          { id: 'where', title: 'Where?', content: 'Wherever people want to trade bitcoin for cash.' },
+          { id: 'how', title: 'How?', content: 'Import contacts. Find traders. Build trust.' }
         ]
       }
     ]
@@ -96,6 +131,144 @@ const SECTIONS = [
       },
       { key: 'warningTitle', label: 'Warning Title', type: 'text', default: 'Limited Network Warning' },
       { key: 'warningMessage', label: 'Warning Message', type: 'textarea', default: 'Only importing close friends severely limits your trading opportunities. Your barber might be the bridge to 50+ bitcoin traders!' }
+    ]
+  },
+  {
+    id: 'profileSetupSection',
+    name: 'Profile Setup',
+    component: ProfileSetupSection,
+    fields: [
+      { key: 'title', label: 'Main Title', type: 'text', default: 'Your profile, your rules' },
+      { key: 'subtitle', label: 'Subtitle', type: 'text', default: 'As private or public as you want' },
+      {
+        key: 'items',
+        label: 'Setup Steps',
+        type: 'array',
+        fields: [
+          { key: 'title', label: 'Title', type: 'text' },
+          { key: 'content', label: 'Content', type: 'textarea' }
+        ],
+        default: [
+          { id: 'step1', title: 'Choose your identity', content: 'Real name for friends, pseudonym for extended network' },
+          { id: 'step2', title: 'Set your preferences', content: 'Buy, sell, or both. Your terms.' },
+          { id: 'step3', title: 'Control visibility', content: 'Decide who sees your offers' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'findingOffersSection',
+    name: 'Finding Offers',
+    component: FindingOffersSection,
+    fields: [
+      { key: 'title', label: 'Main Title', type: 'text', default: 'Find offers instantly' },
+      { key: 'subtitle', label: 'Subtitle', type: 'text', default: 'From people you can actually trust' },
+      {
+        key: 'items',
+        label: 'Filter Options',
+        type: 'array',
+        fields: [
+          { key: 'title', label: 'Title', type: 'text' },
+          { key: 'content', label: 'Content', type: 'text' }
+        ],
+        default: [
+          { id: 'filter1', title: '1st degree', content: 'Your direct contacts' },
+          { id: 'filter2', title: '2nd degree', content: 'Friends of friends' },
+          { id: 'filter3', title: 'Location-based', content: 'Find traders near you' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'contactTradingSection',
+    name: 'Contact Trading',
+    component: ContactTradingSection,
+    fields: [
+      { key: 'title', label: 'Main Title', type: 'text', default: 'Trade on your terms' },
+      { key: 'subtitle', label: 'Subtitle', type: 'text', default: "You're in control of every interaction" },
+      {
+        key: 'items',
+        label: 'Features',
+        type: 'array',
+        fields: [
+          { key: 'title', label: 'Title', type: 'text' },
+          { key: 'content', label: 'Content', type: 'text' }
+        ],
+        default: [
+          { id: 'feature1', title: 'Encrypted chat', content: 'Negotiate privately' },
+          { id: 'feature2', title: 'Flexible payments', content: 'Cash, bank transfer, whatever works' },
+          { id: 'feature3', title: 'No middleman', content: 'Direct peer-to-peer trades' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'clubsSection',
+    name: 'Vexl Clubs',
+    component: ClubsSection,
+    fields: [
+      { key: 'title', label: 'Main Title', type: 'text', default: 'Vexl Clubs' },
+      { key: 'subtitle', label: 'Subtitle', type: 'text', default: 'Extend your network strategically' },
+      { key: 'description', label: 'Description', type: 'textarea', default: 'Join communities aligned with your values' },
+      {
+        key: 'items',
+        label: 'Club Types',
+        type: 'array',
+        fields: [
+          { key: 'title', label: 'Title', type: 'text' },
+          { key: 'content', label: 'Content', type: 'text' }
+        ],
+        default: [
+          { id: 'club1', title: 'Location clubs', content: 'Prague Bitcoiners, Austin Node Runners' },
+          { id: 'club2', title: 'Interest clubs', content: 'Privacy Maximalists, Lightning Network' },
+          { id: 'club3', title: 'Event clubs', content: 'Conference attendees, Meetup groups' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'demoSection',
+    name: 'Live Demo',
+    component: DemoSection,
+    fields: [
+      { key: 'title', label: 'Main Title', type: 'text', default: 'See it in action' },
+      { key: 'subtitle', label: 'Subtitle', type: 'text', default: "Let's do a live demo" },
+      { key: 'description', label: 'Description', type: 'textarea', default: 'Watch how easy it is to find and complete a trade' }
+    ]
+  },
+  {
+    id: 'visionSection',
+    name: 'Vision',
+    component: VisionSection,
+    fields: [
+      { key: 'title', label: 'Main Title', type: 'text', default: 'Your network is your net worth' },
+      { key: 'subtitle', label: 'Subtitle', type: 'text', default: 'Build local circular economies' },
+      { key: 'description', label: 'Description', type: 'textarea', default: 'Imagine your whole neighborhood trading directly' },
+      {
+        key: 'items',
+        label: 'Vision Points',
+        type: 'array',
+        fields: [
+          { key: 'title', label: 'Title', type: 'text' },
+          { key: 'content', label: 'Content', type: 'text' }
+        ],
+        default: [
+          { id: 'vision1', title: 'Local first', content: 'Strengthen community bonds through trade' },
+          { id: 'vision2', title: 'Circular economy', content: 'Keep value in your community' },
+          { id: 'vision3', title: 'Financial sovereignty', content: 'No permission needed to transact' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'getStartedSection',
+    name: 'Get Started',
+    component: GetStartedSection,
+    fields: [
+      { key: 'title', label: 'Main Title', type: 'text', default: 'Ready to join the revolution?' },
+      { key: 'subtitle', label: 'Subtitle', type: 'text', default: 'Get Vexl. Import contacts. Start trading.' },
+      { key: 'cta', label: 'Call to Action', type: 'text', default: 'Download Vexl' },
+      { key: 'description', label: 'Description', type: 'text', default: 'Available on iOS and Android' }
     ]
   }
 ]
@@ -268,6 +441,14 @@ export default function WorkshopVisualEditor() {
       })
       
       setHasUnsavedChanges(false)
+      
+      // Trigger revalidation to update the main site
+      await fetch('/api/revalidate', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('vexl-admin-token')}`
+        }
+      })
       
     } catch (error) {
       console.error('Error saving content:', error)
@@ -461,12 +642,33 @@ export default function WorkshopVisualEditor() {
           <div className={`${devicePreview === 'mobile' ? 'max-w-md mx-auto' : ''} min-h-screen`}>
             {/* Force refresh of section by updating CMS content */}
             <div className="min-h-screen flex items-center justify-center p-8">
-              {editMode && currentSection.id === 'hookSection' ? (
-                <EditableHookSection
+              {editMode ? (
+                <UniversalEditableSection
+                  sectionId={currentSection.id}
                   content={getValue(currentSection.id, '', {})}
-                  onUpdate={(key, value) => updateField(currentSection.id, key, value)}
+                  onUpdate={(key, value) => {
+                    // Handle nested updates for arrays
+                    if (key.includes('.')) {
+                      const parts = key.split('.')
+                      const field = parts[0]
+                      const index = parseInt(parts[1])
+                      const subfield = parts[2]
+                      
+                      if (field === 'stats' || field === 'items') {
+                        const current = getValue(currentSection.id, field, [])
+                        const updated = [...current]
+                        if (!updated[index]) updated[index] = {}
+                        updated[index][subfield] = value
+                        updateField(currentSection.id, field, updated)
+                      }
+                    } else {
+                      updateField(currentSection.id, key, value)
+                    }
+                  }}
                   editMode={editMode}
-                />
+                >
+                  <currentSection.component />
+                </UniversalEditableSection>
               ) : (
                 <currentSection.component />
               )}

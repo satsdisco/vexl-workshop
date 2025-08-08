@@ -65,8 +65,16 @@ export default function DropZoneEditor({
         addComponent('NetworkVisualization')
       } else if (asset.id === 'phone-mockup') {
         addComponent('PhoneMockup')
+      } else if (asset.id === 'two-column' || asset.id === 'three-column') {
+        addLayout(asset.id)
+      } else if (asset.id === 'quote') {
+        addTextElement('blockquote', asset.defaultContent?.text || 'New quote')
       } else {
         console.log('Unknown asset type:', asset.id)
+        // Try to add as generic element
+        if (asset.defaultContent) {
+          addTextElement('div', JSON.stringify(asset.defaultContent))
+        }
       }
     } catch (error) {
       console.error('Error handling drop:', error)
@@ -106,6 +114,16 @@ export default function DropZoneEditor({
       onUpdate('components', newComponents)
     } else {
       onUpdate('components', [{ type: componentName, id: Date.now() }])
+    }
+  }
+
+  const addLayout = (layoutType: string) => {
+    if (content.layouts) {
+      const newLayouts = [...content.layouts]
+      newLayouts.push({ type: layoutType, id: Date.now() })
+      onUpdate('layouts', newLayouts)
+    } else {
+      onUpdate('layouts', [{ type: layoutType, id: Date.now() }])
     }
   }
 

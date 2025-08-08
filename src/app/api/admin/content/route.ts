@@ -3,19 +3,35 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { defaultContent } from '@/data/defaultContent';
 
+// In-memory storage for Vercel deployment
+let inMemoryContent: any = null;
+
 const CONTENT_FILE = path.join(process.cwd(), 'public', 'content.json');
+const IS_VERCEL = process.env.VERCEL === '1';
 
 async function getContent() {
+  // Use in-memory storage on Vercel
+  if (IS_VERCEL) {
+    return inMemoryContent || defaultContent;
+  }
+  
+  // Use file system locally
   try {
     const data = await fs.readFile(CONTENT_FILE, 'utf-8');
     return JSON.parse(data);
   } catch (error) {
-    // Return default content if file doesn't exist
     return defaultContent;
   }
 }
 
 async function saveContent(content: any) {
+  // Use in-memory storage on Vercel
+  if (IS_VERCEL) {
+    inMemoryContent = content;
+    return;
+  }
+  
+  // Use file system locally
   const dir = path.dirname(CONTENT_FILE);
   try {
     await fs.access(dir);

@@ -19,9 +19,9 @@ export const masterTemplate = {
       ]
     },
     pitchSection: {
-      title: 'Your Social Network for Bitcoin',
-      subtitle: 'Trade P2P with people you can trust',
-      description: 'Vexl connects you with friends and friends of friends to trade Bitcoin without KYC, without fees, and without compromising your privacy.',
+      title: 'YOUR SOCIAL NETWORK.',
+      subtitle: 'WITH A BITCOIN LAYER.',
+      description: 'Vexl isn\'t a marketplace - it\'s the strongest network that already exists: your phone contacts',
       features: [
         'No KYC Required',
         'No Trading Fees',

@@ -31,8 +31,8 @@ export const defaultContent: SlideContent = {
   },
   
   pitchSection: {
-    title: "Your social network.",
-    subtitle: "With a Bitcoin layer.",
+    title: "YOUR SOCIAL NETWORK.",
+    subtitle: "WITH A BITCOIN LAYER.",
     description: "Vexl isn't a marketplace - it's the strongest network that already exists: your phone contacts",
     items: [
       { id: "what", title: "What?", content: "Your existing social network, enhanced with bitcoin trading. Every contact is a potential trade partner." },

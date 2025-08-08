@@ -23,7 +23,8 @@ const ClubsSection = dynamic(() => import('@/components/sections/ClubsSection'))
 const DemoSection = dynamic(() => import('@/components/sections/DemoSection'))
 const VisionSection = dynamic(() => import('@/components/sections/VisionSection'))
 const GetStartedSection = dynamic(() => import('@/components/sections/GetStartedSection'))
-const SimpleEditableSection = dynamic(() => import('@/components/sections/SimpleEditableSection'))
+const BetterEditableSection = dynamic(() => import('@/components/sections/BetterEditableSection'))
+const AssetLibraryPanel = dynamic(() => import('@/components/AssetLibraryPanel'))
 
 // Section configuration
 const SECTIONS = [
@@ -545,87 +546,15 @@ export default function WorkshopVisualEditor() {
 
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Edit Panel (left) */}
+        {/* Asset Library Panel (left) */}
         {editMode && (
-          <div className="w-96 bg-vexl-gray-900 border-r border-vexl-gray-800 p-4 overflow-y-auto">
-            <h3 className="text-sm font-semibold text-white mb-4">
-              Edit {currentSection.name} Content
-            </h3>
-            
-            <div className="space-y-4">
-              {currentSection.fields.map(field => (
-                <div key={field.key}>
-                  <label className="block text-xs text-vexl-gray-400 mb-1">
-                    {field.label}
-                  </label>
-                  
-                  {field.type === 'text' && (
-                    <input
-                      type="text"
-                      value={getValue(currentSection.id, field.key, field.default)}
-                      onChange={(e) => updateField(currentSection.id, field.key, e.target.value)}
-                      className="w-full px-3 py-2 bg-vexl-gray-800 text-white rounded"
-                    />
-                  )}
-                  
-                  {field.type === 'textarea' && (
-                    <textarea
-                      value={getValue(currentSection.id, field.key, field.default)}
-                      onChange={(e) => updateField(currentSection.id, field.key, e.target.value)}
-                      rows={3}
-                      className="w-full px-3 py-2 bg-vexl-gray-800 text-white rounded resize-none"
-                    />
-                  )}
-                  
-                  {field.type === 'array' && (
-                    <div className="space-y-2">
-                      {(getValue(currentSection.id, field.key, field.default) || []).map((item: any, index: number) => (
-                        <div key={index} className="bg-vexl-gray-800 p-3 rounded">
-                          <div className="flex justify-between items-start mb-2">
-                            <span className="text-xs text-vexl-gray-400">Item {index + 1}</span>
-                            <button
-                              onClick={() => removeArrayItem(currentSection.id, field.key, index)}
-                              className="text-red-500 hover:text-red-400"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                            </button>
-                          </div>
-                          {field.fields?.map(subField => (
-                            <div key={subField.key} className="mb-2">
-                              <label className="text-xs text-vexl-gray-500">{subField.label}</label>
-                              <input
-                                type="text"
-                                value={item[subField.key] || ''}
-                                onChange={(e) => updateArrayItem(
-                                  currentSection.id, 
-                                  field.key, 
-                                  index, 
-                                  subField.key, 
-                                  e.target.value
-                                )}
-                                className="w-full px-2 py-1 bg-vexl-gray-700 text-white rounded text-sm"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                      <button
-                        onClick={() => {
-                          const defaultItem: any = {}
-                          field.fields?.forEach(f => {
-                            defaultItem[f.key] = ''
-                          })
-                          addArrayItem(currentSection.id, field.key, defaultItem)
-                        }}
-                        className="w-full px-3 py-2 bg-vexl-yellow text-black rounded hover:bg-vexl-yellow/90 text-sm"
-                      >
-                        Add {field.label}
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+          <div className="w-80 bg-vexl-gray-900 border-r border-vexl-gray-800 overflow-hidden">
+            <AssetLibraryPanel
+              onAddAsset={(asset) => {
+                console.log('Add asset:', asset)
+                // TODO: Add asset to current section
+              }}
+            />
           </div>
         )}
 
@@ -643,7 +572,7 @@ export default function WorkshopVisualEditor() {
             {/* Force refresh of section by updating CMS content */}
             <div className="min-h-screen flex items-center justify-center p-8">
               {editMode ? (
-                <SimpleEditableSection
+                <BetterEditableSection
                   sectionId={currentSection.id}
                   content={getValue(currentSection.id, '', {})}
                   onUpdate={(key, value) => {
@@ -668,7 +597,7 @@ export default function WorkshopVisualEditor() {
                   editMode={editMode}
                 >
                   <currentSection.component />
-                </SimpleEditableSection>
+                </BetterEditableSection>
               ) : (
                 <currentSection.component />
               )}

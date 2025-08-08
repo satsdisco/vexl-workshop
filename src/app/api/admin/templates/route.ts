@@ -9,9 +9,8 @@ let templates: any[] = []
 export async function GET(request: NextRequest) {
   // Check authorization
   const authHeader = request.headers.get('authorization')
-  const token = authHeader?.replace('Bearer ', '')
   
-  if (!token || token !== process.env.ADMIN_TOKEN) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
@@ -31,9 +30,8 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   // Check authorization
   const authHeader = request.headers.get('authorization')
-  const token = authHeader?.replace('Bearer ', '')
   
-  if (!token || token !== process.env.ADMIN_TOKEN) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
@@ -162,9 +160,8 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   // Check authorization
   const authHeader = request.headers.get('authorization')
-  const token = authHeader?.replace('Bearer ', '')
   
-  if (!token || token !== process.env.ADMIN_TOKEN) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

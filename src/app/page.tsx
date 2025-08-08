@@ -122,9 +122,9 @@ export default function Home() {
               <VexlLogo />
               <div>
                 <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'Monument Extended' }}>
-                  Vexl Hub
+                  Vexl Studio
                 </h1>
-                <p className="text-sm text-vexl-gray-400">Educational Resources & Tools</p>
+                <p className="text-sm text-vexl-gray-400">Workshop & Presentation Toolkit</p>
               </div>
             </motion.div>
 
@@ -159,11 +159,11 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-5xl md:text-6xl font-bold text-white mb-6" style={{ fontFamily: 'Monument Extended' }}>
-              Welcome to <span className="text-vexl-yellow">Vexl Hub</span>
+              Welcome to <span className="text-vexl-yellow">Vexl Studio</span>
             </h2>
             <p className="text-xl text-vexl-gray-300 max-w-3xl mx-auto mb-8">
-              Your gateway to all Vexl educational resources, interactive presentations, 
-              brand assets, and community tools.
+              Your creative workspace for Vexl presentations, workshops, 
+              and educational materials.
             </p>
             <div className="flex items-center justify-center space-x-4">
               <Link

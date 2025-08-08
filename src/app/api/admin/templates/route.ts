@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
+import { masterTemplate } from '@/data/masterTemplate'
 
 const prisma = new PrismaClient()
 
@@ -151,6 +152,37 @@ export async function POST(request: NextRequest) {
         isActive: t.id === templateId
       }))
       return NextResponse.json({ success: true })
+    }
+  }
+
+  if (action === 'reset') {
+    // Reset to master default template
+    try {
+      // Apply master template sections to current workshop
+      const sections = masterTemplate.sections
+      
+      for (const [sectionId, sectionData] of Object.entries(sections)) {
+        await prisma.content.upsert({
+          where: { sectionId },
+          update: { data: sectionData as any },
+          create: { sectionId, data: sectionData as any }
+        })
+      }
+
+      // Update all templates to inactive
+      await prisma.template.updateMany({
+        data: { isActive: false }
+      })
+
+      return NextResponse.json({ 
+        success: true,
+        message: 'Workshop reset to master template'
+      })
+    } catch (error) {
+      console.error('Reset error:', error)
+      return NextResponse.json({ 
+        error: 'Failed to reset to master template' 
+      }, { status: 500 })
     }
   }
 

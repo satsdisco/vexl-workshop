@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { 
   Copy, Trash2, Edit3, Eye, Plus, Check,
   ArrowLeft, Download, Upload, Globe, Lock,
-  Calendar, User, Star, MoreVertical
+  Calendar, User, Star, MoreVertical, RotateCcw
 } from 'lucide-react'
 import VexlLogo from '@/components/VexlLogo'
 
@@ -155,6 +155,35 @@ export default function TemplatesPage() {
     }
   }
 
+  const resetToMaster = async () => {
+    if (!confirm('This will reset the workshop to the original master template. All current changes will be lost. Are you sure?')) return
+
+    try {
+      const response = await fetch('/api/admin/templates', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('vexl-admin-token')}`
+        },
+        body: JSON.stringify({
+          action: 'reset'
+        })
+      })
+
+      const data = await response.json()
+      
+      if (response.ok && data.success) {
+        showNotification('Workshop reset to master template successfully!')
+        await loadTemplates()
+      } else {
+        showNotification(data.error || 'Failed to reset', 'error')
+      }
+    } catch (error) {
+      console.error('Error resetting to master:', error)
+      showNotification('Failed to reset to master template', 'error')
+    }
+  }
+
   const showNotification = (message: string, type: 'success' | 'error' = 'success') => {
     const notification = document.createElement('div')
     notification.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg text-white shadow-lg z-50 ${
@@ -208,13 +237,24 @@ export default function TemplatesPage() {
               </div>
             </div>
             
-            <button
-              onClick={() => setShowCreateModal(true)}
-              className="flex items-center space-x-2 px-4 py-2 bg-vexl-yellow text-black rounded-lg hover:bg-vexl-yellow/90 transition-colors font-semibold"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Clone Current Workshop</span>
-            </button>
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={resetToMaster}
+                className="flex items-center space-x-2 px-4 py-2 bg-vexl-gray-800 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
+                title="Reset to original workshop content"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>Reset to Master</span>
+              </button>
+              
+              <button
+                onClick={() => setShowCreateModal(true)}
+                className="flex items-center space-x-2 px-4 py-2 bg-vexl-yellow text-black rounded-lg hover:bg-vexl-yellow/90 transition-colors font-semibold"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Clone Current Workshop</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

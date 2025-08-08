@@ -1,7 +1,4 @@
 import VexlLogo from '@/components/VexlLogo'
-import { motion } from 'framer-motion'
-import { Heart, Shield, Users } from 'lucide-react'
-import Image from 'next/image'
 import { useContent } from '@/hooks/useContent'
 
 export default function PitchSection() {
@@ -65,58 +62,6 @@ export default function PitchSection() {
         </div>
       </div>
 
-      {/* Community Funding Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="mt-16 p-8 bg-gradient-to-br from-vexl-yellow/10 via-transparent to-vexl-yellow/5 rounded-2xl border border-vexl-yellow/30"
-      >
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <Heart className="w-8 h-8 text-vexl-yellow" />
-            <h3 className="text-2xl" style={{ 
-              fontFamily: 'Monument Extended', 
-              fontWeight: 700,
-              color: '#FFFFFF'
-            }}>100% Community Funded</h3>
-            <Heart className="w-8 h-8 text-vexl-yellow" />
-          </div>
-          <p className="text-xl mb-6" style={{ color: '#D1D5DB' }}>
-            No VCs. No Surveillance. No Compromise.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <div className="text-center p-6 bg-vexl-gray-900/50 rounded-lg">
-            <Shield className="w-12 h-12 text-green-500 mx-auto mb-3" />
-            <h4 className="font-bold mb-2" style={{ color: '#FFFFFF' }}>Grants → Community</h4>
-            <p className="text-sm" style={{ color: '#9CA3AF' }}>
-              Started with HRF & OpenSats grants, now powered by users like you
-            </p>
-          </div>
-          <div className="text-center p-6 bg-vexl-gray-900/50 rounded-lg">
-            <Users className="w-12 h-12 text-blue-500 mx-auto mb-3" />
-            <h4 className="font-bold mb-2" style={{ color: '#FFFFFF' }}>Built by Bitcoiners</h4>
-            <p className="text-sm" style={{ color: '#9CA3AF' }}>
-              For Bitcoiners who value privacy and freedom above profits
-            </p>
-          </div>
-          <div className="text-center p-6 bg-vexl-gray-900/50 rounded-lg">
-            <Heart className="w-12 h-12 text-red-500 mx-auto mb-3" />
-            <h4 className="font-bold mb-2" style={{ color: '#FFFFFF' }}>Your Support Matters</h4>
-            <p className="text-sm" style={{ color: '#9CA3AF' }}>
-              Every contribution helps us stay independent and surveillance-free
-            </p>
-          </div>
-        </div>
-
-        <div className="text-center">
-          <p className="text-lg italic" style={{ color: '#D1D5DB' }}>
-            "This workshop exists because of donations from people like you"
-          </p>
-        </div>
-      </motion.div>
     </div>
   )
 }

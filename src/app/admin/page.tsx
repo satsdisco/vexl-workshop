@@ -26,26 +26,33 @@ export default function AdminDashboard() {
 
   const adminTools = [
     {
-      title: 'Workshop Visual Editor',
-      description: 'Edit workshop content with live preview',
+      title: 'Ultimate Slide Editor',
+      description: 'The best way to edit and create slides',
       icon: Edit3,
-      href: '/admin/workshop-visual-editor',
+      href: '/admin/ultimate-editor',
       color: 'bg-vexl-yellow',
       primary: true
     },
     {
+      title: 'Visual Editor (Classic)',
+      description: 'Original workshop content editor',
+      icon: Layers,
+      href: '/admin/workshop-visual-editor',
+      color: 'bg-vexl-green'
+    },
+    {
       title: 'Asset Library',
       description: 'Browse available components and modules',
-      icon: Layers,
+      icon: Palette,
       href: '/admin/assets',
-      color: 'bg-vexl-green'
+      color: 'bg-vexl-blue'
     },
     {
       title: 'View Workshop',
       description: 'Preview the live workshop presentation',
       icon: Eye,
       href: '/',
-      color: 'bg-vexl-blue',
+      color: 'bg-vexl-purple',
       external: true
     }
   ]

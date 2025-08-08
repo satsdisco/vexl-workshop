@@ -11,10 +11,10 @@ export function useCMSContent(sectionId: string) {
   useEffect(() => {
     const loadContent = async () => {
       try {
-        const response = await fetch('/api/admin/slides')
+        const response = await fetch('/api/admin/content')
         const data = await response.json()
         
-        if (data.success && data.content[sectionId]) {
+        if (data.success && data.content && data.content[sectionId]) {
           setContent(data.content[sectionId])
         }
       } catch (error) {
@@ -26,8 +26,8 @@ export function useCMSContent(sectionId: string) {
 
     loadContent()
     
-    // Auto-refresh every 5 seconds to see changes
-    const interval = setInterval(loadContent, 5000)
+    // Auto-refresh every 2 seconds to see changes quickly
+    const interval = setInterval(loadContent, 2000)
     return () => clearInterval(interval)
   }, [sectionId])
 

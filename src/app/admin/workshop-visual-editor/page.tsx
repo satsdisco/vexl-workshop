@@ -24,8 +24,8 @@ const SECTIONS = [
     component: HookSection,
     fields: [
       { key: 'title', label: 'Main Title', type: 'text', default: 'KYC is killing Bitcoin' },
-      { key: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Your network is your net worth. Start with the people you already trust.' },
-      { key: 'cta', label: 'Call to Action', type: 'text', default: "Let's Begin" },
+      { key: 'subtitle', label: 'Subtitle', type: 'textarea', default: "Every time you upload your ID to buy bitcoin, you're building the surveillance state." },
+      { key: 'cta', label: 'Call to Action', type: 'text', default: "There's a better way" },
       { 
         key: 'stats', 
         label: 'Statistics', 
@@ -35,9 +35,9 @@ const SECTIONS = [
           { key: 'label', label: 'Label', type: 'text' }
         ],
         default: [
-          { value: '93%', label: 'of Bitcoin trades tracked' },
-          { value: '1984', label: 'surveillance state' },
-          { value: 'P2P', label: 'is the solution' }
+          { id: 'stat1', value: '500M+', label: 'KYC records leaked in crypto exchange hacks' },
+          { id: 'stat2', value: '100%', label: 'of your transactions tracked forever' },
+          { id: 'stat3', value: '0', label: 'privacy once you\'re in the system' }
         ]
       }
     ]
@@ -175,9 +175,10 @@ export default function WorkshopVisualEditor() {
       const newArray = [...array]
       
       if (!newArray[index]) {
-        newArray[index] = {}
+        newArray[index] = { id: `${arrayKey}_${index}` }
       }
       
+      // Preserve the id field
       newArray[index] = {
         ...newArray[index],
         [field]: value
@@ -227,38 +228,34 @@ export default function WorkshopVisualEditor() {
     try {
       setSaving(true)
       
-      // Save each section's content
+      // Build the complete content object
+      const fullContent: Record<string, any> = {}
+      
       for (const section of SECTIONS) {
         const content = sectionContent[section.id] || {}
         
         // Merge with defaults
-        const fullContent: any = {}
+        const sectionData: any = {}
         section.fields.forEach(field => {
-          fullContent[field.key] = content[field.key] || field.default
+          sectionData[field.key] = content[field.key] || field.default
         })
         
-        await fetch('/api/admin/content', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('vexl-admin-token')}`
-          },
-          body: JSON.stringify({
-            sectionId: section.id,
-            content: fullContent
-          })
-        })
+        fullContent[section.id] = sectionData
       }
       
-      alert('Content saved successfully!')
-      
-      // Trigger refresh of the actual workshop
-      await fetch('/api/revalidate?path=/', {
+      // Save all content at once
+      await fetch('/api/admin/content', {
         method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('vexl-admin-token')}`
-        }
+        },
+        body: JSON.stringify({
+          content: fullContent
+        })
       })
+      
+      alert('Content saved successfully!')
       
     } catch (error) {
       console.error('Error saving content:', error)

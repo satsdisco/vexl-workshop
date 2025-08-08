@@ -6,7 +6,7 @@ import {
   Edit3, Save, Eye, EyeOff, Type, Plus, Trash2,
   ChevronLeft, ChevronRight, Monitor, Smartphone,
   Bold, Italic, AlignLeft, AlignCenter, AlignRight,
-  RefreshCw, Layers, Image
+  RefreshCw, Layers, Image, Layout
 } from 'lucide-react'
 import VexlLogo from '@/components/VexlLogo'
 
@@ -25,6 +25,7 @@ const VisionSection = dynamic(() => import('@/components/sections/VisionSection'
 const GetStartedSection = dynamic(() => import('@/components/sections/GetStartedSection'))
 const BetterEditableSection = dynamic(() => import('@/components/sections/BetterEditableSection'))
 const DropZoneEditor = dynamic(() => import('@/components/DropZoneEditor'))
+const ModularEditor = dynamic(() => import('@/components/ModularEditor'))
 const AssetLibraryPanel = dynamic(() => import('@/components/AssetLibraryPanel'))
 
 // Section configuration
@@ -279,6 +280,7 @@ export default function WorkshopVisualEditor() {
   const router = useRouter()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
   const [editMode, setEditMode] = useState(true)
+  const [editorType, setEditorType] = useState<'classic' | 'modular'>('modular')
   const [devicePreview, setDevicePreview] = useState<'desktop' | 'mobile'>('desktop')
   const [sectionContent, setSectionContent] = useState<Record<string, any>>({})
   const [loading, setLoading] = useState(true)
@@ -430,8 +432,10 @@ export default function WorkshopVisualEditor() {
         fullContent[section.id] = sectionData
       }
       
+      console.log('Saving content:', fullContent)
+      
       // Save all content at once
-      await fetch('/api/admin/content', {
+      const response = await fetch('/api/admin/content', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -441,6 +445,15 @@ export default function WorkshopVisualEditor() {
           content: fullContent
         })
       })
+      
+      if (!response.ok) {
+        const error = await response.json()
+        console.error('Save error:', error)
+        throw new Error(error.details || 'Failed to save')
+      }
+      
+      const result = await response.json()
+      console.log('Save successful:', result)
       
       setHasUnsavedChanges(false)
       
@@ -454,7 +467,7 @@ export default function WorkshopVisualEditor() {
       
     } catch (error) {
       console.error('Error saving content:', error)
-      alert('Error saving content')
+      alert(`Error saving content: ${error instanceof Error ? error.message : 'Unknown error'}`)
     } finally {
       setSaving(false)
     }
@@ -503,6 +516,14 @@ export default function WorkshopVisualEditor() {
           </div>
 
           <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setEditorType(editorType === 'classic' ? 'modular' : 'classic')}
+              className="flex items-center space-x-1 px-3 py-1 bg-vexl-gray-800 text-white rounded hover:bg-vexl-gray-700"
+            >
+              <Layers className="w-4 h-4" />
+              <span className="text-sm">{editorType === 'modular' ? 'Modular' : 'Classic'}</span>
+            </button>
+            
             <button
               onClick={() => setEditMode(!editMode)}
               className={`flex items-center space-x-1 px-3 py-1 rounded ${
@@ -572,7 +593,17 @@ export default function WorkshopVisualEditor() {
           <div className={`${devicePreview === 'mobile' ? 'max-w-md mx-auto' : ''} min-h-screen`}>
             {/* Force refresh of section by updating CMS content */}
             <div className="min-h-screen flex items-center justify-center p-8">
-              {editMode ? (
+              {editorType === 'modular' ? (
+                <ModularEditor
+                  sectionId={currentSection.id}
+                  initialElements={getValue(currentSection.id, 'elements', [])}
+                  onSave={(elements) => {
+                    updateField(currentSection.id, 'elements', elements)
+                    setHasUnsavedChanges(true)
+                  }}
+                  editMode={editMode}
+                />
+              ) : editMode ? (
                 <DropZoneEditor
                   sectionId={currentSection.id}
                   content={getValue(currentSection.id, '', {})}

@@ -24,6 +24,7 @@ const DemoSection = dynamic(() => import('@/components/sections/DemoSection'))
 const VisionSection = dynamic(() => import('@/components/sections/VisionSection'))
 const GetStartedSection = dynamic(() => import('@/components/sections/GetStartedSection'))
 const BetterEditableSection = dynamic(() => import('@/components/sections/BetterEditableSection'))
+const DropZoneEditor = dynamic(() => import('@/components/DropZoneEditor'))
 const AssetLibraryPanel = dynamic(() => import('@/components/AssetLibraryPanel'))
 
 // Section configuration
@@ -572,32 +573,39 @@ export default function WorkshopVisualEditor() {
             {/* Force refresh of section by updating CMS content */}
             <div className="min-h-screen flex items-center justify-center p-8">
               {editMode ? (
-                <BetterEditableSection
+                <DropZoneEditor
                   sectionId={currentSection.id}
                   content={getValue(currentSection.id, '', {})}
-                  onUpdate={(key, value) => {
-                    // Handle nested updates for arrays
-                    if (key.includes('.')) {
-                      const parts = key.split('.')
-                      const field = parts[0]
-                      const index = parseInt(parts[1])
-                      const subfield = parts[2]
-                      
-                      if (field === 'stats' || field === 'items') {
-                        const current = getValue(currentSection.id, field, [])
-                        const updated = [...current]
-                        if (!updated[index]) updated[index] = {}
-                        updated[index][subfield] = value
-                        updateField(currentSection.id, field, updated)
-                      }
-                    } else {
-                      updateField(currentSection.id, key, value)
-                    }
-                  }}
+                  onUpdate={(key, value) => updateField(currentSection.id, key, value)}
                   editMode={editMode}
                 >
-                  <currentSection.component />
-                </BetterEditableSection>
+                  <BetterEditableSection
+                    sectionId={currentSection.id}
+                    content={getValue(currentSection.id, '', {})}
+                    onUpdate={(key, value) => {
+                      // Handle nested updates for arrays
+                      if (key.includes('.')) {
+                        const parts = key.split('.')
+                        const field = parts[0]
+                        const index = parseInt(parts[1])
+                        const subfield = parts[2]
+                        
+                        if (field === 'stats' || field === 'items') {
+                          const current = getValue(currentSection.id, field, [])
+                          const updated = [...current]
+                          if (!updated[index]) updated[index] = {}
+                          updated[index][subfield] = value
+                          updateField(currentSection.id, field, updated)
+                        }
+                      } else {
+                        updateField(currentSection.id, key, value)
+                      }
+                    }}
+                    editMode={editMode}
+                  >
+                    <currentSection.component />
+                  </BetterEditableSection>
+                </DropZoneEditor>
               ) : (
                 <currentSection.component />
               )}

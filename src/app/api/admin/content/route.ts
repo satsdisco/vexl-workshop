@@ -49,17 +49,34 @@ export async function POST(request: NextRequest) {
       }, { status: 401 });
     }
 
-    const { content } = await request.json();
-    await saveContent(content);
+    const body = await request.json();
+    console.log('Received content update:', body);
+    
+    // Handle the content - it should be the full content object
+    const contentToSave = body.content || body;
+    
+    // Load existing content
+    const existingContent = await getContent();
+    
+    // Merge with existing content
+    const mergedContent = {
+      ...existingContent,
+      ...contentToSave
+    };
+    
+    await saveContent(mergedContent);
     
     return NextResponse.json({ 
       success: true, 
-      message: 'Content saved successfully' 
+      message: 'Content saved successfully',
+      content: mergedContent
     });
   } catch (error) {
+    console.error('Error saving content:', error);
     return NextResponse.json({ 
       success: false, 
-      error: 'Failed to save content' 
+      error: 'Failed to save content',
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }
 }

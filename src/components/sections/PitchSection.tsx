@@ -12,7 +12,7 @@ export default function PitchSection() {
         <div className="mb-12">
           <VexlLogo className="w-48 h-auto mx-auto mb-8" />
         </div>
-        <h2 className="text-5xl md:text-7xl mb-6" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>
+        <h2 className="text-5xl md:text-7xl mb-6 text-white" style={{ fontFamily: 'Monument Extended', fontWeight: 900 }}>
           {content.title}<br />
           <span className="text-vexl-yellow">{content.subtitle}</span>
         </h2>
@@ -25,7 +25,7 @@ export default function PitchSection() {
         <div className="space-y-8">
           {content.items?.slice(0, 3).map((item) => (
             <div key={item.id} className="group">
-              <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
+              <h3 className="text-2xl mb-3 flex items-center gap-2 text-white" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
                 <span className="text-vexl-yellow">→</span> {item.title}
               </h3>
               <p className="text-vexl-gray-400 pl-8">{item.content}</p>
@@ -35,7 +35,7 @@ export default function PitchSection() {
         <div className="space-y-8">
           {content.items?.slice(3, 6).map((item) => (
             <div key={item.id} className="group">
-              <h3 className="text-2xl mb-3 flex items-center gap-2" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
+              <h3 className="text-2xl mb-3 flex items-center gap-2 text-white" style={{ fontFamily: 'Monument Extended', fontWeight: 700 }}>
                 <span className="text-vexl-yellow">→</span> {item.title}
               </h3>
               <p className="text-vexl-gray-400 pl-8">{item.content}</p>
@@ -47,9 +47,9 @@ export default function PitchSection() {
       <div className="text-center">
         <div className="inline-flex items-center gap-6 vexl-card">
           <span className="text-sm text-vexl-gray-500">Available on</span>
-          <span className="font-bold text-xl">iOS</span>
+          <span className="font-bold text-xl text-white">iOS</span>
           <span className="text-vexl-gray-700">•</span>
-          <span className="font-bold text-xl">Android</span>
+          <span className="font-bold text-xl text-white">Android</span>
         </div>
       </div>
 

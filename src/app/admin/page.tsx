@@ -29,7 +29,7 @@ export default function AdminDashboard() {
       title: 'Edit Workshop',
       description: 'Edit your workshop slides (press E to toggle edit mode)',
       icon: Edit3,
-      href: '/?edit=true',
+      href: '/workshop?edit=true',
       color: 'bg-vexl-yellow',
       primary: true
     },
@@ -37,7 +37,7 @@ export default function AdminDashboard() {
       title: 'View Workshop',
       description: 'Preview the live workshop presentation',
       icon: Eye,
-      href: '/',
+      href: '/workshop',
       color: 'bg-vexl-green',
       external: true
     }

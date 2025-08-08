@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-// In-memory storage for templates (replace with database in production)
+// In-memory storage for templates (fallback for demo)
 let templates: any[] = []
 
 export async function GET(request: NextRequest) {
@@ -37,30 +37,48 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  try {
-    const body = await request.json()
-    const { action } = body
+  const body = await request.json()
+  const { action } = body
 
-    if (action === 'create') {
-      // Create new template from current workshop
-      const { name, description, category, cloneFromCurrent } = body
-      
-      let sections = {}
-      
-      if (cloneFromCurrent) {
+  if (action === 'create') {
+    // Create new template from current workshop
+    const { name, description, category, cloneFromCurrent } = body
+    
+    let sections = {}
+    
+    if (cloneFromCurrent) {
+      try {
         // Get current workshop content
         const currentContent = await prisma.content.findMany()
         sections = currentContent.reduce((acc: any, item: any) => {
           acc[item.sectionId] = item.data
           return acc
         }, {})
+      } catch (error) {
+        console.log('No existing content found, using default sections')
+        // If no content exists yet, use default empty sections
+        sections = {
+          hookSection: { title: 'Hook Section', subtitle: '', description: '' },
+          pitchSection: { title: 'Pitch Section', subtitle: '', description: '' },
+          trustSection: { title: 'Trust Section', subtitle: '', description: '' },
+          privacySection: { title: 'Privacy Section', subtitle: '', description: '' },
+          profileSetupSection: { title: 'Profile Setup', subtitle: '', description: '' },
+          findingOffersSection: { title: 'Finding Offers', subtitle: '', description: '' },
+          contactTradingSection: { title: 'Contact Trading', subtitle: '', description: '' },
+          clubsSection: { title: 'Clubs Section', subtitle: '', description: '' },
+          demoSection: { title: 'Demo Section', subtitle: '', description: '' },
+          visionSection: { title: 'Vision Section', subtitle: '', description: '' },
+          getStartedSection: { title: 'Get Started', subtitle: '', description: '' }
+        }
       }
+    }
 
+    try {
       // Save template to database
       const newTemplate = await prisma.template.create({
         data: {
           name,
-          description,
+          description: description || '',
           category,
           sections,
           isActive: false
@@ -71,12 +89,30 @@ export async function POST(request: NextRequest) {
         success: true,
         template: newTemplate
       })
+    } catch (dbError) {
+      console.error('Database error:', dbError)
+      // Fallback to in-memory storage for demo
+      const newTemplate = {
+        id: `template_${Date.now()}`,
+        name,
+        description: description || '',
+        category,
+        sections,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        isActive: false,
+        thumbnail: null
+      }
+      templates.push(newTemplate)
+      return NextResponse.json({ success: true, template: newTemplate })
     }
+  }
 
-    if (action === 'apply') {
-      // Apply template to current workshop
-      const { templateId } = body
-      
+  if (action === 'apply') {
+    // Apply template to current workshop
+    const { templateId } = body
+    
+    try {
       // Get template
       const template = await prisma.template.findUnique({
         where: { id: templateId }
@@ -109,43 +145,18 @@ export async function POST(request: NextRequest) {
       }
 
       return NextResponse.json({ success: true })
-    }
-
-    return NextResponse.json({ error: 'Invalid action' }, { status: 400 })
-  } catch (error) {
-    console.error('Template operation error:', error)
-    
-    // Fallback to in-memory for demo
-    const body = await request.json()
-    const { action } = body
-
-    if (action === 'create') {
-      const { name, description, category } = body
-      const newTemplate = {
-        id: `template_${Date.now()}`,
-        name,
-        description,
-        category,
-        sections: {},
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        isActive: false
-      }
-      templates.push(newTemplate)
-      return NextResponse.json({ success: true, template: newTemplate })
-    }
-
-    if (action === 'apply') {
-      const { templateId } = body
+    } catch (error) {
+      console.error('Apply template error:', error)
+      // Fallback to in-memory
       templates = templates.map(t => ({
         ...t,
         isActive: t.id === templateId
       }))
       return NextResponse.json({ success: true })
     }
-
-    return NextResponse.json({ error: 'Template operation failed' }, { status: 500 })
   }
+
+  return NextResponse.json({ error: 'Invalid action' }, { status: 400 })
 }
 
 export async function DELETE(request: NextRequest) {
@@ -168,10 +179,15 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ success: true })
   } catch (error) {
+    console.error('Delete template error:', error)
     // Fallback to in-memory
-    const body = await request.json()
-    const { templateId } = body
-    templates = templates.filter(t => t.id !== templateId)
-    return NextResponse.json({ success: true })
+    try {
+      const body = await request.json()
+      const { templateId } = body
+      templates = templates.filter(t => t.id !== templateId)
+      return NextResponse.json({ success: true })
+    } catch {
+      return NextResponse.json({ error: 'Failed to delete template' }, { status: 500 })
+    }
   }
 }

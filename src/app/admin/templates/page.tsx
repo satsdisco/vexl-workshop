@@ -26,6 +26,7 @@ export default function TemplatesPage() {
   const router = useRouter()
   const [templates, setTemplates] = useState<Template[]>([])
   const [loading, setLoading] = useState(true)
+  const [creating, setCreating] = useState(false)
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [newTemplateName, setNewTemplateName] = useState('')
@@ -61,8 +62,12 @@ export default function TemplatesPage() {
   }
 
   const createTemplateFromCurrent = async () => {
-    if (!newTemplateName) return
+    if (!newTemplateName) {
+      showNotification('Please enter a template name', 'error')
+      return
+    }
 
+    setCreating(true)
     try {
       const response = await fetch('/api/admin/templates', {
         method: 'POST',
@@ -79,16 +84,24 @@ export default function TemplatesPage() {
         })
       })
 
-      if (response.ok) {
+      const data = await response.json()
+      
+      if (response.ok && data.success) {
         await loadTemplates()
         setShowCreateModal(false)
         setNewTemplateName('')
         setNewTemplateDescription('')
+        setNewTemplateCategory('custom')
         showNotification('Template created successfully!')
+      } else {
+        console.error('Template creation failed:', data)
+        showNotification(data.error || 'Failed to create template', 'error')
       }
     } catch (error) {
       console.error('Error creating template:', error)
-      showNotification('Failed to create template', 'error')
+      showNotification('Failed to create template. Please try again.', 'error')
+    } finally {
+      setCreating(false)
     }
   }
 
@@ -410,10 +423,17 @@ export default function TemplatesPage() {
               </button>
               <button
                 onClick={createTemplateFromCurrent}
-                disabled={!newTemplateName}
-                className="px-4 py-2 bg-vexl-yellow text-black rounded-lg hover:bg-vexl-yellow/90 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!newTemplateName || creating}
+                className="px-4 py-2 bg-vexl-yellow text-black rounded-lg hover:bg-vexl-yellow/90 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
               >
-                Create Template
+                {creating ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                    <span>Creating...</span>
+                  </>
+                ) : (
+                  <span>Create Template</span>
+                )}
               </button>
             </div>
           </div>

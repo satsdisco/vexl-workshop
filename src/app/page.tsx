@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, Suspense, lazy } from 'react'
+import { useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import Header from '@/components/Header'
 import Navigation from '@/components/Navigation'
@@ -8,6 +9,7 @@ import Timer from '@/components/Timer'
 import PresenterMode from '@/components/PresenterMode'
 import SectionNavigation from '@/components/SectionNavigation'
 import KeyboardGuide from '@/components/KeyboardGuide'
+import SimpleEditMode from '@/components/SimpleEditMode'
 import { AnimatePresence, motion } from 'framer-motion'
 
 // Dynamic imports for code splitting
@@ -25,11 +27,13 @@ const DemoSection = dynamic(() => import('@/components/sections/DemoSection'))
 const VisionSection = dynamic(() => import('@/components/sections/VisionSection'))
 const GetStartedSection = dynamic(() => import('@/components/sections/GetStartedSection'))
 
-export default function Home() {
+function Workshop() {
+  const searchParams = useSearchParams()
   const [currentSection, setCurrentSection] = useState(0)
   const [isPresenterMode, setIsPresenterMode] = useState(false)
   const [isTimerRunning, setIsTimerRunning] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isEditMode, setIsEditMode] = useState(false)
 
   const sections = [
     { id: 'hook', name: 'Hook', duration: 2 },
@@ -55,6 +59,13 @@ export default function Home() {
   }
 
   useEffect(() => {
+    // Check for edit mode in URL
+    if (searchParams.get('edit') === 'true') {
+      setIsEditMode(true)
+    }
+  }, [searchParams])
+
+  useEffect(() => {
     // Check if mobile on mount and resize
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window)
@@ -68,6 +79,17 @@ export default function Home() {
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
+      // Edit mode toggle
+      if (e.key === 'e' && !e.metaKey && !e.shiftKey && !e.altKey) {
+        // Don't toggle if user is typing in an editable field
+        const target = e.target as HTMLElement
+        if (target.contentEditable === 'true' || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+          return
+        }
+        e.preventDefault()
+        setIsEditMode(!isEditMode)
+      }
+      
       // Presenter mode toggle
       if (e.key === 'p' && e.metaKey) {
         e.preventDefault()
@@ -139,7 +161,7 @@ export default function Home() {
       window.removeEventListener('keydown', handleKeyPress)
       window.removeEventListener('wheel', handleWheel)
     }
-  }, [isPresenterMode, isTimerRunning, sections, currentSection, isMobile])
+  }, [isPresenterMode, isTimerRunning, isEditMode, sections, currentSection, isMobile])
 
   // Render mobile version with normal scrolling
   if (isMobile) {
@@ -223,17 +245,61 @@ export default function Home() {
           >
             <div className="min-h-full px-6 py-20 md:px-12 lg:px-16">
               <div className="w-full max-w-7xl mx-auto">
-                {currentSection === 0 && <HookSection />}
-                {currentSection === 1 && <PitchSection />}
-                {currentSection === 2 && <TrustSection />}
-                {currentSection === 3 && <PrivacySection />}
-                {currentSection === 4 && <ProfileSetupSection />}
-                {currentSection === 5 && <FindingOffersSection />}
-                {currentSection === 6 && <ContactTradingSection />}
-                {currentSection === 7 && <ClubsSection />}
-                {currentSection === 8 && <DemoSection />}
-                {currentSection === 9 && <VisionSection />}
-                {currentSection === 10 && <GetStartedSection />}
+                {currentSection === 0 && (
+                  <SimpleEditMode enabled={isEditMode} sectionId="hookSection">
+                    <HookSection />
+                  </SimpleEditMode>
+                )}
+                {currentSection === 1 && (
+                  <SimpleEditMode enabled={isEditMode} sectionId="pitchSection">
+                    <PitchSection />
+                  </SimpleEditMode>
+                )}
+                {currentSection === 2 && (
+                  <SimpleEditMode enabled={isEditMode} sectionId="trustSection">
+                    <TrustSection />
+                  </SimpleEditMode>
+                )}
+                {currentSection === 3 && (
+                  <SimpleEditMode enabled={isEditMode} sectionId="privacySection">
+                    <PrivacySection />
+                  </SimpleEditMode>
+                )}
+                {currentSection === 4 && (
+                  <SimpleEditMode enabled={isEditMode} sectionId="profileSetupSection">
+                    <ProfileSetupSection />
+                  </SimpleEditMode>
+                )}
+                {currentSection === 5 && (
+                  <SimpleEditMode enabled={isEditMode} sectionId="findingOffersSection">
+                    <FindingOffersSection />
+                  </SimpleEditMode>
+                )}
+                {currentSection === 6 && (
+                  <SimpleEditMode enabled={isEditMode} sectionId="contactTradingSection">
+                    <ContactTradingSection />
+                  </SimpleEditMode>
+                )}
+                {currentSection === 7 && (
+                  <SimpleEditMode enabled={isEditMode} sectionId="clubsSection">
+                    <ClubsSection />
+                  </SimpleEditMode>
+                )}
+                {currentSection === 8 && (
+                  <SimpleEditMode enabled={isEditMode} sectionId="demoSection">
+                    <DemoSection />
+                  </SimpleEditMode>
+                )}
+                {currentSection === 9 && (
+                  <SimpleEditMode enabled={isEditMode} sectionId="visionSection">
+                    <VisionSection />
+                  </SimpleEditMode>
+                )}
+                {currentSection === 10 && (
+                  <SimpleEditMode enabled={isEditMode} sectionId="getStartedSection">
+                    <GetStartedSection />
+                  </SimpleEditMode>
+                )}
               </div>
             </div>
           </motion.section>
@@ -247,6 +313,27 @@ export default function Home() {
       />
       
       <KeyboardGuide />
+      
+      {/* Edit Mode Indicator */}
+      {isEditMode && (
+        <div className="fixed top-20 right-4 z-50 bg-vexl-yellow text-black px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2">
+          <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse" />
+          <span className="font-semibold">Edit Mode</span>
+          <span className="text-sm opacity-75">(Press E to exit)</span>
+        </div>
+      )}
     </main>
+  )
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-vexl-black">
+        <div className="animate-pulse text-white">Loading workshop...</div>
+      </div>
+    }>
+      <Workshop />
+    </Suspense>
   )
 }

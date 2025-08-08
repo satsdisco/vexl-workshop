@@ -26,33 +26,19 @@ export default function AdminDashboard() {
 
   const adminTools = [
     {
-      title: 'Ultimate Slide Editor',
-      description: 'The best way to edit and create slides',
+      title: 'Edit Workshop',
+      description: 'Edit your workshop slides (press E to toggle edit mode)',
       icon: Edit3,
-      href: '/admin/ultimate-editor',
+      href: '/?edit=true',
       color: 'bg-vexl-yellow',
       primary: true
-    },
-    {
-      title: 'Visual Editor (Classic)',
-      description: 'Original workshop content editor',
-      icon: Layers,
-      href: '/admin/workshop-visual-editor',
-      color: 'bg-vexl-green'
-    },
-    {
-      title: 'Asset Library',
-      description: 'Browse available components and modules',
-      icon: Palette,
-      href: '/admin/assets',
-      color: 'bg-vexl-blue'
     },
     {
       title: 'View Workshop',
       description: 'Preview the live workshop presentation',
       icon: Eye,
       href: '/',
-      color: 'bg-vexl-purple',
+      color: 'bg-vexl-green',
       external: true
     }
   ]
@@ -167,23 +153,23 @@ export default function AdminDashboard() {
 
         {/* Instructions */}
         <div className="mt-12 bg-vexl-gray-900 rounded-lg p-6 border border-vexl-gray-800">
-          <h3 className="text-lg font-semibold text-white mb-3">Quick Guide</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">How to Edit</h3>
           <ul className="space-y-2 text-sm text-vexl-gray-400">
             <li className="flex items-start">
               <span className="text-vexl-yellow mr-2">•</span>
-              <span>Use the <strong className="text-white">Workshop Visual Editor</strong> to edit all workshop content and see live previews</span>
+              <span>Click <strong className="text-white">Edit Workshop</strong> to open the presentation in edit mode</span>
             </li>
             <li className="flex items-start">
               <span className="text-vexl-yellow mr-2">•</span>
-              <span>Browse the <strong className="text-white">Asset Library</strong> to see all available components and modules</span>
+              <span>Press <strong className="text-white">E</strong> at any time to toggle edit mode on/off</span>
             </li>
             <li className="flex items-start">
               <span className="text-vexl-yellow mr-2">•</span>
-              <span>Changes save automatically and update the live workshop within 2 seconds</span>
+              <span>Click any text to edit it directly - changes save automatically</span>
             </li>
             <li className="flex items-start">
               <span className="text-vexl-yellow mr-2">•</span>
-              <span>Use arrow keys to navigate between sections in the workshop</span>
+              <span>Use arrow keys to navigate between the 11 workshop sections</span>
             </li>
           </ul>
         </div>

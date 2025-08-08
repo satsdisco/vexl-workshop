@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { 
   Edit3, Layers, LogOut, ArrowRight,
-  Palette, Database, Eye
+  Palette, Database, Eye, Copy
 } from 'lucide-react'
 import VexlLogo from '@/components/VexlLogo'
 
@@ -40,6 +40,13 @@ export default function AdminDashboard() {
       href: '/workshop',
       color: 'bg-vexl-green',
       external: true
+    },
+    {
+      title: 'Template Manager',
+      description: 'Create and manage workshop templates',
+      icon: Copy,
+      href: '/admin/templates',
+      color: 'bg-vexl-blue'
     }
   ]
 

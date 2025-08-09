@@ -781,20 +781,20 @@ export default function UltimateDeckBuilder() {
                           transform: 'translate(-50%, -50%)'
                         }}
                       >
-                        {/* Invisible drag overlay */}
-                        <div
-                          className="absolute inset-0 cursor-move z-10"
-                          onMouseDown={(e) => {
-                            const target = e.target as HTMLElement
-                            if (!target.closest('button') && !target.closest('.resize-handle')) {
-                              e.preventDefault()
-                              handleDragStart(component.id, e)
-                            }
-                          }}
-                        />
-                        
                         {/* Visual border on hover */}
                         <div className="absolute inset-0 border-2 border-transparent group-hover:border-vexl-yellow rounded-lg pointer-events-none" />
+                        
+                        {/* Move handle - drag from here */}
+                        <div
+                          className="absolute -top-3 -left-3 w-6 h-6 bg-vexl-yellow rounded-full cursor-move opacity-0 group-hover:opacity-100 z-20 transition-opacity flex items-center justify-center hover:bg-vexl-yellow/80"
+                          onMouseDown={(e) => {
+                            e.stopPropagation()
+                            handleDragStart(component.id, e)
+                          }}
+                          title="Drag to move"
+                        >
+                          <Move className="w-3 h-3 text-black" />
+                        </div>
                         
                         {/* Delete button */}
                         <button
@@ -831,12 +831,7 @@ export default function UltimateDeckBuilder() {
                           <Type className="w-3 h-3 text-white" />
                         </div>
                         
-                        {/* Move indicator */}
-                        <div className="absolute -top-3 -left-3 w-6 h-6 bg-vexl-yellow rounded-full opacity-0 group-hover:opacity-100 z-20 transition-opacity flex items-center justify-center pointer-events-none">
-                          <Move className="w-3 h-3 text-black" />
-                        </div>
-                        
-                        {/* Text content */}
+                        {/* Text content - clicking here opens editor */}
                         <div className="relative">
                           <TextBoxComponent
                             id={component.id}

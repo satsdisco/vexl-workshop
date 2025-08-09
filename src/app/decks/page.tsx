@@ -181,7 +181,7 @@ export default function DecksPage() {
                       <span>Present</span>
                     </Link>
                     <Link
-                      href={`/admin/deck-builder-v2?edit=${deck.id}`}
+                      href={`/admin/deck-builder-v3?edit=${deck.id}`}
                       className="flex items-center justify-center p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
                       title="Edit Deck"
                     >

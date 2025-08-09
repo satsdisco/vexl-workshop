@@ -39,9 +39,22 @@ function Workshop() {
   const [isMobile, setIsMobile] = useState(false)
   const [isEditMode, setIsEditMode] = useState(false)
 
-  // Get deck from query parameter
+  // Get deck from query parameter or preview
   const deckId = searchParams.get('deck') || 'main-workshop'
-  const deck = getDeck(deckId)
+  const previewId = searchParams.get('preview')
+  
+  // Load preview deck from localStorage if preview mode
+  let deck = getDeck(deckId)
+  if (previewId) {
+    const previewData = localStorage.getItem('preview-deck')
+    if (previewData) {
+      try {
+        deck = JSON.parse(previewData)
+      } catch (e) {
+        console.error('Failed to load preview deck')
+      }
+    }
+  }
 
   // All possible sections across all decks
   const allSections = [

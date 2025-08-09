@@ -42,12 +42,12 @@ export default function AdminDashboard() {
       external: true
     },
     {
-      title: 'Enhanced Deck Builder',
-      description: 'Create decks with reusable components and interactive elements',
+      title: 'Ultimate Deck Builder',
+      description: 'Full-featured builder with text, components, drag & drop',
       icon: Sparkles,
-      href: '/admin/deck-builder-v2',
+      href: '/admin/deck-builder-v3',
       color: 'bg-purple-600',
-      badge: 'V2'
+      badge: 'V3'
     },
     {
       title: 'View Decks',

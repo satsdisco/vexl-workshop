@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
         name: deck.name,
         description: deck.description,
         category: 'deck',
-        content: deck,
+        sections: deck,
         isActive: false
       }
     })

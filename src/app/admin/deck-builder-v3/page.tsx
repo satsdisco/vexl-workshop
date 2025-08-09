@@ -286,7 +286,12 @@ export default function UltimateDeckBuilder() {
 
   const loadDecks = async () => {
     try {
-      const response = await fetch('/api/admin/decks')
+      const token = localStorage.getItem('vexl-admin-token') || localStorage.getItem('adminToken')
+      const response = await fetch('/api/admin/decks', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
       const data = await response.json()
       if (data.decks) {
         setDecks(data.decks)

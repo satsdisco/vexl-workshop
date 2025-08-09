@@ -781,19 +781,51 @@ export default function UltimateDeckBuilder() {
                           transform: 'translate(-50%, -50%)'
                         }}
                       >
-                        {/* Visual border on hover */}
-                        <div className="absolute inset-0 border-2 border-transparent group-hover:border-vexl-yellow rounded-lg pointer-events-none" />
-                        
-                        {/* Move handle - drag from here */}
-                        <div
-                          className="absolute -top-3 -left-3 w-6 h-6 bg-vexl-yellow rounded-full cursor-move opacity-0 group-hover:opacity-100 z-20 transition-opacity flex items-center justify-center hover:bg-vexl-yellow/80"
+                        {/* Draggable border frame - only the border area is draggable */}
+                        {/* Top border */}
+                        <div 
+                          className="absolute top-0 left-0 right-0 h-2 cursor-move opacity-0 group-hover:opacity-100 bg-vexl-yellow/20 group-hover:bg-vexl-yellow/40 transition-all z-10"
                           onMouseDown={(e) => {
                             e.stopPropagation()
+                            e.preventDefault()
                             handleDragStart(component.id, e)
                           }}
-                          title="Drag to move"
-                        >
-                          <Move className="w-3 h-3 text-black" />
+                        />
+                        {/* Bottom border */}
+                        <div 
+                          className="absolute bottom-0 left-0 right-0 h-2 cursor-move opacity-0 group-hover:opacity-100 bg-vexl-yellow/20 group-hover:bg-vexl-yellow/40 transition-all z-10"
+                          onMouseDown={(e) => {
+                            e.stopPropagation()
+                            e.preventDefault()
+                            handleDragStart(component.id, e)
+                          }}
+                        />
+                        {/* Left border */}
+                        <div 
+                          className="absolute top-0 left-0 bottom-0 w-2 cursor-move opacity-0 group-hover:opacity-100 bg-vexl-yellow/20 group-hover:bg-vexl-yellow/40 transition-all z-10"
+                          onMouseDown={(e) => {
+                            e.stopPropagation()
+                            e.preventDefault()
+                            handleDragStart(component.id, e)
+                          }}
+                        />
+                        {/* Right border */}
+                        <div 
+                          className="absolute top-0 right-0 bottom-0 w-2 cursor-move opacity-0 group-hover:opacity-100 bg-vexl-yellow/20 group-hover:bg-vexl-yellow/40 transition-all z-10"
+                          onMouseDown={(e) => {
+                            e.stopPropagation()
+                            e.preventDefault()
+                            handleDragStart(component.id, e)
+                          }}
+                        />
+                        
+                        {/* Visual border outline */}
+                        <div className="absolute inset-0 border-2 border-transparent group-hover:border-vexl-yellow rounded-lg pointer-events-none transition-all" />
+                        
+                        {/* Move indicator - shows on hover but not clickable */}
+                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-2 py-0.5 bg-vexl-yellow text-black text-xs rounded-full opacity-0 group-hover:opacity-100 z-5 transition-opacity pointer-events-none flex items-center gap-1">
+                          <Move className="w-3 h-3" />
+                          <span className="font-medium">Drag border to move</span>
                         </div>
                         
                         {/* Delete button */}
@@ -832,7 +864,7 @@ export default function UltimateDeckBuilder() {
                         </div>
                         
                         {/* Text content - clicking here opens editor */}
-                        <div className="relative">
+                        <div className="relative p-2">
                           <TextBoxComponent
                             id={component.id}
                             content={component.content}

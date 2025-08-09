@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { 
   Clock, Users, ChevronRight, Play, Download,
-  Filter, Search, Sparkles, ArrowLeft
+  Filter, Search, Sparkles, ArrowLeft, Edit3
 } from 'lucide-react'
 import VexlLogo from '@/components/VexlLogo'
 import { decks, Deck } from '@/data/decks'
@@ -179,6 +179,13 @@ export default function DecksPage() {
                     >
                       <Play className="w-4 h-4" />
                       <span>Present</span>
+                    </Link>
+                    <Link
+                      href={`/admin/deck-builder-v2?edit=${deck.id}`}
+                      className="flex items-center justify-center p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                      title="Edit Deck"
+                    >
+                      <Edit3 className="w-4 h-4" />
                     </Link>
                     <button
                       className="flex items-center justify-center p-2 bg-vexl-gray-800 text-white rounded-lg hover:bg-vexl-gray-700 transition-colors"

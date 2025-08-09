@@ -42,12 +42,12 @@ export default function AdminDashboard() {
       external: true
     },
     {
-      title: 'Deck Builder',
-      description: 'Create and edit presentation decks for different audiences',
+      title: 'Enhanced Deck Builder',
+      description: 'Create decks with reusable components and interactive elements',
       icon: Sparkles,
-      href: '/admin/deck-builder',
+      href: '/admin/deck-builder-v2',
       color: 'bg-purple-600',
-      badge: 'NEW'
+      badge: 'V2'
     },
     {
       title: 'View Decks',

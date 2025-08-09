@@ -29,6 +29,7 @@ const DemoSection = dynamic(() => import('@/components/sections/DemoSection'))
 const VisionSection = dynamic(() => import('@/components/sections/VisionSection'))
 const GetStartedSection = dynamic(() => import('@/components/sections/GetStartedSection'))
 const QuickDemoSection = dynamic(() => import('@/components/sections/QuickDemoSection'))
+const CommunityGrowthSection = dynamic(() => import('@/components/sections/CommunityGrowthSection'))
 
 function Workshop() {
   const searchParams = useSearchParams()
@@ -302,6 +303,7 @@ function Workshop() {
                     'demo-quick': { component: <QuickDemoSection />, editId: 'quickDemoSection' },
                     'vision': { component: <VisionSection />, editId: 'visionSection' },
                     'get-started': { component: <GetStartedSection />, editId: 'getStartedSection' },
+                    'community-growth': { component: <CommunityGrowthSection />, editId: 'communityGrowthSection' },
                   }
                   
                   const section = sectionMap[sectionId]

@@ -306,7 +306,7 @@ export default function UltimateDeckBuilder() {
       id: `deck-${Date.now()}`,
       name: 'New Presentation Deck',
       description: 'Describe your deck purpose',
-      slides: [],
+      slides: [], // Ensure slides is always an array
       duration: 30,
       audience: 'General',
       difficulty: 'intermediate',
@@ -314,15 +314,17 @@ export default function UltimateDeckBuilder() {
     }
     setCurrentDeck(newDeck)
     setSlideOrder([])
+    setCurrentSlide(null)
   }
 
   const addSlide = (templateType: string) => {
     if (!currentDeck) return
     
     const template = slideTemplates[templateType as keyof typeof slideTemplates]
+    const slides = currentDeck.slides || []
     const newSlide: Slide = {
       id: `slide-${Date.now()}`,
-      name: `Slide ${currentDeck.slides.length + 1}`,
+      name: `Slide ${slides.length + 1}`,
       type: templateType,
       layout: template.structure.layout,
       components: template.structure.components || []
@@ -330,7 +332,7 @@ export default function UltimateDeckBuilder() {
     
     const updatedDeck = {
       ...currentDeck,
-      slides: [...currentDeck.slides, newSlide]
+      slides: [...slides, newSlide]
     }
     setCurrentDeck(updatedDeck)
     setSlideOrder([...slideOrder, newSlide.id])
@@ -444,7 +446,7 @@ export default function UltimateDeckBuilder() {
   }
 
   const updateSlideInDeck = (slide: Slide) => {
-    if (!currentDeck) return
+    if (!currentDeck || !currentDeck.slides) return
     
     const updatedSlides = currentDeck.slides.map(s => 
       s.id === slide.id ? slide : s
@@ -456,7 +458,8 @@ export default function UltimateDeckBuilder() {
   const updateComponent = (componentId: string, updates: Partial<SlideComponent>) => {
     if (!currentSlide) return
     
-    const updatedComponents = currentSlide.components.map(comp =>
+    const components = currentSlide.components || []
+    const updatedComponents = components.map(comp =>
       comp.id === componentId ? { ...comp, ...updates } : comp
     )
     
@@ -472,9 +475,10 @@ export default function UltimateDeckBuilder() {
   const removeComponent = (componentId: string) => {
     if (!currentSlide) return
     
+    const components = currentSlide.components || []
     const updatedSlide = {
       ...currentSlide,
-      components: currentSlide.components.filter(c => c.id !== componentId)
+      components: components.filter(c => c.id !== componentId)
     }
     
     setCurrentSlide(updatedSlide)
@@ -662,14 +666,14 @@ export default function UltimateDeckBuilder() {
                     key={deck.id}
                     onClick={() => {
                       setCurrentDeck(deck)
-                      setSlideOrder(deck.slides.map(s => s.id))
-                      setCurrentSlide(deck.slides[0] || null)
+                      setSlideOrder((deck.slides || []).map(s => s.id))
+                      setCurrentSlide(deck.slides?.[0] || null)
                     }}
                     className="w-full text-left p-4 bg-vexl-gray-800 rounded-lg hover:bg-vexl-gray-700 transition-colors"
                   >
                     <h3 className="font-semibold text-white">{deck.name}</h3>
                     <p className="text-sm text-vexl-gray-400 mt-1">
-                      {deck.slides.length} slides • {deck.duration} min
+                      {deck.slides?.length || 0} slides • {deck.duration} min
                     </p>
                   </button>
                 ))}
@@ -691,7 +695,7 @@ export default function UltimateDeckBuilder() {
               <div className="mb-4">
                 <h3 className="text-sm font-semibold text-vexl-gray-400 mb-3">SLIDES</h3>
                 <div className="space-y-2">
-                  {currentDeck.slides.map((slide, index) => (
+                  {(currentDeck.slides || []).map((slide, index) => (
                     <div
                       key={slide.id}
                       className={`p-3 rounded-lg cursor-pointer transition-colors ${
@@ -771,7 +775,7 @@ export default function UltimateDeckBuilder() {
                 className="relative bg-black rounded-xl border-2 border-vexl-gray-800"
                 style={{ aspectRatio: '16/9', minHeight: '500px' }}
               >
-                {currentSlide.components.map((component) => {
+                {(currentSlide?.components || []).map((component) => {
                   // Render existing slide
                   if (component.type === 'existing-slide') {
                     const ExistingSlide = existingSlides.find(s => s.id === component.componentId)?.component
@@ -915,7 +919,7 @@ export default function UltimateDeckBuilder() {
                 })}
 
                 {/* Empty state */}
-                {currentSlide.components.length === 0 && (
+                {(!currentSlide?.components || currentSlide.components.length === 0) && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center">
                       <Sparkles className="w-12 h-12 text-vexl-gray-600 mx-auto mb-4" />

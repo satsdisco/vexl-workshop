@@ -11,6 +11,7 @@ import SectionNavigation from '@/components/SectionNavigation'
 import KeyboardGuide from '@/components/KeyboardGuide'
 import SimpleEditMode from '@/components/SimpleEditMode'
 import ExportPDF from '@/components/ExportPDF'
+import CustomDeckRenderer from '@/components/CustomDeckRenderer'
 import { AnimatePresence, motion } from 'framer-motion'
 import { getDeck } from '@/data/decks'
 
@@ -42,6 +43,11 @@ function Workshop() {
   // Get deck from query parameter or preview
   const deckId = searchParams.get('deck') || 'main-workshop'
   const previewId = searchParams.get('preview')
+  const customDeckId = searchParams.get('custom')
+  
+  // State for custom deck loading
+  const [customDeck, setCustomDeck] = useState<any>(null)
+  const [loadingDeck, setLoadingDeck] = useState(false)
   
   // Load preview deck from localStorage if preview mode
   let deck = getDeck(deckId)
@@ -54,6 +60,11 @@ function Workshop() {
         console.error('Failed to load preview deck')
       }
     }
+  }
+  
+  // Use custom deck if loaded
+  if (customDeck) {
+    deck = customDeck
   }
 
   // All possible sections across all decks
@@ -101,8 +112,10 @@ function Workshop() {
   ]
 
   // Filter sections based on deck if provided
-  const sections = deck 
+  const sections = deck && deck.slides && Array.isArray(deck.slides) && typeof deck.slides[0] === 'string'
     ? allSections.filter(section => deck.slides.includes(section.id))
+    : deck && deck.slides && Array.isArray(deck.slides) && typeof deck.slides[0] === 'object'
+    ? deck.slides // Custom deck with slide objects
     : allSections
 
 
@@ -113,6 +126,37 @@ function Workshop() {
     
     setCurrentSection(newSection)
   }
+
+  // Load custom deck if needed
+  useEffect(() => {
+    const loadCustomDeck = async () => {
+      if (customDeckId) {
+        setLoadingDeck(true)
+        try {
+          const token = localStorage.getItem('adminToken')
+          const response = await fetch('/api/admin/templates', {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          })
+          if (response.ok) {
+            const data = await response.json()
+            const customTemplate = data.templates?.find((t: any) => t.id === customDeckId)
+            if (customTemplate && customTemplate.sections) {
+              const deckData = customTemplate.sections
+              setCustomDeck(deckData)
+            }
+          }
+        } catch (error) {
+          console.error('Failed to load custom deck:', error)
+        } finally {
+          setLoadingDeck(false)
+        }
+      }
+    }
+    
+    loadCustomDeck()
+  }, [customDeckId])
 
   useEffect(() => {
     // Check for edit mode in URL
@@ -265,6 +309,18 @@ function Workshop() {
     )
   }
 
+  // Show loading state if loading custom deck
+  if (loadingDeck) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-vexl-black">
+        <div className="text-center">
+          <div className="animate-pulse text-white mb-4">Loading custom deck...</div>
+          <div className="w-8 h-8 border-4 border-vexl-yellow border-t-transparent rounded-full animate-spin mx-auto"></div>
+        </div>
+      </main>
+    )
+  }
+
   // Desktop version with slide navigation
   return (
     <main className="relative h-screen flex flex-col">
@@ -301,7 +357,15 @@ function Workshop() {
           >
             <div className="min-h-full px-6 py-20 md:px-12 lg:px-16 slide-section">
               <div className="w-full max-w-7xl mx-auto">
-                {sections[currentSection] && (() => {
+                {/* Check if this is a custom deck with component data */}
+                {deck && deck.slides && typeof deck.slides[currentSection] === 'object' && deck.slides[currentSection].components ? (
+                  // Render custom deck slide
+                  <CustomDeckRenderer 
+                    slide={deck.slides[currentSection]} 
+                    isEditMode={isEditMode}
+                  />
+                ) : sections[currentSection] && (() => {
+                  // Render traditional slides
                   const sectionId = sections[currentSection].id
                   const sectionMap: { [key: string]: { component: React.ReactNode, editId: string } } = {
                     'hook': { component: <HookSection />, editId: 'hookSection' },

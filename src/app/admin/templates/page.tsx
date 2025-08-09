@@ -363,7 +363,7 @@ export default function TemplatesPage() {
                     )}
                     
                     <Link
-                      href={`/workshop?template=${template.id}`}
+                      href={template.category === 'deck' ? `/workshop?custom=${template.id}` : `/workshop?template=${template.id}`}
                       className="flex items-center justify-center p-2 bg-vexl-gray-800 text-white rounded-lg hover:bg-vexl-gray-700 transition-colors"
                       title="Preview"
                     >

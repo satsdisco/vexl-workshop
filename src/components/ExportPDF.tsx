@@ -34,9 +34,7 @@ export default function ExportPDF({ deckName = 'Vexl Workshop' }: ExportPDFProps
         
         // Capture the section as canvas
         const canvas = await html2canvas(section, {
-          scale: 2,
           useCORS: true,
-          backgroundColor: '#000000',
           logging: false
         })
         

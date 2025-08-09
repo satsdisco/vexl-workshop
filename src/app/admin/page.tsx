@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { 
   Edit3, Layers, LogOut, ArrowRight,
-  Palette, Database, Eye, Copy, Sparkles, FileText
+  Palette, Database, Eye, Copy, Sparkles, FileText, Monitor
 } from 'lucide-react'
 import VexlLogo from '@/components/VexlLogo'
 
@@ -63,6 +63,14 @@ export default function AdminDashboard() {
       icon: Copy,
       href: '/admin/templates',
       color: 'bg-vexl-blue'
+    },
+    {
+      title: 'Keynote Builder',
+      description: 'Create standard presentations for conferences',
+      icon: Monitor,
+      href: '/admin/keynote-builder',
+      color: 'bg-red-600',
+      badge: 'NEW'
     }
   ]
 

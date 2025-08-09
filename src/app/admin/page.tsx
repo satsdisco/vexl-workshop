@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { 
   Edit3, Layers, LogOut, ArrowRight,
-  Palette, Database, Eye, Copy
+  Palette, Database, Eye, Copy, Sparkles, FileText
 } from 'lucide-react'
 import VexlLogo from '@/components/VexlLogo'
 
@@ -39,6 +39,22 @@ export default function AdminDashboard() {
       icon: Eye,
       href: '/workshop',
       color: 'bg-vexl-green',
+      external: true
+    },
+    {
+      title: 'Deck Builder',
+      description: 'Create and edit presentation decks for different audiences',
+      icon: Sparkles,
+      href: '/admin/deck-builder',
+      color: 'bg-purple-600',
+      badge: 'NEW'
+    },
+    {
+      title: 'View Decks',
+      description: 'Browse and launch all available presentation decks',
+      icon: FileText,
+      href: '/decks',
+      color: 'bg-orange-600',
       external: true
     },
     {
@@ -99,6 +115,11 @@ export default function AdminDashboard() {
                   {tool.primary && (
                     <span className="px-2 py-1 bg-vexl-yellow text-vexl-black text-xs font-bold rounded">
                       MAIN
+                    </span>
+                  )}
+                  {tool.badge && (
+                    <span className="px-2 py-1 bg-purple-600 text-white text-xs font-bold rounded">
+                      {tool.badge}
                     </span>
                   )}
                 </div>

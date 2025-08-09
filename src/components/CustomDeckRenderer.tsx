@@ -46,54 +46,77 @@ interface CustomDeckRendererProps {
   isEditMode?: boolean
 }
 
-// Enhanced text renderer component with brand colors
+// Enhanced text renderer component with brand colors and rich text support
 const TextRenderer = ({ content }: { content: any }) => {
   // Brand colors
-  const brandColors = {
+  const brandColors: Record<string, string> = {
     white: '#FFFFFF',
     yellow: '#FCD34D',
     green: '#10B981',
     blue: '#3B82F6',
     gray: '#6B7280',
-    lightGray: '#D1D5DB'
+    lightGray: '#D1D5DB',
+    red: '#EF4444',
+    purple: '#9333EA',
+    orange: '#FB923C'
   }
   
-  // Text sizes
-  const textSizes = {
-    title: 'text-4xl md:text-6xl',
-    subtitle: 'text-2xl md:text-3xl',
-    large: 'text-xl md:text-2xl',
-    body: 'text-lg md:text-xl',
-    small: 'text-base md:text-lg',
-    caption: 'text-sm md:text-base'
-  }
-  
-  // Font weights
-  const fontWeights = {
-    normal: 'font-normal',
-    medium: 'font-medium',
-    semibold: 'font-semibold',
-    bold: 'font-bold',
-    black: 'font-black'
-  }
-
   const style = content?.style || 'body'
-  const color = content?.color || 'white'
   const weight = content?.weight || (style === 'title' ? 'bold' : 'normal')
   const align = content?.align || 'left'
+  const customSize = content?.customSize || null
+  const richText = content?.richText || []
   const text = content?.text || ''
+
+  // Get text size
+  const getTextSize = () => {
+    if (customSize) return `${customSize}px`
+    const sizes: Record<string, string> = {
+      title: '48px',
+      subtitle: '32px',
+      large: '24px',
+      body: '18px',
+      small: '16px',
+      caption: '14px'
+    }
+    return sizes[style] || sizes.body
+  }
+
+  // Get font weight
+  const getFontWeight = () => {
+    const weights: Record<string, number> = {
+      normal: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+      black: 900
+    }
+    return weights[weight] || 400
+  }
 
   return (
     <div 
-      className={`${textSizes[style]} ${fontWeights[weight]}`}
       style={{ 
         fontFamily: (style === 'title' || style === 'subtitle') ? 'Monument Extended' : 'inherit',
-        whiteSpace: 'pre-wrap',
-        color: brandColors[color] || brandColors.white,
-        textAlign: align as any
+        fontSize: getTextSize(),
+        fontWeight: getFontWeight(),
+        textAlign: align as any,
+        whiteSpace: 'pre-wrap'
       }}
     >
-      {text}
+      {/* Render rich text if available, otherwise plain text */}
+      {richText && richText.length > 0 ? (
+        richText.map((word: any, index: number) => (
+          <span 
+            key={index}
+            style={{ color: brandColors[word.color] || brandColors.white }}
+          >
+            {word.text}{index < richText.length - 1 ? ' ' : ''}
+          </span>
+        ))
+      ) : (
+        <span style={{ color: brandColors.white }}>{text}</span>
+      )}
     </div>
   )
 }

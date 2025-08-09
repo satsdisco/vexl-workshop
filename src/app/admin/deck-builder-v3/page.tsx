@@ -92,6 +92,8 @@ const slideTemplates = {
 // Simple text display component with enhanced editor modal
 const TextBoxComponent = ({ content, onUpdate, id }) => {
   const [isEditing, setIsEditing] = useState(false)
+  
+  // Use content directly for display
   const richText = content.richText || []
   const style = content.style || 'body'
   const align = content.align || 'left'
@@ -169,7 +171,10 @@ const TextBoxComponent = ({ content, onUpdate, id }) => {
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm">
           <EnhancedTextEditor
             content={content}
-            onUpdate={onUpdate}
+            onUpdate={(componentId, updates) => {
+              // Pass the complete updated content
+              onUpdate(componentId, updates)
+            }}
             id={id}
             onClose={() => setIsEditing(false)}
           />

@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Plus, Save, Eye, Trash2, Copy, ChevronLeft, ChevronRight,
   Type, Image, List, Code, Palette, Layout, Download, Upload,
-  Sparkles, Play, Edit3, X, Check, Settings, ArrowUp, ArrowDown
+  Sparkles, Play, Edit3, X, Check, Settings, ArrowUp, ArrowDown,
+  ArrowRight
 } from 'lucide-react'
 import Link from 'next/link'
 import VexlLogo from '@/components/VexlLogo'

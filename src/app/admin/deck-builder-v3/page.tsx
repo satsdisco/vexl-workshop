@@ -7,11 +7,13 @@ import {
   Type, Image, List, Code, Palette, Layout, Download, Upload,
   Sparkles, Play, Edit3, X, Check, Settings, ArrowUp, ArrowDown,
   ArrowRight, Grid, Layers, Component, FileText, Move, Maximize2,
-  AlignLeft, AlignCenter, AlignRight, Bold, Italic, Underline
+  AlignLeft, AlignCenter, AlignRight, Bold, Italic, Underline,
+  Camera, Shield, Star, User
 } from 'lucide-react'
 import Link from 'next/link'
 import VexlLogo from '@/components/VexlLogo'
 import { componentRegistry, getComponent, getComponentsByCategory } from '@/lib/componentRegistry'
+import { brandAssets, getAssetsByCategory, getPlaceholderUrl } from '@/lib/brandAssets'
 import dynamic from 'next/dynamic'
 
 // Import all existing slide components
@@ -86,61 +88,146 @@ const slideTemplates = {
   }
 }
 
-// Text component for adding to slides
+// Enhanced text component with rich editing options
 const TextBoxComponent = ({ content, onUpdate, id }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [text, setText] = useState(content.text || 'Click to edit')
   const [style, setStyle] = useState(content.style || 'body')
+  const [color, setColor] = useState(content.color || 'white')
+  const [align, setAlign] = useState(content.align || 'left')
+  const [weight, setWeight] = useState(content.weight || 'normal')
 
-  const styles = {
-    title: 'text-4xl font-bold text-white',
-    subtitle: 'text-2xl font-semibold text-vexl-yellow',
-    body: 'text-lg text-vexl-gray-300',
-    caption: 'text-sm text-vexl-gray-400'
+  // Brand colors
+  const brandColors = {
+    white: '#FFFFFF',
+    yellow: '#FCD34D',
+    green: '#10B981',
+    blue: '#3B82F6',
+    gray: '#6B7280',
+    lightGray: '#D1D5DB'
+  }
+
+  // Text sizes
+  const textSizes = {
+    title: 'text-5xl',
+    subtitle: 'text-3xl',
+    large: 'text-2xl',
+    body: 'text-lg',
+    small: 'text-base',
+    caption: 'text-sm'
+  }
+
+  // Font weights
+  const fontWeights = {
+    normal: 'font-normal',
+    medium: 'font-medium',
+    semibold: 'font-semibold',
+    bold: 'font-bold',
+    black: 'font-black'
+  }
+
+  const updateContent = (updates) => {
+    onUpdate(id, { ...content, ...updates })
   }
 
   return (
     <div className="relative group h-full">
       {isEditing ? (
-        <div className="flex flex-col h-full">
-          <div className="flex gap-2 mb-2">
+        <div className="flex flex-col h-full bg-vexl-gray-900/95 p-3 rounded-lg">
+          <div className="grid grid-cols-2 gap-2 mb-2">
             <select
               value={style}
               onChange={(e) => {
                 setStyle(e.target.value)
-                onUpdate(id, { text, style: e.target.value })
+                updateContent({ text, style: e.target.value, color, align, weight })
               }}
-              className="px-2 py-1 bg-vexl-gray-800 text-white text-sm rounded"
+              className="px-2 py-1 bg-vexl-gray-800 text-white text-xs rounded"
             >
               <option value="title">Title</option>
               <option value="subtitle">Subtitle</option>
+              <option value="large">Large</option>
               <option value="body">Body</option>
+              <option value="small">Small</option>
               <option value="caption">Caption</option>
             </select>
-            <button
-              onClick={() => setIsEditing(false)}
-              className="px-2 py-1 bg-vexl-green text-white text-sm rounded"
+            
+            <select
+              value={color}
+              onChange={(e) => {
+                setColor(e.target.value)
+                updateContent({ text, style, color: e.target.value, align, weight })
+              }}
+              className="px-2 py-1 bg-vexl-gray-800 text-white text-xs rounded"
             >
-              Done
-            </button>
+              <option value="white">White</option>
+              <option value="yellow">Yellow</option>
+              <option value="green">Green</option>
+              <option value="blue">Blue</option>
+              <option value="gray">Gray</option>
+              <option value="lightGray">Light Gray</option>
+            </select>
+            
+            <select
+              value={weight}
+              onChange={(e) => {
+                setWeight(e.target.value)
+                updateContent({ text, style, color, align, weight: e.target.value })
+              }}
+              className="px-2 py-1 bg-vexl-gray-800 text-white text-xs rounded"
+            >
+              <option value="normal">Normal</option>
+              <option value="medium">Medium</option>
+              <option value="semibold">Semibold</option>
+              <option value="bold">Bold</option>
+              <option value="black">Black</option>
+            </select>
+            
+            <select
+              value={align}
+              onChange={(e) => {
+                setAlign(e.target.value)
+                updateContent({ text, style, color, align: e.target.value, weight })
+              }}
+              className="px-2 py-1 bg-vexl-gray-800 text-white text-xs rounded"
+            >
+              <option value="left">Left</option>
+              <option value="center">Center</option>
+              <option value="right">Right</option>
+            </select>
           </div>
+          
           <textarea
             value={text}
             onChange={(e) => {
               setText(e.target.value)
-              onUpdate(id, { text: e.target.value, style })
+              updateContent({ text: e.target.value, style, color, align, weight })
             }}
-            className="flex-1 w-full px-3 py-2 bg-vexl-gray-900 text-white rounded resize-none"
-            style={{ fontFamily: style === 'title' ? 'Monument Extended' : 'inherit' }}
+            className="flex-1 w-full px-3 py-2 bg-vexl-gray-800 text-white rounded resize-none text-sm"
+            style={{ 
+              fontFamily: (style === 'title' || style === 'subtitle') ? 'Monument Extended' : 'inherit',
+              color: brandColors[color]
+            }}
+            placeholder="Enter text..."
           />
+          
+          <button
+            onClick={() => setIsEditing(false)}
+            className="mt-2 px-3 py-1 bg-vexl-yellow text-black text-sm rounded font-semibold hover:bg-vexl-yellow/90"
+          >
+            Done
+          </button>
         </div>
       ) : (
         <div
           onClick={() => setIsEditing(true)}
-          className={`${styles[style]} cursor-pointer hover:bg-vexl-gray-900/50 p-2 rounded h-full flex items-center`}
-          style={{ fontFamily: style === 'title' || style === 'subtitle' ? 'Monument Extended' : 'inherit' }}
+          className={`${textSizes[style]} ${fontWeights[weight]} cursor-pointer hover:bg-vexl-gray-900/20 p-2 rounded h-full flex items-center justify-${align}`}
+          style={{ 
+            fontFamily: (style === 'title' || style === 'subtitle') ? 'Monument Extended' : 'inherit',
+            color: brandColors[color],
+            textAlign: align as any
+          }}
         >
-          {text}
+          {text || 'Click to add text'}
         </div>
       )}
     </div>
@@ -149,8 +236,9 @@ const TextBoxComponent = ({ content, onUpdate, id }) => {
 
 interface SlideComponent {
   id: string
-  type: 'component' | 'textbox' | 'existing-slide'
+  type: 'component' | 'textbox' | 'existing-slide' | 'image' | 'asset'
   componentId?: string
+  assetId?: string
   content?: any
   position: { x: number, y: number }
   size: { width: number, height: number }
@@ -183,7 +271,9 @@ export default function UltimateDeckBuilder() {
   const [isPreview, setIsPreview] = useState(false)
   const [showComponentLibrary, setShowComponentLibrary] = useState(false)
   const [showExistingSlides, setShowExistingSlides] = useState(false)
+  const [showBrandAssets, setShowBrandAssets] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
+  const [selectedAssetCategory, setSelectedAssetCategory] = useState<string>('all')
   const [slideOrder, setSlideOrder] = useState<string[]>([])
   const [draggedComponent, setDraggedComponent] = useState<string | null>(null)
   const [resizingComponent, setResizingComponent] = useState<string | null>(null)
@@ -260,6 +350,39 @@ export default function UltimateDeckBuilder() {
     
     setCurrentSlide(updatedSlide)
     updateSlideInDeck(updatedSlide)
+  }
+  
+  const addAssetToSlide = (assetId: string) => {
+    if (!currentSlide) return
+    
+    const asset = brandAssets.find(a => a.id === assetId)
+    if (!asset) return
+    
+    // Determine default size based on asset type
+    let defaultSize = { width: 20, height: 20 }
+    if (asset.category === 'screenshot') {
+      defaultSize = { width: 15, height: 30 }
+    } else if (asset.category === 'logo') {
+      defaultSize = { width: 25, height: 10 }
+    }
+    
+    const newAsset: SlideComponent = {
+      id: `asset-${Date.now()}`,
+      type: 'asset',
+      assetId: assetId,
+      content: asset,
+      position: { x: 50, y: 50 },
+      size: defaultSize
+    }
+    
+    const updatedSlide = {
+      ...currentSlide,
+      components: [...currentSlide.components, newAsset]
+    }
+    
+    setCurrentSlide(updatedSlide)
+    updateSlideInDeck(updatedSlide)
+    setShowBrandAssets(false)
   }
 
   const addComponentToSlide = (componentId: string) => {
@@ -480,6 +603,13 @@ export default function UltimateDeckBuilder() {
                   <span>Components</span>
                 </button>
                 <button
+                  onClick={() => setShowBrandAssets(!showBrandAssets)}
+                  className="flex items-center space-x-2 px-4 py-2 bg-vexl-yellow text-black rounded-lg hover:bg-vexl-yellow/90"
+                >
+                  <Image className="w-4 h-4" />
+                  <span>Brand Assets</span>
+                </button>
+                <button
                   onClick={() => setShowExistingSlides(!showExistingSlides)}
                   className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                 >
@@ -692,6 +822,49 @@ export default function UltimateDeckBuilder() {
                     )
                   }
 
+                  // Render brand asset/image
+                  if (component.type === 'asset') {
+                    const asset = component.content
+                    return (
+                      <div
+                        key={component.id}
+                        className="absolute group border-2 border-transparent hover:border-vexl-yellow"
+                        style={{
+                          left: `${component.position.x}%`,
+                          top: `${component.position.y}%`,
+                          width: `${component.size.width}%`,
+                          height: `${component.size.height}%`,
+                          transform: 'translate(-50%, -50%)'
+                        }}
+                      >
+                        <div
+                          className="absolute -top-2 -left-2 w-4 h-4 bg-vexl-yellow rounded-full cursor-move opacity-0 group-hover:opacity-100 z-10"
+                          onMouseDown={(e) => handleDragStart(component.id, e)}
+                        >
+                          <Move className="w-4 h-4 text-black p-0.5" />
+                        </div>
+                        <button
+                          className="absolute -top-2 -right-2 w-4 h-4 bg-red-500 rounded-full opacity-0 group-hover:opacity-100 z-10"
+                          onClick={() => removeComponent(component.id)}
+                        >
+                          <X className="w-4 h-4 text-white p-0.5" />
+                        </button>
+                        <div
+                          className="absolute -bottom-2 -right-2 w-4 h-4 bg-vexl-green rounded-full cursor-se-resize opacity-0 group-hover:opacity-100 z-10"
+                          onMouseDown={(e) => handleResize(component.id, e)}
+                        >
+                          <Maximize2 className="w-4 h-4 text-black p-0.5" />
+                        </div>
+                        <img
+                          src={asset?.url || getPlaceholderUrl(asset?.category || 'icon', asset?.name || 'Asset')}
+                          alt={asset?.name || 'Brand Asset'}
+                          className="w-full h-full object-contain"
+                          style={{ pointerEvents: 'none' }}
+                        />
+                      </div>
+                    )
+                  }
+
                   // Render component
                   if (component.type === 'component') {
                     const ComponentDef = getComponent(component.componentId!)
@@ -853,6 +1026,148 @@ export default function UltimateDeckBuilder() {
                   </div>
                 </button>
               ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Brand Assets Panel */}
+        {showBrandAssets && (
+          <div className="w-96 border-l border-vexl-gray-800 bg-vexl-gray-900/50 overflow-y-auto">
+            <div className="p-4 border-b border-vexl-gray-800">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-lg font-semibold text-white">Brand Assets</h3>
+                <button
+                  onClick={() => setShowBrandAssets(false)}
+                  className="p-1 hover:bg-vexl-gray-800 rounded"
+                >
+                  <X className="w-5 h-5 text-vexl-gray-400" />
+                </button>
+              </div>
+              <select
+                value={selectedAssetCategory}
+                onChange={(e) => setSelectedAssetCategory(e.target.value)}
+                className="w-full px-3 py-2 bg-vexl-gray-800 text-white rounded-lg text-sm"
+              >
+                <option value="all">All Assets</option>
+                <option value="logo">Logos</option>
+                <option value="screenshot">Screenshots</option>
+                <option value="avatar">Avatars</option>
+                <option value="symbol">Symbols & Icons</option>
+              </select>
+            </div>
+            
+            <div className="p-4">
+              {/* Screenshots Section */}
+              {(selectedAssetCategory === 'all' || selectedAssetCategory === 'screenshot') && (
+                <div className="mb-6">
+                  <h4 className="text-sm font-medium text-vexl-gray-400 mb-3 flex items-center">
+                    <Camera className="w-4 h-4 mr-2" />
+                    App Screenshots
+                  </h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    {getAssetsByCategory('screenshot').map(asset => (
+                      <button
+                        key={asset.id}
+                        onClick={() => addAssetToSlide(asset.id)}
+                        className="group bg-vexl-gray-800 rounded-lg p-3 hover:bg-vexl-gray-700 transition-colors"
+                      >
+                        <div className="aspect-[9/16] bg-vexl-gray-900 rounded mb-2 flex items-center justify-center">
+                          <img
+                            src={asset.url || getPlaceholderUrl('screenshot', asset.name)}
+                            alt={asset.name}
+                            className="max-w-full max-h-full object-contain"
+                          />
+                        </div>
+                        <p className="text-xs text-white truncate">{asset.name}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Logos Section */}
+              {(selectedAssetCategory === 'all' || selectedAssetCategory === 'logo') && (
+                <div className="mb-6">
+                  <h4 className="text-sm font-medium text-vexl-gray-400 mb-3 flex items-center">
+                    <Star className="w-4 h-4 mr-2" />
+                    Logos
+                  </h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    {getAssetsByCategory('logo').map(asset => (
+                      <button
+                        key={asset.id}
+                        onClick={() => addAssetToSlide(asset.id)}
+                        className="group bg-vexl-gray-800 rounded-lg p-4 hover:bg-vexl-gray-700 transition-colors"
+                      >
+                        <div className="h-12 flex items-center justify-center mb-2">
+                          <img
+                            src={asset.url || getPlaceholderUrl('logo', asset.name)}
+                            alt={asset.name}
+                            className="max-h-full object-contain"
+                          />
+                        </div>
+                        <p className="text-xs text-white truncate">{asset.name}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Avatars Section */}
+              {(selectedAssetCategory === 'all' || selectedAssetCategory === 'avatar') && (
+                <div className="mb-6">
+                  <h4 className="text-sm font-medium text-vexl-gray-400 mb-3 flex items-center">
+                    <User className="w-4 h-4 mr-2" />
+                    Avatars
+                  </h4>
+                  <div className="grid grid-cols-3 gap-3">
+                    {getAssetsByCategory('avatar').map(asset => (
+                      <button
+                        key={asset.id}
+                        onClick={() => addAssetToSlide(asset.id)}
+                        className="group bg-vexl-gray-800 rounded-lg p-3 hover:bg-vexl-gray-700 transition-colors"
+                      >
+                        <div className="aspect-square rounded-full bg-vexl-gray-900 mb-2 flex items-center justify-center overflow-hidden">
+                          <img
+                            src={asset.url || getPlaceholderUrl('avatar', asset.name)}
+                            alt={asset.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <p className="text-xs text-white truncate">{asset.name}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Symbols & Icons Section */}
+              {(selectedAssetCategory === 'all' || selectedAssetCategory === 'symbol') && (
+                <div className="mb-6">
+                  <h4 className="text-sm font-medium text-vexl-gray-400 mb-3 flex items-center">
+                    <Shield className="w-4 h-4 mr-2" />
+                    Symbols & Icons
+                  </h4>
+                  <div className="grid grid-cols-3 gap-3">
+                    {getAssetsByCategory('symbol').map(asset => (
+                      <button
+                        key={asset.id}
+                        onClick={() => addAssetToSlide(asset.id)}
+                        className="group bg-vexl-gray-800 rounded-lg p-3 hover:bg-vexl-gray-700 transition-colors"
+                      >
+                        <div className="h-12 flex items-center justify-center mb-2">
+                          <img
+                            src={asset.url || getPlaceholderUrl('symbol', asset.name)}
+                            alt={asset.name}
+                            className="max-h-full object-contain"
+                          />
+                        </div>
+                        <p className="text-xs text-white truncate">{asset.name}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}

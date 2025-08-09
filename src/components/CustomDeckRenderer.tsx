@@ -24,8 +24,9 @@ const existingSlideComponents = {
 
 interface SlideComponent {
   id: string
-  type: 'component' | 'textbox' | 'existing-slide'
+  type: 'component' | 'textbox' | 'existing-slide' | 'asset' | 'image'
   componentId?: string
+  assetId?: string
   content?: any
   position: { x: number, y: number }
   size: { width: number, height: number }
@@ -45,24 +46,51 @@ interface CustomDeckRendererProps {
   isEditMode?: boolean
 }
 
-// Text renderer component
+// Enhanced text renderer component with brand colors
 const TextRenderer = ({ content }: { content: any }) => {
-  const styles = {
-    title: 'text-4xl md:text-6xl font-bold text-white',
-    subtitle: 'text-2xl md:text-3xl font-semibold text-vexl-yellow',
-    body: 'text-lg md:text-xl text-vexl-gray-300',
-    caption: 'text-sm md:text-base text-vexl-gray-400'
+  // Brand colors
+  const brandColors = {
+    white: '#FFFFFF',
+    yellow: '#FCD34D',
+    green: '#10B981',
+    blue: '#3B82F6',
+    gray: '#6B7280',
+    lightGray: '#D1D5DB'
+  }
+  
+  // Text sizes
+  const textSizes = {
+    title: 'text-4xl md:text-6xl',
+    subtitle: 'text-2xl md:text-3xl',
+    large: 'text-xl md:text-2xl',
+    body: 'text-lg md:text-xl',
+    small: 'text-base md:text-lg',
+    caption: 'text-sm md:text-base'
+  }
+  
+  // Font weights
+  const fontWeights = {
+    normal: 'font-normal',
+    medium: 'font-medium',
+    semibold: 'font-semibold',
+    bold: 'font-bold',
+    black: 'font-black'
   }
 
   const style = content?.style || 'body'
+  const color = content?.color || 'white'
+  const weight = content?.weight || (style === 'title' ? 'bold' : 'normal')
+  const align = content?.align || 'left'
   const text = content?.text || ''
 
   return (
     <div 
-      className={styles[style]}
+      className={`${textSizes[style]} ${fontWeights[weight]}`}
       style={{ 
         fontFamily: (style === 'title' || style === 'subtitle') ? 'Monument Extended' : 'inherit',
-        whiteSpace: 'pre-wrap'
+        whiteSpace: 'pre-wrap',
+        color: brandColors[color] || brandColors.white,
+        textAlign: align as any
       }}
     >
       {text}
@@ -165,6 +193,20 @@ export default function CustomDeckRenderer({ slide, isEditMode = false }: Custom
             return (
               <div key={component.id} style={positionStyles}>
                 <TextRenderer content={component.content} />
+              </div>
+            )
+          }
+          
+          // Render asset/image
+          if (component.type === 'asset' || component.type === 'image') {
+            const asset = component.content
+            return (
+              <div key={component.id} style={positionStyles}>
+                <img
+                  src={asset?.url || '/placeholder.svg'}
+                  alt={asset?.name || 'Asset'}
+                  className="w-full h-full object-contain"
+                />
               </div>
             )
           }

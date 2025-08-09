@@ -29,6 +29,15 @@ export default function Home() {
       features: ['11 Slides', 'Keyboard Navigation', 'Edit Mode']
     },
     {
+      title: 'Presentation Decks',
+      description: 'Choose from multiple tailored presentations for different audiences and contexts',
+      icon: Zap,
+      href: '/decks',
+      color: 'from-purple-600 to-purple-800',
+      badge: 'New',
+      features: ['7 Decks', 'PDF Export', 'Audience-Focused']
+    },
+    {
       title: 'Vexl Jeopardy',
       description: 'Test your knowledge about Bitcoin, privacy, and Vexl in a fun game format',
       icon: Gamepad2,

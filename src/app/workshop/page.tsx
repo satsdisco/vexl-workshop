@@ -10,7 +10,9 @@ import PresenterMode from '@/components/PresenterMode'
 import SectionNavigation from '@/components/SectionNavigation'
 import KeyboardGuide from '@/components/KeyboardGuide'
 import SimpleEditMode from '@/components/SimpleEditMode'
+import ExportPDF from '@/components/ExportPDF'
 import { AnimatePresence, motion } from 'framer-motion'
+import { getDeck } from '@/data/decks'
 
 // Dynamic imports for code splitting
 const HookSection = dynamic(() => import('@/components/sections/HookSection'), {
@@ -26,6 +28,7 @@ const ClubsSection = dynamic(() => import('@/components/sections/ClubsSection'))
 const DemoSection = dynamic(() => import('@/components/sections/DemoSection'))
 const VisionSection = dynamic(() => import('@/components/sections/VisionSection'))
 const GetStartedSection = dynamic(() => import('@/components/sections/GetStartedSection'))
+const QuickDemoSection = dynamic(() => import('@/components/sections/QuickDemoSection'))
 
 function Workshop() {
   const searchParams = useSearchParams()
@@ -35,7 +38,12 @@ function Workshop() {
   const [isMobile, setIsMobile] = useState(false)
   const [isEditMode, setIsEditMode] = useState(false)
 
-  const sections = [
+  // Get deck from query parameter
+  const deckId = searchParams.get('deck') || 'main-workshop'
+  const deck = getDeck(deckId)
+
+  // All possible sections across all decks
+  const allSections = [
     { id: 'hook', name: 'Hook', duration: 2 },
     { id: 'pitch', name: 'Vexl Pitch', duration: 3 },
     { id: 'trust', name: 'Trust > Ratings', duration: 5 },
@@ -45,9 +53,43 @@ function Workshop() {
     { id: 'contact-trading', name: 'Contact & Trading', duration: 3 },
     { id: 'clubs', name: 'Vexl Clubs', duration: 3 },
     { id: 'demo', name: 'Live Demo', duration: 10 },
+    { id: 'demo-quick', name: 'Quick Demo', duration: 3 },
     { id: 'vision', name: 'Your Network', duration: 8 },
     { id: 'get-started', name: 'Get Started', duration: 2 },
+    // Technical deck sections
+    { id: 'technical-architecture', name: 'Technical Architecture', duration: 5 },
+    { id: 'encryption-deep-dive', name: 'Encryption Deep Dive', duration: 5 },
+    { id: 'p2p-networking', name: 'P2P Networking', duration: 4 },
+    { id: 'security-model', name: 'Security Model', duration: 4 },
+    { id: 'api-overview', name: 'API Overview', duration: 3 },
+    // Beginner deck sections
+    { id: 'what-is-bitcoin', name: 'What is Bitcoin?', duration: 3 },
+    { id: 'why-privacy-matters', name: 'Why Privacy Matters', duration: 3 },
+    { id: 'simple-demo', name: 'Simple Demo', duration: 5 },
+    { id: 'getting-started-easy', name: 'Getting Started', duration: 3 },
+    { id: 'support-resources', name: 'Support & Resources', duration: 2 },
+    // Privacy deck sections
+    { id: 'surveillance-problem', name: 'The Surveillance Problem', duration: 4 },
+    { id: 'no-kyc-philosophy', name: 'No-KYC Philosophy', duration: 3 },
+    { id: 'encryption-overview', name: 'Encryption Overview', duration: 3 },
+    { id: 'anonymous-trading', name: 'Anonymous Trading', duration: 4 },
+    // Community deck sections
+    { id: 'community-growth', name: 'Community Growth', duration: 3 },
+    { id: 'network-effects', name: 'Network Effects', duration: 3 },
+    { id: 'local-adoption', name: 'Local Adoption', duration: 4 },
+    { id: 'organizing-tips', name: 'Organizing Tips', duration: 3 },
+    // Investor deck sections
+    { id: 'market-opportunity', name: 'Market Opportunity', duration: 3 },
+    { id: 'traction-metrics', name: 'Traction & Metrics', duration: 3 },
+    { id: 'roadmap', name: 'Product Roadmap', duration: 3 },
+    { id: 'team', name: 'Team', duration: 2 },
+    { id: 'funding-needs', name: 'Funding Needs', duration: 2 },
   ]
+
+  // Filter sections based on deck if provided
+  const sections = deck 
+    ? allSections.filter(section => deck.slides.includes(section.id))
+    : allSections
 
 
   const navigateSection = (direction: 'prev' | 'next') => {
@@ -243,67 +285,60 @@ function Workshop() {
             transition={{ duration: 0.5, ease: 'easeInOut' }}
             className="absolute inset-0 overflow-y-auto overflow-x-hidden"
           >
-            <div className="min-h-full px-6 py-20 md:px-12 lg:px-16">
+            <div className="min-h-full px-6 py-20 md:px-12 lg:px-16 slide-section">
               <div className="w-full max-w-7xl mx-auto">
-                {currentSection === 0 && (
-                  <SimpleEditMode enabled={isEditMode} sectionId="hookSection">
-                    <HookSection />
-                  </SimpleEditMode>
-                )}
-                {currentSection === 1 && (
-                  <SimpleEditMode enabled={isEditMode} sectionId="pitchSection">
-                    <PitchSection />
-                  </SimpleEditMode>
-                )}
-                {currentSection === 2 && (
-                  <SimpleEditMode enabled={isEditMode} sectionId="trustSection">
-                    <TrustSection />
-                  </SimpleEditMode>
-                )}
-                {currentSection === 3 && (
-                  <SimpleEditMode enabled={isEditMode} sectionId="privacySection">
-                    <PrivacySection />
-                  </SimpleEditMode>
-                )}
-                {currentSection === 4 && (
-                  <SimpleEditMode enabled={isEditMode} sectionId="profileSetupSection">
-                    <ProfileSetupSection />
-                  </SimpleEditMode>
-                )}
-                {currentSection === 5 && (
-                  <SimpleEditMode enabled={isEditMode} sectionId="findingOffersSection">
-                    <FindingOffersSection />
-                  </SimpleEditMode>
-                )}
-                {currentSection === 6 && (
-                  <SimpleEditMode enabled={isEditMode} sectionId="contactTradingSection">
-                    <ContactTradingSection />
-                  </SimpleEditMode>
-                )}
-                {currentSection === 7 && (
-                  <SimpleEditMode enabled={isEditMode} sectionId="clubsSection">
-                    <ClubsSection />
-                  </SimpleEditMode>
-                )}
-                {currentSection === 8 && (
-                  <SimpleEditMode enabled={isEditMode} sectionId="demoSection">
-                    <DemoSection />
-                  </SimpleEditMode>
-                )}
-                {currentSection === 9 && (
-                  <SimpleEditMode enabled={isEditMode} sectionId="visionSection">
-                    <VisionSection />
-                  </SimpleEditMode>
-                )}
-                {currentSection === 10 && (
-                  <SimpleEditMode enabled={isEditMode} sectionId="getStartedSection">
-                    <GetStartedSection />
-                  </SimpleEditMode>
-                )}
+                {sections[currentSection] && (() => {
+                  const sectionId = sections[currentSection].id
+                  const sectionMap: { [key: string]: { component: React.ReactNode, editId: string } } = {
+                    'hook': { component: <HookSection />, editId: 'hookSection' },
+                    'pitch': { component: <PitchSection />, editId: 'pitchSection' },
+                    'trust': { component: <TrustSection />, editId: 'trustSection' },
+                    'privacy': { component: <PrivacySection />, editId: 'privacySection' },
+                    'profile-setup': { component: <ProfileSetupSection />, editId: 'profileSetupSection' },
+                    'finding-offers': { component: <FindingOffersSection />, editId: 'findingOffersSection' },
+                    'contact-trading': { component: <ContactTradingSection />, editId: 'contactTradingSection' },
+                    'clubs': { component: <ClubsSection />, editId: 'clubsSection' },
+                    'demo': { component: <DemoSection />, editId: 'demoSection' },
+                    'demo-quick': { component: <QuickDemoSection />, editId: 'quickDemoSection' },
+                    'vision': { component: <VisionSection />, editId: 'visionSection' },
+                    'get-started': { component: <GetStartedSection />, editId: 'getStartedSection' },
+                  }
+                  
+                  const section = sectionMap[sectionId]
+                  if (!section) {
+                    // Placeholder for sections not yet implemented
+                    return (
+                      <div className="flex items-center justify-center min-h-[60vh]">
+                        <div className="text-center">
+                          <h2 className="text-3xl font-bold text-white mb-4" style={{ fontFamily: 'Monument Extended' }}>
+                            {sections[currentSection].name}
+                          </h2>
+                          <p className="text-vexl-gray-400 mb-8">
+                            This slide is being developed for specialized decks
+                          </p>
+                          <div className="inline-flex items-center gap-2 px-6 py-3 bg-vexl-gray-900 rounded-lg">
+                            <span className="text-vexl-yellow">Coming Soon</span>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+                  
+                  return (
+                    <SimpleEditMode enabled={isEditMode} sectionId={section.editId}>
+                      {section.component}
+                    </SimpleEditMode>
+                  )
+                })()}
               </div>
             </div>
           </motion.section>
         </AnimatePresence>
+      </div>
+
+      {/* PDF Export Button */}
+      <div className="fixed bottom-20 left-4 z-40">
+        <ExportPDF deckName={deck?.name || 'Vexl Workshop'} />
       </div>
 
       <SectionNavigation 

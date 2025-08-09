@@ -14,6 +14,7 @@ import Link from 'next/link'
 import VexlLogo from '@/components/VexlLogo'
 import { componentRegistry, getComponent, getComponentsByCategory } from '@/lib/componentRegistry'
 import { brandAssets, getAssetsByCategory, getPlaceholderUrl } from '@/lib/brandAssets'
+import { EnhancedTextEditor } from './enhanced-text-editor'
 import dynamic from 'next/dynamic'
 
 // Import all existing slide components
@@ -88,15 +89,14 @@ const slideTemplates = {
   }
 }
 
-// Enhanced rich text component with inline editing and custom sizing
+// Simple text display component with enhanced editor modal
 const TextBoxComponent = ({ content, onUpdate, id }) => {
   const [isEditing, setIsEditing] = useState(false)
-  const [richText, setRichText] = useState(content.richText || [{ text: content.text || 'Click to edit', color: content.color || 'white' }])
-  const [style, setStyle] = useState(content.style || 'body')
-  const [align, setAlign] = useState(content.align || 'left')
-  const [weight, setWeight] = useState(content.weight || 'normal')
-  const [customSize, setCustomSize] = useState(content.customSize || null)
-  const [selectedWordIndex, setSelectedWordIndex] = useState(null)
+  const richText = content.richText || []
+  const style = content.style || 'body'
+  const align = content.align || 'left'
+  const weight = content.weight || 'normal'
+  const customSize = content.customSize || null
 
   // Brand colors
   const brandColors = {
@@ -105,7 +105,10 @@ const TextBoxComponent = ({ content, onUpdate, id }) => {
     green: '#10B981',
     blue: '#3B82F6',
     gray: '#6B7280',
-    lightGray: '#D1D5DB'
+    lightGray: '#D1D5DB',
+    red: '#EF4444',
+    purple: '#9333EA',
+    orange: '#FB923C'
   }
 
   // Text sizes
@@ -132,183 +135,47 @@ const TextBoxComponent = ({ content, onUpdate, id }) => {
     black: 'font-black'
   }
 
-  const updateContent = (updates) => {
-    onUpdate(id, { ...content, ...updates })
-  }
-
-  const parseTextIntoWords = (text) => {
-    return text.split(' ').map(word => ({ text: word + ' ', color: content.color || 'white' }))
-  }
-
-  const updateWordColor = (wordIndex, color) => {
-    const updatedRichText = richText.map((word, index) => 
-      index === wordIndex ? { ...word, color } : word
-    )
-    setRichText(updatedRichText)
-    updateContent({ richText: updatedRichText, style, align, weight, customSize })
-  }
-
-  const handleTextChange = (text) => {
-    const newRichText = parseTextIntoWords(text)
-    setRichText(newRichText)
-    updateContent({ text, richText: newRichText, style, align, weight, customSize })
-  }
-
-  const renderEditableText = () => {
-    return (
-      <div className="mb-3">
-        <textarea
-          value={richText.map(word => word.text).join('')}
-          onChange={(e) => handleTextChange(e.target.value)}
-          className="w-full px-3 py-2 bg-vexl-gray-800 text-white rounded resize-none text-sm mb-2"
-          rows={3}
-          style={{ 
-            fontFamily: (style === 'title' || style === 'subtitle') ? 'Monument Extended' : 'inherit'
-          }}
-          placeholder="Enter text..."
-        />
-        
-        {/* Word-by-word color editing */}
-        <div className="max-h-32 overflow-y-auto bg-vexl-gray-800 p-2 rounded text-sm">
-          <div className="text-xs text-vexl-gray-400 mb-2">Click words to change color:</div>
-          <div className="flex flex-wrap gap-1">
-            {richText.map((word, index) => (
-              <span
-                key={index}
-                className={`px-1 py-0.5 rounded cursor-pointer hover:bg-vexl-gray-700 ${
-                  selectedWordIndex === index ? 'bg-vexl-yellow text-black' : ''
-                }`}
-                style={{ color: brandColors[word.color] }}
-                onClick={() => setSelectedWordIndex(selectedWordIndex === index ? null : index)}
-              >
-                {word.text.trim() || '·'}
-              </span>
-            ))}
-          </div>
-          
-          {/* Color picker for selected word */}
-          {selectedWordIndex !== null && (
-            <div className="mt-2 pt-2 border-t border-vexl-gray-700">
-              <div className="text-xs text-vexl-gray-400 mb-1">Change color:</div>
-              <div className="grid grid-cols-6 gap-1">
-                {Object.entries(brandColors).map(([colorName, colorValue]) => (
-                  <button
-                    key={colorName}
-                    className="w-6 h-6 rounded border-2 border-vexl-gray-600 hover:border-white"
-                    style={{ backgroundColor: colorValue }}
-                    onClick={() => updateWordColor(selectedWordIndex, colorName)}
-                    title={colorName}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    )
-  }
 
   return (
-    <div className="relative group h-full w-full">
-      {isEditing ? (
-        <div className="flex flex-col h-full bg-vexl-gray-900/95 p-3 rounded-lg max-w-sm">
-          <div className="grid grid-cols-2 gap-2 mb-2">
-            <select
-              value={style}
-              onChange={(e) => {
-                setStyle(e.target.value)
-                updateContent({ richText, style: e.target.value, align, weight, customSize })
-              }}
-              className="px-2 py-1 bg-vexl-gray-800 text-white text-xs rounded"
-            >
-              <option value="title">Title</option>
-              <option value="subtitle">Subtitle</option>
-              <option value="large">Large</option>
-              <option value="body">Body</option>
-              <option value="small">Small</option>
-              <option value="caption">Caption</option>
-            </select>
-            
-            <select
-              value={weight}
-              onChange={(e) => {
-                setWeight(e.target.value)
-                updateContent({ richText, style, align, weight: e.target.value, customSize })
-              }}
-              className="px-2 py-1 bg-vexl-gray-800 text-white text-xs rounded"
-            >
-              <option value="normal">Normal</option>
-              <option value="medium">Medium</option>
-              <option value="semibold">Semibold</option>
-              <option value="bold">Bold</option>
-              <option value="black">Black</option>
-            </select>
-            
-            <select
-              value={align}
-              onChange={(e) => {
-                setAlign(e.target.value)
-                updateContent({ richText, style, align: e.target.value, weight, customSize })
-              }}
-              className="px-2 py-1 bg-vexl-gray-800 text-white text-xs rounded"
-            >
-              <option value="left">Left</option>
-              <option value="center">Center</option>
-              <option value="right">Right</option>
-            </select>
-            
-            <input
-              type="number"
-              value={customSize || ''}
-              onChange={(e) => {
-                const size = e.target.value ? parseInt(e.target.value) : null
-                setCustomSize(size)
-                updateContent({ richText, style, align, weight, customSize: size })
-              }}
-              placeholder="Custom size"
-              className="px-2 py-1 bg-vexl-gray-800 text-white text-xs rounded"
-              min="8"
-              max="200"
-            />
-          </div>
-          
-          {renderEditableText()}
-          
-          <button
-            onClick={() => {
-              setIsEditing(false)
-              setSelectedWordIndex(null)
-            }}
-            className="mt-2 px-3 py-1 bg-vexl-yellow text-black text-sm rounded font-semibold hover:bg-vexl-yellow/90"
-          >
-            Done
-          </button>
-        </div>
-      ) : (
-        <div
-          onClick={() => setIsEditing(true)}
-          className={`${fontWeights[weight]} cursor-pointer hover:bg-vexl-gray-900/20 p-2 rounded h-full w-full flex items-center relative select-none`}
-          style={{ 
-            fontFamily: (style === 'title' || style === 'subtitle') ? 'Monument Extended' : 'inherit',
-            textAlign: align as any,
-            ...getTextSize()
-          }}
-        >
-          {richText && richText.length > 0 ? (
-            richText.map((word, index) => (
+    <>
+      <div
+        onClick={() => setIsEditing(true)}
+        className={`${fontWeights[weight]} cursor-pointer hover:bg-vexl-gray-900/20 p-2 rounded h-full w-full select-none`}
+        style={{ 
+          fontFamily: (style === 'title' || style === 'subtitle') ? 'Monument Extended' : 'inherit',
+          textAlign: align as any,
+          ...getTextSize(),
+          display: 'block'
+        }}
+      >
+        {richText && richText.length > 0 ? (
+          <span style={{ display: 'block', textAlign: align as any }}>
+            {richText.map((word, index) => (
               <span 
                 key={index}
                 style={{ color: brandColors[word.color] || brandColors.white }}
               >
-                {word.text}
+                {word.text}{index < richText.length - 1 ? ' ' : ''}
               </span>
-            ))
-          ) : (
-            <span style={{ color: brandColors.white }}>Click to add text</span>
-          )}
+            ))}
+          </span>
+        ) : (
+          <span style={{ color: brandColors.white }}>Click to add text</span>
+        )}
+      </div>
+      
+      {/* Enhanced Text Editor Modal */}
+      {isEditing && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+          <EnhancedTextEditor
+            content={content}
+            onUpdate={onUpdate}
+            id={id}
+            onClose={() => setIsEditing(false)}
+          />
         </div>
       )}
-    </div>
+    </>
   )
 }
 
@@ -905,53 +772,72 @@ export default function UltimateDeckBuilder() {
                     return (
                       <div
                         key={component.id}
-                        className="absolute group border-2 border-transparent hover:border-vexl-yellow"
+                        className="absolute group"
                         style={{
                           left: `${component.position.x}%`,
                           top: `${component.position.y}%`,
                           width: `${component.size.width}%`,
-                          height: `${component.size.height}%`,
+                          minHeight: '40px',
                           transform: 'translate(-50%, -50%)'
                         }}
-                        onMouseDown={(e) => {
-                          // Allow dragging from anywhere on the text component
-                          const target = e.target as HTMLElement
-                          if (target === e.currentTarget || target.closest?.('.draggable-text')) {
-                            handleDragStart(component.id, e)
-                          }
-                        }}
                       >
+                        {/* Invisible drag overlay */}
+                        <div
+                          className="absolute inset-0 cursor-move z-10"
+                          onMouseDown={(e) => {
+                            const target = e.target as HTMLElement
+                            if (!target.closest('button') && !target.closest('.resize-handle')) {
+                              e.preventDefault()
+                              handleDragStart(component.id, e)
+                            }
+                          }}
+                        />
+                        
+                        {/* Visual border on hover */}
+                        <div className="absolute inset-0 border-2 border-transparent group-hover:border-vexl-yellow rounded-lg pointer-events-none" />
+                        
+                        {/* Delete button */}
                         <button
-                          className="absolute -top-2 -right-2 w-4 h-4 bg-red-500 rounded-full opacity-0 group-hover:opacity-100 z-10"
+                          className="absolute -top-3 -right-3 w-6 h-6 bg-red-500 rounded-full opacity-0 group-hover:opacity-100 z-20 transition-opacity flex items-center justify-center hover:bg-red-600"
                           onClick={(e) => {
                             e.stopPropagation()
                             removeComponent(component.id)
                           }}
                         >
-                          <X className="w-4 h-4 text-white p-0.5" />
+                          <X className="w-4 h-4 text-white" />
                         </button>
                         
-                        {/* Resize handle for custom text sizing */}
+                        {/* Box resize handle */}
                         <div
-                          className="absolute -bottom-2 -right-2 w-4 h-4 bg-vexl-blue rounded-full cursor-se-resize opacity-0 group-hover:opacity-100 z-10"
+                          className="resize-handle absolute -bottom-3 -right-3 w-6 h-6 bg-vexl-green rounded-full cursor-se-resize opacity-0 group-hover:opacity-100 z-20 transition-opacity flex items-center justify-center hover:bg-vexl-green/80"
+                          onMouseDown={(e) => {
+                            e.stopPropagation()
+                            handleResize(component.id, e)
+                          }}
+                          title="Drag to resize box"
+                        >
+                          <Maximize2 className="w-3 h-3 text-black" />
+                        </div>
+                        
+                        {/* Text size handle */}
+                        <div
+                          className="resize-handle absolute -bottom-3 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-vexl-blue rounded-full cursor-ew-resize opacity-0 group-hover:opacity-100 z-20 transition-opacity flex items-center justify-center hover:bg-vexl-blue/80"
                           onMouseDown={(e) => {
                             e.stopPropagation()
                             handleTextResize(component.id, e)
                           }}
-                          title="Drag to resize text"
+                          title="Drag horizontally to resize text"
                         >
-                          <Maximize2 className="w-4 h-4 text-white p-0.5" />
+                          <Type className="w-3 h-3 text-white" />
                         </div>
                         
                         {/* Move indicator */}
-                        <div className="absolute -top-2 -left-2 w-4 h-4 bg-vexl-yellow rounded-full opacity-0 group-hover:opacity-100 z-10 flex items-center justify-center">
+                        <div className="absolute -top-3 -left-3 w-6 h-6 bg-vexl-yellow rounded-full opacity-0 group-hover:opacity-100 z-20 transition-opacity flex items-center justify-center pointer-events-none">
                           <Move className="w-3 h-3 text-black" />
                         </div>
                         
-                        <div 
-                          className="draggable-text cursor-move w-full h-full"
-                          style={{ cursor: 'move' }}
-                        >
+                        {/* Text content */}
+                        <div className="relative">
                           <TextBoxComponent
                             id={component.id}
                             content={component.content}

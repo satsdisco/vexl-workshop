@@ -19,7 +19,7 @@ interface Template {
   createdAt: string
   updatedAt: string
   isActive: boolean
-  category: 'default' | 'custom' | 'seasonal' | 'event'
+  category: 'default' | 'custom' | 'seasonal' | 'event' | 'deck'
 }
 
 export default function TemplatesPage() {

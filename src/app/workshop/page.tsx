@@ -112,11 +112,21 @@ function Workshop() {
   ]
 
   // Filter sections based on deck if provided
-  const sections = deck && deck.slides && Array.isArray(deck.slides) && typeof deck.slides[0] === 'string'
-    ? allSections.filter(section => deck.slides.includes(section.id))
-    : deck && deck.slides && Array.isArray(deck.slides) && typeof deck.slides[0] === 'object'
-    ? deck.slides // Custom deck with slide objects
-    : allSections
+  let sections: { id: string; name: string; duration: number }[] = allSections
+  
+  if (deck && deck.slides) {
+    if (Array.isArray(deck.slides) && typeof deck.slides[0] === 'string') {
+      // Traditional deck with slide IDs
+      sections = allSections.filter(section => deck.slides.includes(section.id))
+    } else if (Array.isArray(deck.slides) && typeof deck.slides[0] === 'object') {
+      // Custom deck with slide objects - map to section format
+      sections = deck.slides.map((slide: any, index: number) => ({
+        id: slide.id || `slide-${index}`,
+        name: slide.name || `Slide ${index + 1}`,
+        duration: slide.duration || 2
+      }))
+    }
+  }
 
 
   const navigateSection = (direction: 'prev' | 'next') => {
@@ -358,13 +368,25 @@ function Workshop() {
             <div className="min-h-full px-6 py-20 md:px-12 lg:px-16 slide-section">
               <div className="w-full max-w-7xl mx-auto">
                 {/* Check if this is a custom deck with component data */}
-                {deck && deck.slides && typeof deck.slides[currentSection] === 'object' && deck.slides[currentSection].components ? (
-                  // Render custom deck slide
-                  <CustomDeckRenderer 
-                    slide={deck.slides[currentSection]} 
-                    isEditMode={isEditMode}
-                  />
-                ) : sections[currentSection] && (() => {
+                {(() => {
+                  const currentSlide = deck?.slides?.[currentSection]
+                  const isCustomSlide = currentSlide && 
+                    typeof currentSlide === 'object' && 
+                    currentSlide !== null && 
+                    (currentSlide as any).components !== undefined
+                  
+                  if (isCustomSlide) {
+                    // Render custom deck slide
+                    return (
+                      <CustomDeckRenderer 
+                        slide={currentSlide as any} 
+                        isEditMode={isEditMode}
+                      />
+                    )
+                  }
+                  
+                  // Render traditional slides
+                  if (!sections[currentSection]) return null
                   // Render traditional slides
                   const sectionId = sections[currentSection].id
                   const sectionMap: { [key: string]: { component: React.ReactNode, editId: string } } = {
